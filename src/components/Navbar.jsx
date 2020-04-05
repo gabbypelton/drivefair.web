@@ -5,6 +5,7 @@ import {
   NavbarToggler,
   NavbarBrand,
   Nav,
+  Navbar,
   NavItem,
   NavLink,
   UncontrolledDropdown,
@@ -14,9 +15,6 @@ import {
   NavbarText
 } from 'reactstrap';
 
-import {
-  StyledNavbar as Navbar 
-} from "./styles";
 
 const Example = (props) => {
   const [isOpen, setIsOpen] = useState(false);

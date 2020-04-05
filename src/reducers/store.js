@@ -1,14 +1,19 @@
-import { createStore, combineReducers } from "redux";
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import logger from "redux-logger";
+import thunk from 'redux-thunk';
 import customer from "./customer";
 import orders from "./orders";
-import vendors from "./vendors";
+import vendor from "./vendor";
 import session from "./session";
 
 const rootReducer = combineReducers({
   customer,
   orders,
-  vendors,
+  vendor,
   session
-})
+});
 
-export default createStore(rootReducer);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk, logger)));
+
+export default store;

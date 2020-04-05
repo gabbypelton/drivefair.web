@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Row, Col } from 'reactstrap'
 
-export class Register extends Component {
+export class Vendors extends Component {
   render() {
     return (
-      <div>
+      <Row>
         
-      </div>
+      </Row>
     )
   }
 }
@@ -19,4 +20,4 @@ const mapDispatchToProps = {
   
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register)
+export default connect(mapStateToProps, mapDispatchToProps)(Vendors)

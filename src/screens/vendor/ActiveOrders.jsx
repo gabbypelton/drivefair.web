@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-export class Landing extends Component {
+export class ActiveOrders extends Component {
   render() {
     return (
       <div>
@@ -19,4 +19,4 @@ const mapDispatchToProps = {
   
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Landing)
+export default connect(mapStateToProps, mapDispatchToProps)(ActiveOrders)
