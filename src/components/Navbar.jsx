@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation, useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
 import {
   Collapse,
@@ -18,39 +19,29 @@ import {
 
 const Example = (props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const history = useHistory();
+  const customer = {
+    phrase: "No wait I'm a customer!",
+    path: "/customer/landing"
+  }
+  const vendor = {
+    phrase: "But I'm a vendor!",
+    path: "/vendor/landing"
+  }
+  const switchTo = history.location.pathname.includes("vendor") ? customer : vendor;
 
   const toggle = () => setIsOpen(!isOpen);
 
   return (
     <div>
       <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">Delivery App</NavbarBrand>
+        <NavbarBrand href="/"> </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink href="/vendor/landing">Home</NavLink>
+            <NavLink href={switchTo.path}>{switchTo.phrase}</NavLink>
             </NavItem>
-            <NavItem>
-              <NavLink href="https://github.com/runranron/delivery-app">GitHub</NavLink>
-            </NavItem>
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                Register
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>
-                  Option 1
-                </DropdownItem>
-                <DropdownItem>
-                  Option 2
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  Reset
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
           </Nav>
           <NavbarText>Now serving Denton, TX</NavbarText>
         </Collapse>
@@ -60,11 +51,11 @@ const Example = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  
+  isLoggedIn: state.session.isLoggedIn
 })
 
 const mapDispatchToProps = {
-  
+
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Example)

@@ -1,23 +1,20 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Row, Col } from 'reactstrap'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Row, Col, Container } from "reactstrap";
 
 export class Vendors extends Component {
   render() {
     return (
-      <Row>
-        
-      </Row>
-    )
+      <Container>
+        <Row>Sup</Row> <Row>Sup</Row> <Row>Sup</Row> <Row>Sup</Row>
+        <Row>Sup</Row>
+      </Container>
+    );
   }
 }
 
-const mapStateToProps = (state) => ({
-  
-})
+const mapStateToProps = (state) => ({});
 
-const mapDispatchToProps = {
-  
-}
+const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Vendors)
+export default connect(mapStateToProps, mapDispatchToProps)(Vendors);

@@ -150,7 +150,7 @@ class Register extends Component {
               <Input
                 name="phoneNumber"
                 type="tel"
-                maxlength="12"
+                maxLength="12"
                 value={this.state.phoneNumber}
                 onInput={this.handleChange.bind(this)}
               />
@@ -189,7 +189,7 @@ class Register extends Component {
           />
           <GroupedInput
             name="state"
-            maxlength="2"
+            maxLength="2"
             value={this.state.state}
             placeholder="State"
             inputError={this.state.formErrors.state}
@@ -197,7 +197,7 @@ class Register extends Component {
           />
           <GroupedInput
             name="zip"
-            maxlength="5"
+            maxLength="5"
             value={this.state.zip}
             placeholder="Zip"
             inputError={this.state.formErrors.zip}

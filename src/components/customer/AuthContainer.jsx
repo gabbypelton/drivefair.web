@@ -22,9 +22,9 @@ class AuthContainer extends React.Component {
 
   componentDidMount() {
     this.setState({
-      selectedModal: "login",
-      modalTitle: "Sign in.",
-      cta: "I need an account.",
+      selectedModal: "register",
+      modalTitle: "Sign up.",
+      cta: "Click here if you already have an account.",
     });
   }
 
@@ -44,12 +44,12 @@ class AuthContainer extends React.Component {
     let { selectedModal, modalTitle, cta } = this.state;
     if (selectedModal === "register") {
       selectedModal = "login";
-      modalTitle = "Sign In";
-      cta = "I need an account";
+      modalTitle = "Sign In.";
+      cta = "Click here if you need an account.";
     } else {
       selectedModal = "register";
-      modalTitle = "Sign Up";
-      cta = "I have an account.";
+      modalTitle = "Sign Up.";
+      cta = "Click here if you already have an account.";
     }
     this.setState({
       selectedModal,
@@ -63,15 +63,12 @@ class AuthContainer extends React.Component {
       <Row>
         <Col>
           <Row>
-            <Button
-              color="primary"
-              onClick={this.toggleSelectedModal.bind(this)}
-            >
-              {this.state.cta}
-            </Button>
+            <h1>{this.state.modalTitle}</h1>
           </Row>
           <Row>
-            <h1>{this.state.modalTitle}</h1>
+            <Button color="link" onClick={this.toggleSelectedModal.bind(this)}>
+              {this.state.cta}
+            </Button>
           </Row>
           <Row>
             <ModalSelector selectedModal={this.state.selectedModal} />

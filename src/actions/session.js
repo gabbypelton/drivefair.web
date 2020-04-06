@@ -8,7 +8,7 @@ export const loginCustomer = ({email, password}) => async (dispatch) => {
     const { token } = authResponse.data;
     localStorage.clear();
     localStorage.setItem('authToken', token);
-    dispatch({ type: types.LOG_IN_SUCCESS, payload: authResponse });
+    dispatch({ type: types.LOG_IN_SUCCESS, payload: authResponse.data });
   } catch (error) {
     dispatch({ type: types.LOG_IN_FAIL, error });
   }
@@ -21,7 +21,7 @@ export const loginVendor = ({email, password}) => async (dispatch) => {
     const { token } = authResponse.data;
     localStorage.clear();
     localStorage.setItem('authToken', token);
-    dispatch({ type: types.LOG_IN_SUCCESS, payload: authResponse });
+    dispatch({ type: types.LOG_IN_SUCCESS, payload: authResponse.data });
   } catch (error) {
     dispatch({ type: types.LOG_IN_FAIL, error });
   }

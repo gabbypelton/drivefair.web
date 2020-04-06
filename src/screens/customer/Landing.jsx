@@ -9,7 +9,6 @@ const Landing = (props) => {
       <div style={{backgroundColor: "#F7F9FB"}}>
         <h1 className="display-3">Welcome to Delivery</h1>
         <p className="lead">Let's get you something to eat.</p>
-        <p>Sign in order register for a new account below!</p>
         <p className="lead"></p>
       </div>
       <AuthContainer />

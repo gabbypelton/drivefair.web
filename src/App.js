@@ -1,9 +1,9 @@
 import React from "react";
-import logo from "./logo.svg";
+import { connect } from "react-redux";
 import "./App.css";
 import { setBaseURL } from "./services/http";
 import Navbar from "./components/Navbar";
-import { Switch, Route } from "react-router";
+import { Switch, Route, useHistory } from "react-router";
 import Vendors from "./screens/customer/Vendors";
 import CustomerLanding from "./screens/customer/Landing";
 import VendorLanding from "./screens/vendor/Landing";
@@ -12,7 +12,12 @@ import { Container, Col } from "reactstrap";
 
 setBaseURL("http://localhost:5000");
 
-function App() {
+function App(props) {
+  const history = useHistory();
+  if (props.isLoggedIn && history.location.pathname !== "/") {
+    history.push("/")
+  }
+
   return (
     <Container className="App">
       <Navbar />
@@ -21,10 +26,14 @@ function App() {
         <Route path="/customer/landing" component={CustomerLanding} />
         <Route path="/vendor/landing" component={VendorLanding} />
         <Route path="/vendor/orders/active" component={ActiveOrders} />
-        <Route path="/" component={CustomerLanding} />
+        <Route path="/" component={props.isLoggedIn ? Vendors : CustomerLanding} />
       </Switch>
     </Container>
   );
 }
 
-export default App;
+const mapStateToProps = state => ({
+  isLoggedIn: state.session.isLoggedIn
+});
+
+export default connect(mapStateToProps)(App);
