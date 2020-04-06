@@ -57,7 +57,7 @@ export const ModalFooter = styled(BSModalFooter)`
 `;
 
 export const Button = styled(BSButton)`
-  background: ${colors.tertiary};
+  background: ${props => colors[props.color]};
   margin: 1rem 0 0 0;
 `;
 

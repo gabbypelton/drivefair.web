@@ -104,7 +104,7 @@ class Register extends Component {
           </Col>
         </Row>
         <Row style={{justifyContent: "center"}}>
-          <Button onClick={(e) => this.handleSubmit(e)}>Sign In</Button>
+          <Button color="tertiary" onClick={(e) => this.handleSubmit(e)}>Sign Up</Button>
         </Row>
       </Form>
     );

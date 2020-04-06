@@ -11,6 +11,7 @@ import {
   InputErrorMessage,
 } from "../styles";
 import { newVendor } from "../../actions/vendor";
+import { loadState } from "../../services/stateManagement";
 import {
   passwordValidation,
   emailValidation,
@@ -22,20 +23,39 @@ class Register extends Component {
     email: "",
     password: "",
     confirmPassword: "",
+    businessName: "",
+    phoneNumber: "",
+    street: "",
+    unit: "",
+    city: "",
+    state: "",
+    zip: "",
     formErrors: {},
   };
 
   componentDidMount() {
-    const email = localStorage.getItem("email");
-    const password = localStorage.getItem("password");
-    this.setState({
-      email,
-      password,
-    });
+    const loadableProperties = [
+      "email",
+      "businessName",
+      "phoneNumber",
+      "street",
+      "unit",
+      "city",
+      "state",
+      "zip",
+    ];
+    loadState(this, loadableProperties);
   }
 
   handleChange({ target }) {
-    const { name, value } = target;
+    let { name, value } = target;
+    if (name === "phoneNumber") {
+      if (value.match(/[^0-9\-]{1}/)) return
+      if (value.match(/^[0-9]{3}$/) || value.match(/^[0-9]{3}-[0-9]{3}$/)) {
+        value += "-";
+      }
+    }
+
     localStorage.setItem(name, value);
 
     this.setState({
@@ -45,11 +65,11 @@ class Register extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { email, password } = this.state;
+    const { email, password, businessName, phoneNumber, address } = this.state;
 
     const formErrors = {
-      password: passwordValidation(password),
       email: emailValidation(email),
+      password: passwordValidation(password),
       confirmPassword: confirmPasswordValidation(confirmPasswordValidation),
     };
 
@@ -61,14 +81,17 @@ class Register extends Component {
     this.props.newVendor({
       email,
       password,
+      businessName,
+      phoneNumber,
+      address,
     });
   }
 
   render() {
     return (
-      <Form style={{border: "red solid 2px"}}>
+      <Form style={{ width: "80%" }}>
         <Row>
-          <Col>
+          <Col xs="12" md="6" xl="4">
             <FormGroup>
               <Label to="email">Email</Label>
               <Input
@@ -77,13 +100,29 @@ class Register extends Component {
                 onChange={this.handleChange.bind(this)}
               />
               <InputErrorMessage>
-                {this.state.formErrors.email}
+                {this.state.formErrors.email || " "}
               </InputErrorMessage>
             </FormGroup>
+          </Col>
+          <Col xs="12" md="6" xl="4">
+            <FormGroup>
+              <Label to="businessName">Business Name</Label>
+              <Input
+                name="businessName"
+                value={this.state.businessName}
+                onChange={this.handleChange.bind(this)}
+              />
+              <InputErrorMessage>
+                {this.state.formErrors.businessName}
+              </InputErrorMessage>
+            </FormGroup>
+          </Col>
+          <Col xs="12" md="6" xl="4">
             <FormGroup>
               <Label to="password">Password</Label>
               <Input
                 name="password"
+                type="password"
                 value={this.state.password}
                 onChange={this.handleChange.bind(this)}
               />
@@ -91,10 +130,13 @@ class Register extends Component {
                 {this.state.formErrors.password}
               </InputErrorMessage>
             </FormGroup>
+          </Col>
+          <Col xs="12" md="6" xl="4">
             <FormGroup>
               <Label to="confirmPassword">Conrfirm Password</Label>
               <Input
                 name="confirmPassword"
+                type="password"
                 onChange={this.handleChange.bind(this)}
               />
               <InputErrorMessage>
@@ -102,36 +144,85 @@ class Register extends Component {
               </InputErrorMessage>
             </FormGroup>
           </Col>
-          <Col>
+          <Col xs="12" md="6" xl="4">
             <FormGroup>
-              <Label to="firstName">First Name</Label>
-              <Input name="firstName" onChange={this.handleChange.bind(this)} />
+              <Label to="phoneNumber">Phone Number</Label>
+              <Input
+                name="phoneNumber"
+                type="tel"
+                maxlength="12"
+                value={this.state.phoneNumber}
+                onInput={this.handleChange.bind(this)}
+              />
               <InputErrorMessage>
-                {this.state.formErrors.firstName}
-              </InputErrorMessage>
-            </FormGroup>
-            <FormGroup>
-              <Label to="lastName">Last Name</Label>
-              <Input name="lastName" onChange={this.handleChange.bind(this)} />
-              <InputErrorMessage>
-                {this.state.formErrors.lastName}
-              </InputErrorMessage>
-            </FormGroup>
-            <FormGroup>
-              <Label to="address">Delivery Address</Label>
-              <Input name="address" onChange={this.handleChange.bind(this)} />
-              <InputErrorMessage>
-                {this.state.formErrors.address}
+                {this.state.formErrors.phoneNumber}
               </InputErrorMessage>
             </FormGroup>
           </Col>
         </Row>
+        <Row>
+          <Col xs="12" md="6" xl="4">
+            <Label>Business Address</Label>
+          </Col>
+        </Row>
+        <Row>
+          <GroupedInput
+            name="street"
+            value={this.state.street}
+            placeholder="Street and Number"
+            inputError={this.state.formErrors.street}
+            onChange={this.handleChange.bind(this)}
+          />
+          <GroupedInput
+            name="unit"
+            value={this.state.unit}
+            placeholder="Apt/Unit"
+            inputError={this.state.formErrors.unit}
+            onChange={this.handleChange.bind(this)}
+          />
+          <GroupedInput
+            name="city"
+            value={this.state.city}
+            placeholder="City"
+            inputError={this.state.formErrors.city}
+            onChange={this.handleChange.bind(this)}
+          />
+          <GroupedInput
+            name="state"
+            maxlength="2"
+            value={this.state.state}
+            placeholder="State"
+            inputError={this.state.formErrors.state}
+            onChange={this.handleChange.bind(this)}
+          />
+          <GroupedInput
+            name="zip"
+            maxlength="5"
+            value={this.state.zip}
+            placeholder="Zip"
+            inputError={this.state.formErrors.zip}
+            onChange={this.handleChange.bind(this)}
+          />
+        </Row>
         <Row style={{ justifyContent: "center" }}>
-          <Button onClick={(e) => this.handleSubmit(e)}>Sign In</Button>
+          <Button color="tertiary" onClick={(e) => this.handleSubmit(e)}>
+            Sign Up
+          </Button>
         </Row>
       </Form>
     );
   }
 }
+
+const GroupedInput = (props) => {
+  return (
+    <Col xs="12" md="6" xl="4">
+      <FormGroup>
+        <Input {...props} />
+        <InputErrorMessage>{props.inputError}</InputErrorMessage>
+      </FormGroup>
+    </Col>
+  );
+};
 
 export default connect(null, { newVendor })(Register);
