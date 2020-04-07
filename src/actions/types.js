@@ -10,7 +10,7 @@ const asyncActions = [
   "LOG_IN",
 ];
 const syncActions = [
-  "LOGOUT"
+  "LOG_OUT"
 ];
 
 syncActions.forEach((key) => {

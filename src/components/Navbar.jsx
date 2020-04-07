@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { useLocation, useHistory } from "react-router-dom";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import {
   Collapse,
   NavbarToggler,
@@ -13,49 +13,67 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  NavbarText
-} from 'reactstrap';
-
+  NavbarText,
+} from "reactstrap";
+import {logout} from "../actions/session";
 
 const Example = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const history = useHistory();
   const customer = {
     phrase: "No wait I'm a customer!",
-    path: "/customer/landing"
-  }
+    path: "/customer/landing",
+  };
   const vendor = {
     phrase: "But I'm a vendor!",
-    path: "/vendor/landing"
-  }
-  const switchTo = history.location.pathname.includes("vendor") ? customer : vendor;
+    path: "/vendor/landing",
+  };
+  const switchTo = history.location.pathname.includes("vendor")
+    ? customer
+    : vendor;
 
   const toggle = () => setIsOpen(!isOpen);
-
-  return (
+  if (!props.isLoggedIn) {
+    return (
+      <div>
+        <Navbar color="light" light expand="md">
+          <NavbarBrand href="/"> </NavbarBrand>
+          <NavbarToggler onClick={toggle} />
+          <Collapse isOpen={isOpen} navbar>
+            <Nav className="mr-auto" navbar>
+              <NavItem>
+                <NavLink href={switchTo.path}>{switchTo.phrase}</NavLink>
+              </NavItem>
+            </Nav>
+            <NavbarText>Now serving Denton, TX</NavbarText>
+          </Collapse>
+        </Navbar>
+      </div>
+    );
+  } return (
     <div>
-      <Navbar color="light" light expand="md">
-        <NavbarBrand href="/"> </NavbarBrand>
-        <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar>
-          <Nav className="mr-auto" navbar>
-            <NavItem>
-            <NavLink href={switchTo.path}>{switchTo.phrase}</NavLink>
-            </NavItem>
-          </Nav>
-          <NavbarText>Now serving Denton, TX</NavbarText>
-        </Collapse>
-      </Navbar>
-    </div>
-  );
-}
+    <Navbar color="light" light expand="md">
+      <NavbarBrand href="/"> </NavbarBrand>
+      <NavbarToggler onClick={toggle} />
+      <Collapse isOpen={isOpen} navbar>
+        <Nav className="mr-auto" navbar>
+          <NavItem>
+            <NavLink onClick={() => props.logout()} href="/">Logout</NavLink>
+          </NavItem>
+        </Nav>
+        <NavbarText>Now serving Denton, TX</NavbarText>
+      </Collapse>
+    </Navbar>
+  </div>
+  )
+};
 
 const mapStateToProps = (state) => ({
-  isLoggedIn: state.session.isLoggedIn
-})
+  isLoggedIn: state.session.isLoggedIn,
+});
 
 const mapDispatchToProps = {
+  logout
+};
 
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Example)
+export default connect(mapStateToProps, mapDispatchToProps)(Example);
