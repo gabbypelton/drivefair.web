@@ -1,7 +1,10 @@
 const actionsObj = {};
 const asyncActions = [
-  "GET_CUSTOMER",
+  "GET_CUSTOMER_PROFILE",
   "NEW_CUSTOMER",
+  "NEW_VENDOR",
+  "GET_VENDORS",
+  "GET_VENDOR_PROFILE",
   "NEW_ORDER",
   "ADD_MENU_ITEM",
   "REMOVE_MENU_ITEM",

@@ -10,7 +10,7 @@ import {
   Label,
   InputErrorMessage,
 } from "../styles";
-import { loginVendor } from "../../actions/session";
+import { loginCustomer } from "../../actions/session";
 import {loadState} from "../../services/stateManagement";
 import {
   emailValidation,
@@ -48,7 +48,7 @@ class Login extends Component {
       this.setState({ formErrors });
       return;
     }
-    this.props.loginVendor({ email, password });
+    this.props.loginCustomer({ email, password });
   }
 
   render() {
@@ -81,4 +81,4 @@ class Login extends Component {
   }
 }
 
-export default connect(null, { loginVendor })(Login);
+export default connect(null, { loginCustomer })(Login);

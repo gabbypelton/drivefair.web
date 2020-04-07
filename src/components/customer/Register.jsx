@@ -2,13 +2,20 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { FormGroup, Col, Row } from "reactstrap";
 
-import { Button, Form, Input, ModalBody, Label, InputErrorMessage } from "../styles";
-import { newCustomer } from "../../actions/customer";
+import {
+  Button,
+  Form,
+  Input,
+  ModalBody,
+  Label,
+  InputErrorMessage,
+} from "../styles";
+import { newVendor } from "../../actions/vendor";
 import { loadState } from "../../services/stateManagement";
 import {
   passwordValidation,
   emailValidation,
-  confirmPasswordValidation
+  confirmPasswordValidation,
 } from "../../services/inputValidation";
 
 class Register extends Component {
@@ -16,19 +23,39 @@ class Register extends Component {
     email: "",
     password: "",
     confirmPassword: "",
-    firstName: "",
-    lastName: "",
-    address: "",
+    fullName: "",
+    phoneNumber: "",
+    street: "",
+    unit: "",
+    city: "",
+    state: "",
+    zip: "",
     formErrors: {},
   };
 
   componentDidMount() {
-    const loadableProperties = ['email', 'firstName', 'lastName', 'address'];
+    const loadableProperties = [
+      "email",
+      "fullName",
+      "phoneNumber",
+      "street",
+      "unit",
+      "city",
+      "state",
+      "zip",
+    ];
     loadState(this, loadableProperties);
   }
 
   handleChange({ target }) {
-    const { name, value } = target;
+    let { name, value } = target;
+    if (name === "phoneNumber") {
+      if (value.match(/[^0-9\-]{1}/)) return
+      if (value.match(/^[0-9]{3}$/) || value.match(/^[0-9]{3}-[0-9]{3}$/)) {
+        value += "-";
+      }
+    }
+
     localStorage.setItem(name, value);
 
     this.setState({
@@ -38,12 +65,12 @@ class Register extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { email, password, firstName, lastName, address } = this.state;
+    const { email, password, fullName, phoneNumber, address } = this.state;
 
     const formErrors = {
-      password: passwordValidation(password),
       email: emailValidation(email),
-      confirmPassword: confirmPasswordValidation(confirmPasswordValidation)
+      password: passwordValidation(password),
+      confirmPassword: confirmPasswordValidation(confirmPasswordValidation),
     };
 
     if (formErrors.email || formErrors.password) {
@@ -51,30 +78,60 @@ class Register extends Component {
       return;
     }
 
-    this.props.newCustomer({
+    this.props.newVendor({
       email,
       password,
-      firstName,
-      lastName,
-      address
-    }); 
+      fullName,
+      phoneNumber,
+      address,
+    });
   }
 
   render() {
     return (
-      <Form style={{width: "80%"}}>
+      <Form style={{ width: "80%" }}>
         <Row>
-          <Col>
+          <Col xs="12" md="6">
             <FormGroup>
               <Label to="email">Email</Label>
-              <Input name="email" value={this.state.email} onChange={this.handleChange.bind(this)} />
-              <InputErrorMessage>{this.state.formErrors.email || " "}</InputErrorMessage>
+              <Input
+                name="email"
+                value={this.state.email}
+                onChange={this.handleChange.bind(this)}
+              />
+              <InputErrorMessage>
+                {this.state.formErrors.email || " "}
+              </InputErrorMessage>
             </FormGroup>
+          </Col>
+          <Col xs="12" md="6">
+            <FormGroup>
+              <Label to="fullName">Full Name</Label>
+              <Input
+                name="fullName"
+                value={this.state.fullName}
+                onChange={this.handleChange.bind(this)}
+              />
+              <InputErrorMessage>
+                {this.state.formErrors.fullName}
+              </InputErrorMessage>
+            </FormGroup>
+          </Col>
+          <Col xs="12" md="6">
             <FormGroup>
               <Label to="password">Password</Label>
-              <Input name="password" type="password" value={this.state.password} onChange={this.handleChange.bind(this)} />
-              <InputErrorMessage>{this.state.formErrors.password}</InputErrorMessage>
+              <Input
+                name="password"
+                type="password"
+                value={this.state.password}
+                onChange={this.handleChange.bind(this)}
+              />
+              <InputErrorMessage>
+                {this.state.formErrors.password}
+              </InputErrorMessage>
             </FormGroup>
+          </Col>
+          <Col xs="12" md="6">
             <FormGroup>
               <Label to="confirmPassword">Conrfirm Password</Label>
               <Input
@@ -82,33 +139,35 @@ class Register extends Component {
                 type="password"
                 onChange={this.handleChange.bind(this)}
               />
-              <InputErrorMessage>{this.state.formErrors.confirmPassword}</InputErrorMessage>
+              <InputErrorMessage>
+                {this.state.formErrors.confirmPassword}
+              </InputErrorMessage>
             </FormGroup>
           </Col>
-          <Col>
+          <Col xs="12" md="6">
             <FormGroup>
-              <Label to="firstName">First Name</Label>
-              <Input name="firstName" value={this.state.firstName} onChange={this.handleChange.bind(this)} />
-              <InputErrorMessage>{this.state.formErrors.firstName}</InputErrorMessage>
-            </FormGroup>
-            <FormGroup>
-              <Label to="lastName">Last Name</Label>
-              <Input name="lastName" value={this.state.lastName} onChange={this.handleChange.bind(this)} />
-              <InputErrorMessage>{this.state.formErrors.lastName}</InputErrorMessage>
-            </FormGroup>
-            <FormGroup>
-              <Label to="address">Delivery Address</Label>
-              <Input name="address" value={this.state.address} onChange={this.handleChange.bind(this)} />
-              <InputErrorMessage>{this.state.formErrors.address}</InputErrorMessage>
+              <Label to="phoneNumber">Phone Number</Label>
+              <Input
+                name="phoneNumber"
+                type="tel"
+                maxLength="12"
+                value={this.state.phoneNumber}
+                onInput={this.handleChange.bind(this)}
+              />
+              <InputErrorMessage>
+                {this.state.formErrors.phoneNumber}
+              </InputErrorMessage>
             </FormGroup>
           </Col>
         </Row>
-        <Row style={{justifyContent: "center"}}>
-          <Button color="tertiary" onClick={(e) => this.handleSubmit(e)}>Sign Up</Button>
+        <Row style={{ justifyContent: "center" }}>
+          <Button color="tertiary" onClick={(e) => this.handleSubmit(e)}>
+            Sign Up
+          </Button>
         </Row>
       </Form>
     );
   }
 }
 
-export default connect(null, { newCustomer })(Register);
+export default connect(null, { newVendor })(Register);

@@ -50,7 +50,7 @@ class Register extends Component {
   handleChange({ target }) {
     let { name, value } = target;
     if (name === "phoneNumber") {
-      if (value.match(/[^0-9\-]{1}/)) return
+      if (value.match(/[^0-9\-]{1}/)) return;
       if (value.match(/^[0-9]{3}$/) || value.match(/^[0-9]{3}-[0-9]{3}$/)) {
         value += "-";
       }
@@ -65,7 +65,25 @@ class Register extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { email, password, businessName, phoneNumber, address } = this.state;
+    const {
+      email,
+      password,
+      businessName,
+      phoneNumber,
+      street,
+      unit,
+      city,
+      state,
+      zip,
+    } = this.state;
+
+    const address = {
+      street,
+      unit,
+      city,
+      state,
+      zip
+    }
 
     const formErrors = {
       email: emailValidation(email),
@@ -91,7 +109,7 @@ class Register extends Component {
     return (
       <Form style={{ width: "80%" }}>
         <Row>
-          <Col xs="12" md="6" xl="4">
+          <Col xs="12" md="6">
             <FormGroup>
               <Label to="email">Email</Label>
               <Input
@@ -104,7 +122,7 @@ class Register extends Component {
               </InputErrorMessage>
             </FormGroup>
           </Col>
-          <Col xs="12" md="6" xl="4">
+          <Col xs="12" md="6">
             <FormGroup>
               <Label to="businessName">Business Name</Label>
               <Input
@@ -117,7 +135,7 @@ class Register extends Component {
               </InputErrorMessage>
             </FormGroup>
           </Col>
-          <Col xs="12" md="6" xl="4">
+          <Col xs="12" md="6">
             <FormGroup>
               <Label to="password">Password</Label>
               <Input
@@ -131,7 +149,7 @@ class Register extends Component {
               </InputErrorMessage>
             </FormGroup>
           </Col>
-          <Col xs="12" md="6" xl="4">
+          <Col xs="12" md="6">
             <FormGroup>
               <Label to="confirmPassword">Conrfirm Password</Label>
               <Input
@@ -144,7 +162,7 @@ class Register extends Component {
               </InputErrorMessage>
             </FormGroup>
           </Col>
-          <Col xs="12" md="6" xl="4">
+          <Col xs="12" md="6">
             <FormGroup>
               <Label to="phoneNumber">Phone Number</Label>
               <Input
@@ -160,8 +178,9 @@ class Register extends Component {
             </FormGroup>
           </Col>
         </Row>
+        <br />
         <Row>
-          <Col xs="12" md="6" xl="4">
+          <Col xs="12">
             <Label>Business Address</Label>
           </Col>
         </Row>

@@ -87,7 +87,6 @@ export const DataInputGroup = styled(BSInputGroup)`
 `;
 
 export const Input = styled(BSInput)`
-  margin: 1rem 0 0 0;
 `;
 
 export const DataLabel = styled(BSLabel)`
@@ -106,7 +105,6 @@ export const ButtonGroup = styled(BSButtonGroup)`
 `;
 
 export const Label = styled(BSLabel)`
-  margin: 1rem 0 0 0;
 `;
 
 export const ResultContainer = styled(Col)`
