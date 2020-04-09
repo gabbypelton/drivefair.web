@@ -5,12 +5,14 @@ import customer from "./customer";
 import orders from "./orders";
 import vendor from "./vendor";
 import session from "./session";
+import cart from "./cart";
 
 const rootReducer = combineReducers({
   customer,
   orders,
   vendor,
-  session
+  session,
+  cart
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

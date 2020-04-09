@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import {
   Row,
@@ -9,13 +9,21 @@ import {
   CardText,
   CardSubtitle,
   Button,
+  CardImg,
 } from "reactstrap";
+import { Link } from "react-router-dom";
 
 export const VendorInfo = (props) => {
-  const { businessName, address, phoneNumber } = props.vendor;
+  const { businessName, address, phoneNumber, _id } = props.vendor;
   return (
     <Col xs="12" md="6" xl="4">
       <Card>
+        <CardImg
+          top
+          width="100%"
+          src="https://via.placeholder.com/400"
+          alt="Card image cap"
+        />
         <CardBody>
           <CardTitle>{businessName}</CardTitle>
           <CardSubtitle>{phoneNumber}</CardSubtitle>
@@ -34,7 +42,7 @@ export const VendorInfo = (props) => {
               <Col>{address.street}</Col>
             </Row>
           </CardText>
-          <Button>Menu</Button>
+          <Link to={`/vendors/${_id}`}>Menu</Link>
         </CardBody>
       </Card>
     </Col>

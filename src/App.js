@@ -6,11 +6,14 @@ import { Container, Col, Spinner } from "reactstrap";
 import "./App.css";
 import { setBaseURL } from "./services/http";
 import { loginWithToken } from "./actions/session";
+import { getVendors } from "./actions/vendor";
 import Navbar from "./components/Navbar";
 import Vendors from "./screens/customer/Vendors";
 import CustomerLanding from "./screens/customer/Landing";
 import VendorLanding from "./screens/vendor/Landing";
 import ActiveOrders from "./screens/vendor/ActiveOrders";
+import Menu from "./screens/customer/Menu";
+import Cart from "./screens/customer/Cart";
 
 setBaseURL("http://localhost:5000");
 
@@ -21,9 +24,8 @@ function App(props) {
   if (authToken && !props.isLoggedIn) {
     props.loginWithToken(authToken, userType);
   }
-
-  if (props.isLoggedIn && history.location.pathname !== "/") {
-    history.push("/");
+  if (props.isLoggedIn) {
+    props.getVendors();
   }
 
   return (
@@ -35,8 +37,10 @@ function App(props) {
         <Switch>
           <Route path="/customer/vendors" component={Vendors} />
           <Route path="/customer/landing" component={CustomerLanding} />
+          <Route path="/customer/cart" component={Cart} />
           <Route path="/vendor/landing" component={VendorLanding} />
           <Route path="/vendor/orders/active" component={ActiveOrders} />
+          <Route path="/vendors/:vendorId" component={Menu} />
           <Route
             path="/"
             component={props.isLoggedIn ? Vendors : CustomerLanding}
@@ -54,6 +58,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   loginWithToken,
+  getVendors,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

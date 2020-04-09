@@ -5,9 +5,6 @@ import VendorInfo from "../../components/customer/VendorInfo";
 import { getVendors } from "../../actions/vendor";
 
 export class Vendors extends Component {
-  componentDidMount() {
-    this.props.getVendors();
-  }
   render() {
     return (
       <Container>

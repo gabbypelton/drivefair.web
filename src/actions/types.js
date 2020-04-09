@@ -5,11 +5,14 @@ const asyncActions = [
   "NEW_VENDOR",
   "GET_VENDORS",
   "GET_VENDOR_PROFILE",
-  "NEW_ORDER",
+  "SELECT_VENDOR",
   "ADD_MENU_ITEM",
   "REMOVE_MENU_ITEM",
-  "ADD_ORDER_ITEM",
-  "REMOVE_ORDER_ITEM",
+  "ADD_TO_CART",
+  "REMOVE_FROM_CART",
+  "SAVE_CART",
+  "REMOVE_FROM_CART",
+  "SEND_ORDER",
   "LOG_IN",
 ];
 const syncActions = [
