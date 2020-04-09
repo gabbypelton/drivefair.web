@@ -92,12 +92,9 @@ const MenuItemMod = (props) => {
               id={option.name}
               value={option.name}
               checked={
-                typeof selectedMods[mod.name] === "object" &&
-                selectedMods[mod.name].includes(option.name)
-              }
-              selected={
-                typeof selectedMods[mod.name] === "string" &&
-                selectedMods[mod.name] === option.name
+                (mod.type === "multiple" &&
+                selectedMods[mod.name].includes(option.name)) ||
+                (selectedMods[mod.name] === option.name)
               }
               type={mod.type === "multiple" ? "checkbox" : "radio"}
               onChange={(e) => updateSelectedMods(e.target)}

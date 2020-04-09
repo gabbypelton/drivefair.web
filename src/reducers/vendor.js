@@ -3,7 +3,7 @@ import types from "../actions/types";
 const initialState = {
   isLoading: false,
   vendors: [],
-  selectedVendorId: "",
+  selectedVendorId: localStorage.getItem("selectedVendorId") || "",
   selectedVendor: {
     businessName: "",
     address: {},

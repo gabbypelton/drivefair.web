@@ -28,5 +28,6 @@ export const getVendors = () => async (dispatch) => {
 };
 
 export const selectVendor = (vendorId) => (dispatch) => {
+  localStorage.setItem("selectedVendorId", vendorId);
   dispatch({ type: types.SELECT_VENDOR, payload: { vendorId } });
 };

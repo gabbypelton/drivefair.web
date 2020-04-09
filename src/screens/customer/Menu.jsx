@@ -7,14 +7,6 @@ import  MenuItem from "../../components/customer/MenuItem";
 import { Link } from "../../components/styles";
 
 export class Menu extends Component {
-  componentDidMount() {
-    this.props.selectVendor(this.props.match.params.vendorId);
-  }
-  componentDidUpdate(prevProps) {
-    if (!prevProps.vendors.length && this.props.vendors.length) {
-      this.props.selectVendor(this.props.match.params.vendorId);
-    }
-  }
   render() {
     const {
       menu,

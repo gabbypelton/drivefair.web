@@ -40,7 +40,7 @@ function App(props) {
           <Route path="/customer/cart" component={Cart} />
           <Route path="/vendor/landing" component={VendorLanding} />
           <Route path="/vendor/orders/active" component={ActiveOrders} />
-          <Route path="/vendors/:vendorId" component={Menu} />
+          <Route path="/vendors/menu" component={Menu} />
           <Route
             path="/"
             component={props.isLoggedIn ? Vendors : CustomerLanding}

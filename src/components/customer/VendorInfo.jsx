@@ -12,6 +12,7 @@ import {
   CardImg,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { selectVendor } from "../../actions/vendor";
 
 export const VendorInfo = (props) => {
   const { businessName, address, phoneNumber, _id } = props.vendor;
@@ -42,7 +43,9 @@ export const VendorInfo = (props) => {
               <Col>{address.street}</Col>
             </Row>
           </CardText>
-          <Link to={`/vendors/${_id}`}>Menu</Link>
+          <Link to={`/vendors/menu`} onClick={() => props.selectVendor(_id)}>
+            Menu
+          </Link>
         </CardBody>
       </Card>
     </Col>
@@ -51,6 +54,6 @@ export const VendorInfo = (props) => {
 
 const mapStateToProps = (state) => ({});
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { selectVendor };
 
 export default connect(mapStateToProps, mapDispatchToProps)(VendorInfo);

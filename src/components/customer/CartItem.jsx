@@ -10,6 +10,7 @@ import {
   CardImg,
   Button,
 } from "reactstrap";
+import { removeFromCart} from "../../actions/cart";
 
 const CartItem = (props) => {
   const { cartItem } = props;
@@ -41,7 +42,7 @@ const CartItem = (props) => {
             );
           })}
         </Row>
-        <Button>Remove</Button>
+        <Button onClick={() => props.removeFromCart(cartItem.key)}>Remove</Button>
       </CardBody>
     </Col>
   );
@@ -75,6 +76,8 @@ const mapStateToProps = (state) => ({
   selectedVendor: state.vendor.selectedVendor,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  removeFromCart
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartItem);
