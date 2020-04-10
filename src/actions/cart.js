@@ -11,7 +11,19 @@ export const removeFromCart = (key) => (dispatch) => {
   dispatch(saveCart());
 };
 
-export const sendOrder = (orderId, modifications) => (dispatch) => {};
+export const sendOrder = (orderItems, vendorId, method) => async (dispatch) => {
+  try {
+    dispatch({ type: types.SEND_ORDER });
+    const sentOrder = await Axios.post("/orders/new", {
+      orderItems,
+      vendorId,
+      method,
+    });
+    dispatch({ type: types.SEND_ORDER_SUCCESS, payload: sentOrder.data });
+  } catch (error) {
+    dispatch({ type: types.SEND_ORDER_ERROR, error });
+  }
+};
 
 export const saveCart = () => (dispatch) => {
   dispatch({ type: types.SAVE_CART });

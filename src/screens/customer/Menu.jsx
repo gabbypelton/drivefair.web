@@ -27,11 +27,11 @@ export class Menu extends Component {
           <Col>{phoneNumber}</Col>
         </Row>
         <Row>
-          <Col>{address.street}</Col>
+          <Col>{address.street} #{address.unit}</Col>
         </Row>
         <Row>
           <Col>
-            {address.city}, {address.state}
+            {address.city}, {address.state} {address.zip}
           </Col>
         </Row>
         {menu.map((menuItem) => (

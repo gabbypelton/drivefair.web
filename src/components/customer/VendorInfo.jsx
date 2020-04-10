@@ -39,9 +39,6 @@ export const VendorInfo = (props) => {
                 {address.city}, {address.state} {address.zip}
               </Col>
             </Row>
-            <Row>
-              <Col>{address.street}</Col>
-            </Row>
           </CardText>
           <Link to={`/vendors/menu`} onClick={() => props.selectVendor(_id)}>
             Menu
