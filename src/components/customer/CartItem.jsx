@@ -9,41 +9,39 @@ import {
   Col,
   CardImg,
   Button,
+  Card,
 } from "reactstrap";
-import { removeFromCart} from "../../actions/cart";
+import { removeFromCart } from "../../actions/cart";
 
 const CartItem = (props) => {
   const { cartItem } = props;
   const { menuItem, modifications } = cartItem;
   return (
-    <Col xs={12} md={6} xl={4}>
-      <CardBody>
-        <CardImg
-          top
-          width="100%"
-          src="https://via.placeholder.com/400"
-          alt="Card image cap"
-        />
-        <CardTitle>{menuItem.name}</CardTitle>
-        <CardSubtitle>{menuItem.description}</CardSubtitle>
-        <CardText>${parseFloat(menuItem.price).toFixed(2)}</CardText>
-        <Row>
-          {Object.keys(modifications).map((modName) => {
-            const menuItemMod = menuItem.modifications.find(
-              (mod) => mod.name === modName
-            );
-            const selections = modifications[modName];
-            return (
-              <SelectedOptions
-                menuItemMod={menuItemMod}
-                selections={selections}
-                key={menuItemMod._id}
-              />
-            );
-          })}
-        </Row>
-        <Button onClick={() => props.removeFromCart(cartItem.key)}>Remove</Button>
-      </CardBody>
+    <Col xs="12" md="6" lg="4">
+      <Card>
+        <CardBody>
+          <CardTitle>{menuItem.name}</CardTitle>
+          <CardText>${parseFloat(cartItem.price).toFixed(2)}</CardText>
+          <Row>
+            {Object.keys(modifications).map((modName) => {
+              const menuItemMod = menuItem.modifications.find(
+                (mod) => mod.name === modName
+              );
+              const selections = modifications[modName];
+              return (
+                <SelectedOptions
+                  menuItemMod={menuItemMod}
+                  selections={selections}
+                  key={menuItemMod._id}
+                />
+              );
+            })}
+          </Row>
+          <Button onClick={() => props.removeFromCart(cartItem.key)}>
+            Remove
+          </Button>
+        </CardBody>
+      </Card>
     </Col>
   );
 };
@@ -77,7 +75,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  removeFromCart
+  removeFromCart,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartItem);

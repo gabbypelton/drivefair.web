@@ -17,12 +17,12 @@ import { selectVendor } from "../../actions/vendor";
 export const VendorInfo = (props) => {
   const { businessName, address, phoneNumber, _id } = props.vendor;
   return (
-    <Col xs="12" md="6" xl="4">
+    <Col xs="12" md="6" lg="4">
       <Card>
         <CardImg
           top
           width="100%"
-          src="https://via.placeholder.com/400"
+          src="https://via.placeholder.com/200"
           alt="Card image cap"
         />
         <CardBody>
@@ -40,7 +40,7 @@ export const VendorInfo = (props) => {
               </Col>
             </Row>
           </CardText>
-          <Link to={`/vendors/menu`} onClick={() => props.selectVendor(_id)}>
+          <Link to={`/customer/menu`} onClick={() => props.selectVendor(_id)}>
             Menu
           </Link>
         </CardBody>

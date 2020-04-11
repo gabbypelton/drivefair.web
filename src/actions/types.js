@@ -16,7 +16,9 @@ const asyncActions = [
   "LOG_IN",
 ];
 const syncActions = [
-  "LOG_OUT"
+  "LOG_OUT",
+  "TOGGLE_READY_TO_PAY",
+  "TOGGLE_ORDER_METHOD"
 ];
 
 syncActions.forEach((key) => {

@@ -1,3 +1,3 @@
 export const formatPriceFromFloatString = floatString => {
-  return `+$${parseInt(floatString).toFixed(2)}`;
+  return `+$${parseFloat(floatString).toFixed(2)}`;
 }

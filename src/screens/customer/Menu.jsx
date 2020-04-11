@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Container, Row, Col } from "reactstrap";
 
 import { selectVendor } from "../../actions/vendor";
-import  MenuItem from "../../components/customer/MenuItem";
-import { Link } from "../../components/styles";
+import MenuItem from "../../components/customer/MenuItem";
+import { Link, Container, Row, Col, Button } from "../../components/styles";
+import { Redirect } from "react-router";
 
 export class Menu extends Component {
   render() {
@@ -15,28 +15,34 @@ export class Menu extends Component {
       phoneNumber,
       _id,
     } = this.props.selectedVendor;
+    if (!_id) return <Redirect to="/" />;
     return (
       <Container>
-        <Row>
-          <Link to="/customer/cart">Cart</Link>
-        </Row>
-        <Row>
-          <Col>{businessName}</Col>
-        </Row>
-        <Row>
-          <Col>{phoneNumber}</Col>
-        </Row>
-        <Row>
-          <Col>{address.street} #{address.unit}</Col>
-        </Row>
-        <Row>
+        <Row style={{ marginBottom: "2rem" }}>
           <Col>
-            {address.city}, {address.state} {address.zip}
+            <Row>
+              <Col>{businessName}</Col>
+            </Row>
+            <Row>
+              <Col>{phoneNumber}</Col>
+            </Row>
+            <Row>
+              <Col>
+                {address.street} #{address.unit}
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                {address.city}, {address.state} {address.zip}
+              </Col>
+            </Row>
           </Col>
         </Row>
-        {menu.map((menuItem) => (
-          <MenuItem key={menuItem._id} menuItem={menuItem} />
-        ))}
+        <Row>
+          {menu.map((menuItem) => (
+            <MenuItem key={menuItem._id} menuItem={menuItem} />
+          ))}
+        </Row>
       </Container>
     );
   }

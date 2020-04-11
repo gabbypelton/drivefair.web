@@ -2,30 +2,43 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { Container, Row, Col, Button } from "../../components/styles";
-import { sendOrder } from "../../actions/cart";
+import { toggleOrderMethod, toggleReadyToPay } from "../../actions/cart";
+import { getVendors } from "../../actions/vendor";
 import CartItem from "../../components/customer/CartItem";
+import PaymentModal from "../../components/customer/payment/PaymentModal";
 
 export class Cart extends Component {
-  state = {
-    method: "pickup",
-  };
-  chooseMethod(method) {
-    this.setState({
-      method,
-    });
+  componentDidMount() {
+    this.props.getVendors();
+  }
+
+  toggleOrderMethod(orderMethod) {
+    this.props.toggleOrderMethod(orderMethod);
   }
 
   placeOrder() {
-    this.props.sendOrder(
-      this.props.cartItems,
-      this.props.selectedVendor._id,
-      this.state.method
-    );
+    this.props.toggleReadyToPay(true);
   }
 
   render() {
+    if (!this.props.cartItems.length) {
+      return (
+        <Container>
+          <br />
+          <br />
+          <Row>
+            <Col>Your cart is empty!</Col>
+          </Row>
+        </Container>
+      );
+    }
     return (
       <Container>
+        <Row style={{ justifyContent: "flex-end" }}>
+          <Button color="link" onClick={() => this.props.history.goBack()}>
+            Go Back
+          </Button>
+        </Row>
         <Row>
           <Col>Cart for {this.props.selectedVendor.businessName}</Col>
         </Row>
@@ -38,15 +51,15 @@ export class Cart extends Component {
           <Col>
             <Button
               color="primary"
-              active={this.state.method === "delivery"}
-              onClick={() => this.chooseMethod("delivery")}
+              active={this.props.orderMethod === "delivery"}
+              onClick={() => this.toggleOrderMethod("delivery")}
             >
               Delivery
             </Button>
             <Button
               color="primary"
-              active={this.state.method === "pickup"}
-              onClick={() => this.chooseMethod("pickup")}
+              active={this.props.orderMethod === "pickup"}
+              onClick={() => this.toggleOrderMethod("pickup")}
             >
               Pickup
             </Button>
@@ -54,9 +67,12 @@ export class Cart extends Component {
         </Row>
         <Row>
           <Col>
-            <Button color="primary" onClick={() => this.placeOrder()}>Place Order</Button>
+            <Button color="primary" onClick={() => this.placeOrder()}>
+              Place Order
+            </Button>
           </Col>
         </Row>
+        <PaymentModal />
       </Container>
     );
   }
@@ -65,10 +81,13 @@ export class Cart extends Component {
 const mapStateToProps = (state) => ({
   cartItems: state.cart.items,
   selectedVendor: state.vendor.selectedVendor,
+  orderMethod: state.cart.orderMethod
 });
 
 const mapDispatchToProps = {
-  sendOrder
+  toggleOrderMethod,
+  getVendors,
+  toggleReadyToPay,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

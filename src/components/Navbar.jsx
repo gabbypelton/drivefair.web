@@ -9,13 +9,9 @@ import {
   Navbar,
   NavItem,
   NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   NavbarText,
 } from "reactstrap";
-import {logout} from "../actions/session";
+import { logout } from "../actions/session";
 
 const Example = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -50,22 +46,34 @@ const Example = (props) => {
         </Navbar>
       </div>
     );
-  } return (
+  }
+  return (
     <div>
-    <Navbar color="light" light expand="md">
-      <NavbarBrand href="/"> </NavbarBrand>
-      <NavbarToggler onClick={toggle} />
-      <Collapse isOpen={isOpen} navbar>
-        <Nav className="mr-auto" navbar>
-          <NavItem>
-            <NavLink onClick={() => props.logout()} href="/">Logout</NavLink>
-          </NavItem>
-        </Nav>
-        <NavbarText>Now serving Denton, TX</NavbarText>
-      </Collapse>
-    </Navbar>
-  </div>
-  )
+      <Navbar color="light" light expand="md">
+        <NavbarBrand href="/"> </NavbarBrand>
+        <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={isOpen} navbar>
+          <Nav className="mr-auto" navbar>
+            <NavItem>
+              <NavLink onClick={() => props.logout()} href="/">
+                Logout
+              </NavLink>
+            </NavItem>
+          </Nav>
+          <Nav navbar>
+            <NavItem>
+              <NavLink href="javascript:history.back()">Go Back</NavLink>
+            </NavItem>
+          </Nav>
+          <Nav navbar>
+            <NavItem>
+              <NavLink href="/cart">Cart</NavLink>
+            </NavItem>
+          </Nav>
+        </Collapse>
+      </Navbar>
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => ({
@@ -73,7 +81,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  logout
+  logout,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Example);

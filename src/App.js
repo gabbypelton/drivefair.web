@@ -21,13 +21,9 @@ function App(props) {
   const history = useHistory();
   const authToken = localStorage.getItem("authToken");
   const userType = localStorage.getItem("userType");
-  if (authToken && !props.isLoggedIn) {
+  if (authToken && !props.isLoggedIn && !props.isLoading) {
     props.loginWithToken(authToken, userType);
   }
-  if (props.isLoggedIn) {
-    props.getVendors();
-  }
-
   return (
     <Container className="App">
       <Navbar />
@@ -37,10 +33,10 @@ function App(props) {
         <Switch>
           <Route path="/customer/vendors" component={Vendors} />
           <Route path="/customer/landing" component={CustomerLanding} />
-          <Route path="/customer/cart" component={Cart} />
+          <Route path="/cart" component={Cart} />
           <Route path="/vendor/landing" component={VendorLanding} />
           <Route path="/vendor/orders/active" component={ActiveOrders} />
-          <Route path="/vendors/menu" component={Menu} />
+          <Route path="/customer/menu" component={Menu} />
           <Route
             path="/"
             component={props.isLoggedIn ? Vendors : CustomerLanding}
