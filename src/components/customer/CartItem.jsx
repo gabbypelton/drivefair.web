@@ -14,14 +14,14 @@ import {
 import { removeFromCart } from "../../actions/cart";
 
 const CartItem = (props) => {
-  const { cartItem } = props;
-  const { menuItem, modifications } = cartItem;
+  const { orderItem } = props;
+  const { menuItem, modifications } = orderItem;
   return (
     <Col xs="12" md="6" lg="4">
       <Card>
         <CardBody>
           <CardTitle>{menuItem.name}</CardTitle>
-          <CardText>${parseFloat(cartItem.price).toFixed(2)}</CardText>
+          <CardText>${parseFloat(orderItem.price).toFixed(2)}</CardText>
           <Row>
             {Object.keys(modifications).map((modName) => {
               const menuItemMod = menuItem.modifications.find(
@@ -37,7 +37,7 @@ const CartItem = (props) => {
               );
             })}
           </Row>
-          <Button onClick={() => props.removeFromCart(cartItem.key)}>
+          <Button onClick={() => props.removeFromCart(orderItem._id)}>
             Remove
           </Button>
         </CardBody>

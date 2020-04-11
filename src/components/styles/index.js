@@ -16,6 +16,7 @@ import {
   Button as BSButton,
   Row as BSRow,
   Col as BSCol,
+  NavLink as BSNavLink
 } from "reactstrap";
 
 import { colors } from "../../constants/theme";
@@ -142,11 +143,14 @@ export const InputErrorMessage = styled.small`
 
 export const OptionContainer = styled(BSCol)`
   display:flex;
-  
+
 `;
 
 export const OptionLabel = styled(BSLabel)`
 `;
 
 export const OptionInput = styled(BSInput)`
+`
+export const NavLink = styled(BSNavLink)`
+  cursor: pointer
 `

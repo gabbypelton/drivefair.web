@@ -10,7 +10,7 @@ import {
   Label,
   InputErrorMessage,
 } from "../styles";
-import { newVendor } from "../../actions/vendor";
+import { newCustomer } from "../../actions/customer";
 import { loadState } from "../../services/stateManagement";
 import {
   passwordValidation,
@@ -78,7 +78,7 @@ class Register extends Component {
       return;
     }
 
-    this.props.newVendor({
+    this.props.newCustomer({
       email,
       password,
       fullName,
@@ -170,4 +170,4 @@ class Register extends Component {
   }
 }
 
-export default connect(null, { newVendor })(Register);
+export default connect(null, { newCustomer })(Register);

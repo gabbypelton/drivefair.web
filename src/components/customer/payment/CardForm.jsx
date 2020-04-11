@@ -10,7 +10,7 @@ import { Label } from "reactstrap";
 import { connect } from "react-redux";
 
 import useResponsiveFontSize from "../../useResponsiveFontSize";
-import { sendOrder } from "../../../actions/cart";
+import { sendCart } from "../../../actions/cart";
 
 
 const useOptions = () => {
@@ -57,7 +57,7 @@ const CardForm = () => {
       card: elements.getElement(CardNumberElement)
     });
     
-    this.props.sendOrder(this.props.orderItems, this.props.vendorId, this.props.method, payload)
+    this.props.sendCart(this.props.orderItems, this.props.vendorId, this.props.method, payload)
   };
 
   return (
@@ -127,13 +127,13 @@ const CardForm = () => {
 };
 
 const mapStateToProps = state => ({
-  orderItems: state.cart.items,
+  orderItems: state.cart.orderItems,
   vendorId: state.cart.selectedVendorId,
   method: state.cart.selectedMethod,
 })
 
 const mapDispatchToProps = {
-  sendOrder
+  sendCart
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardForm);

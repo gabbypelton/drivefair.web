@@ -8,10 +8,10 @@ import {
   Nav,
   Navbar,
   NavItem,
-  NavLink,
   NavbarText,
 } from "reactstrap";
 import { logout } from "../actions/session";
+import {  NavLink } from "../components/styles";
 
 const Example = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -62,12 +62,12 @@ const Example = (props) => {
           </Nav>
           <Nav navbar>
             <NavItem>
-              <NavLink href="javascript:history.back()">Go Back</NavLink>
+              <NavLink onClick={() => history.goBack()}>Go Back</NavLink>
             </NavItem>
           </Nav>
           <Nav navbar>
             <NavItem>
-              <NavLink href="/cart">Cart</NavLink>
+              <NavLink onClick={() => history.push("/cart")}>Cart</NavLink>
             </NavItem>
           </Nav>
         </Collapse>

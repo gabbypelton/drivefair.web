@@ -1,36 +1,54 @@
 import types from "./types";
 import Axios from "axios";
 
-export const addToCart = (menuItem, modifications, price) => (dispatch) => {
-  dispatch({
-    type: types.ADD_TO_CART,
-    payload: { menuItem, modifications, price },
-  });
-  dispatch(saveCart());
-};
-
-export const removeFromCart = (key) => (dispatch) => {
-  dispatch({ type: types.REMOVE_FROM_CART, payload: { key } });
-  dispatch(saveCart());
-};
-
-export const sendOrder = (orderItems, vendorId, method) => async (dispatch) => {
+export const getCart = () => async (dispatch) => {
   try {
-    dispatch({ type: types.SEND_ORDER });
-    const sentOrder = await Axios.post("/orders/new", {
-      orderItems,
-      vendorId,
-      method,
-    });
-    dispatch({ type: types.SEND_ORDER_SUCCESS, payload: sentOrder.data });
-    localStorage.removeItem("cart");
+    dispatch({ type: types.GET_CART });
+    const response = await Axios.get("/orders/cart");
+    dispatch({ type: types.GET_CART_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.SEND_ORDER_ERROR, error });
+    dispatch({ type: types.GET_CART_FAIL, error });
   }
 };
 
-export const saveCart = () => (dispatch) => {
-  dispatch({ type: types.SAVE_CART });
+export const addToCart = (menuItem, modifications, price, vendorId) => async (
+  dispatch
+) => {
+  const orderItem = { menuItem, modifications, price };
+  try {
+    dispatch({ type: types.ADD_TO_CART });
+    const response = await Axios.post("/orders/addToCart", {
+      orderItem,
+      vendorId,
+    });
+    dispatch({ type: types.ADD_TO_CART_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispatch({ type: types.ADD_TO_CART_FAIL, error });
+  }
+};
+
+export const removeFromCart = (orderItemId) => async (dispatch) => {
+  try {
+    dispatch({ type: types.REMOVE_FROM_CART });
+    const response = await Axios.post("/orders/removeFromCart", {
+      orderItemId,
+    });
+    dispatch({ type: types.REMOVE_FROM_CART_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispatch({ type: types.REMOVE_FROM_CART_FAIL, error });
+  }
+};
+
+export const sendCart = (paymentDetails) => async (dispatch) => {
+  try {
+    dispatch({ type: types.SEND_CART });
+    const response = await Axios.post("/orders/send", {
+      paymentDetails,
+    });
+    dispatch({ type: types.SEND_CART_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispatch({ type: types.SEND_CART_FAIL, error });
+  }
 };
 
 export const toggleReadyToPay = (readyToPay) => (dispatch) => {

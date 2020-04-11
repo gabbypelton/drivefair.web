@@ -46,7 +46,7 @@ const MenuItem = (props) => {
         price += menuItemMod.options[selectedMod].price;
       }
     })
-    props.addToCart(menuItem, selectedMods, price)
+    props.addToCart(menuItem, selectedMods, price, props.selectedVendor._id)
   }
   
   const updateSelectedMods = ({ type, name, value, checked }, modification) => {
@@ -108,7 +108,7 @@ const MenuItemMod = (props) => {
           <OptionContainer key={optionName}>
             <OptionLabel for={optionName}>
               {optionName} (
-              {formatPriceFromFloatString(mod.options[optionName].price)})
+              +{formatPriceFromFloatString(mod.options[optionName].price)})
             </OptionLabel>
             <OptionInput
               name={mod.name}
