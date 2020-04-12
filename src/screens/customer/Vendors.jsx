@@ -18,7 +18,7 @@ export class Vendors extends Component {
       <Container>
         <Row>
           {this.props.vendors.map((vendor) => {
-            return <VendorInfo vendor={vendor} />;
+            return <VendorInfo key={vendor._id} vendor={vendor} />;
           })}
         </Row>
       </Container>

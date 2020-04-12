@@ -66,9 +66,11 @@ class AuthContainer extends React.Component {
             <h1>{this.state.modalTitle}</h1>
           </Row>
           <Row>
-            <Button color="link" onClick={this.toggleSelectedModal.bind(this)}>
-              {this.state.cta}
-            </Button>
+            <Button
+              color="link"
+              onClick={this.toggleSelectedModal.bind(this)}
+              buttonText={this.state.cta}
+            />
           </Row>
           <Row>
             <ModalSelector selectedModal={this.state.selectedModal} />

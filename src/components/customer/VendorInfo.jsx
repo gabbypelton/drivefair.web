@@ -29,16 +29,10 @@ export const VendorInfo = (props) => {
           <CardTitle>{businessName}</CardTitle>
           <CardSubtitle>{phoneNumber}</CardSubtitle>
           <CardText>
-            <Row>
-              <Col>
-                {address.street} {address.unit}
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                {address.city}, {address.state} {address.zip}
-              </Col>
-            </Row>
+            {address.street} {address.unit}
+          </CardText>
+          <CardText>
+            {address.city}, {address.state} {address.zip}
           </CardText>
           <Link to={`/customer/menu`} onClick={() => props.selectVendor(_id)}>
             Menu

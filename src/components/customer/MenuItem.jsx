@@ -7,7 +7,6 @@ import {
   CardText,
   Row,
   Col,
-  Button,
   CardImg,
   FormGroup,
   Label,
@@ -16,7 +15,7 @@ import {
   Card,
 } from "reactstrap";
 import { addToCart } from "../../actions/cart";
-import { OptionContainer, OptionLabel, OptionInput } from "../styles";
+import { OptionContainer, OptionLabel, OptionInput, Button } from "../styles";
 import { formatPriceFromFloatString } from "../../services/formatting";
 
 const MenuItem = (props) => {
@@ -34,28 +33,30 @@ const MenuItem = (props) => {
 
   const addToCart = () => {
     let price = menuItem.price;
-    Object.keys(selectedMods).forEach(modName => {
+    Object.keys(selectedMods).forEach((modName) => {
       const selectedMod = selectedMods[modName];
-      const menuItemMod = menuItem.modifications.find(mod => mod.name === modName);
+      const menuItemMod = menuItem.modifications.find(
+        (mod) => mod.name === modName
+      );
       if (Array.isArray(selectedMod)) {
-        selectedMod.forEach(option => {
+        selectedMod.forEach((option) => {
           price += menuItemMod[option].price;
         });
       } else {
-        console.log(menuItemMod.options[selectedMod].price)
+        console.log(menuItemMod.options[selectedMod].price);
         price += menuItemMod.options[selectedMod].price;
       }
-    })
-    props.addToCart(menuItem, selectedMods, price, props.selectedVendor._id)
-  }
-  
+    });
+    props.addToCart(menuItem, selectedMods, price, props.selectedVendor._id);
+  };
+
   const updateSelectedMods = ({ type, name, value, checked }, modification) => {
     let newValue;
     if (type === "checkbox") {
       if (checked) {
         newValue = [...selectedMods[name], value];
       } else {
-        newValue = selectedMods[name].filter(option => option !== value);
+        newValue = selectedMods[name].filter((option) => option !== value);
       }
     } else newValue = value;
     setMods({
@@ -79,15 +80,19 @@ const MenuItem = (props) => {
           <Row>
             {menuItem.modifications.map((mod) => (
               <MenuItemMod
+                key={mod._id}
                 mod={mod}
                 selectedMods={selectedMods}
                 updateSelectedMods={updateSelectedMods.bind(this)}
               />
             ))}
           </Row>
-          <Button onClick={() => addToCart(menuItem, selectedMods)}>
-            Add to cart
-          </Button>
+          <Button
+            color="primary"
+            onClick={() => addToCart(menuItem, selectedMods)}
+            buttonText="Add to cart"
+            isLoading={props.isLoading}
+          />
         </CardBody>
       </Card>
     </Col>
@@ -107,8 +112,8 @@ const MenuItemMod = (props) => {
         {Object.keys(mod.options).map((optionName) => (
           <OptionContainer key={optionName}>
             <OptionLabel for={optionName}>
-              {optionName} (
-              +{formatPriceFromFloatString(mod.options[optionName].price)})
+              {optionName} ( +
+              {formatPriceFromFloatString(mod.options[optionName].price)})
             </OptionLabel>
             <OptionInput
               name={mod.name}
@@ -131,6 +136,7 @@ const MenuItemMod = (props) => {
 
 const mapStateToProps = (state) => ({
   selectedVendor: state.vendor.selectedVendor,
+  isLoading: state.cart.isLoading
 });
 
 const mapDispatchToProps = {

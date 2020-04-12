@@ -56,16 +56,14 @@ export class Cart extends Component {
               color="primary"
               active={this.props.orderMethod === "DELIVERY"}
               onClick={() => this.toggleOrderMethod("DELIVERY")}
-            >
-              Delivery
-            </Button>
+              buttonText="Delivery"
+            />
             <Button
               color="primary"
               active={this.props.orderMethod === "PICKUP"}
               onClick={() => this.toggleOrderMethod("PICKUP")}
-            >
-              Pickup
-            </Button>
+              buttonText="Pickup"
+            />
           </Col>
         </Row>
         <Row>
@@ -73,9 +71,13 @@ export class Cart extends Component {
         </Row>
         <Row>
           <Col>
-            <Button color="primary" onClick={() => this.placeOrder()}>
-              Place Order
-            </Button>
+            <Button
+              color="primary"
+              isLoading={this.props.isLoading}
+              onClick={() => this.placeOrder()}
+              buttonText="Place Order"
+              isLoading={this.props.isLoading}
+            />
           </Col>
         </Row>
         <PaymentModal />
@@ -89,6 +91,7 @@ const mapStateToProps = (state) => ({
   selectedVendor: state.vendor.selectedVendor,
   orderMethod: state.cart.method,
   totalPrice: state.cart.total,
+  isLoading: state.cart.isLoading
 });
 
 const mapDispatchToProps = {

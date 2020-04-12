@@ -13,7 +13,7 @@ const asyncActions = [
   "SAVE_CART",
   "GET_CART",
   "REMOVE_FROM_CART",
-  "SEND_CART",
+  "PAY",
   "LOG_IN",
 ];
 const syncActions = [

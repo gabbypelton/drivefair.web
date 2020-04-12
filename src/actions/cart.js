@@ -7,7 +7,7 @@ export const getCart = () => async (dispatch) => {
     const response = await Axios.get("/orders/cart");
     dispatch({ type: types.GET_CART_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.GET_CART_FAIL, error });
+    dispatch({ type: types.GET_CART_FAIL, payload: { error } });
   }
 };
 
@@ -23,7 +23,7 @@ export const addToCart = (menuItem, modifications, price, vendorId) => async (
     });
     dispatch({ type: types.ADD_TO_CART_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.ADD_TO_CART_FAIL, error });
+    dispatch({ type: types.ADD_TO_CART_FAIL, payload: { error } });
   }
 };
 
@@ -35,19 +35,19 @@ export const removeFromCart = (orderItemId) => async (dispatch) => {
     });
     dispatch({ type: types.REMOVE_FROM_CART_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.REMOVE_FROM_CART_FAIL, error });
+    dispatch({ type: types.REMOVE_FROM_CART_FAIL, payload: { error } });
   }
 };
 
-export const sendCart = (paymentDetails) => async (dispatch) => {
+export const pay = (paymentDetails) => async (dispatch) => {
   try {
-    dispatch({ type: types.SEND_CART });
-    const response = await Axios.post("/orders/send", {
+    dispatch({ type: types.PAY });
+    const response = await Axios.post("/orders/pay", {
       paymentDetails,
     });
-    dispatch({ type: types.SEND_CART_SUCCESS, payload: response.data });
+    dispatch({ type: types.PAY_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.SEND_CART_FAIL, error });
+    dispatch({ type: types.PAY_FAIL, payload: { error } });
   }
 };
 

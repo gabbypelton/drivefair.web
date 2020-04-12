@@ -18,7 +18,6 @@ import Cart from "./screens/customer/Cart";
 setBaseURL("http://localhost:5000");
 
 function App(props) {
-  const history = useHistory();
   const authToken = localStorage.getItem("authToken");
   const userType = localStorage.getItem("userType");
   if (authToken && !props.isLoggedIn && !props.isLoading) {

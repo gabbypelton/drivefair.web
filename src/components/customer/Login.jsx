@@ -11,7 +11,7 @@ import {
   InputErrorMessage,
 } from "../styles";
 import { loginCustomer } from "../../actions/session";
-import {loadState} from "../../services/stateManagement";
+import { loadState } from "../../services/stateManagement";
 import {
   emailValidation,
   passwordValidation,
@@ -25,7 +25,7 @@ class Login extends Component {
   };
 
   componentDidMount() {
-    const loadableProperties = ['email'];
+    const loadableProperties = ["email"];
     loadState(this, loadableProperties);
   }
 
@@ -40,20 +40,12 @@ class Login extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const { email, password } = this.state;
-    const formErrors = {
-      password: passwordValidation(password),
-      email: emailValidation(email),
-    };
-    if (formErrors.email || formErrors.password) {
-      this.setState({ formErrors });
-      return;
-    }
     this.props.loginCustomer({ email, password });
   }
 
   render() {
     return (
-      <Form style={{width: "40%"}}>
+      <Form style={{ width: "40%" }}>
         <FormGroup>
           <Label to="email">Email</Label>
           <Input
@@ -75,10 +67,19 @@ class Login extends Component {
             {this.state.formErrors.password}
           </InputErrorMessage>
         </FormGroup>
-        <Button color="tertiary" onClick={(e) => this.handleSubmit(e)}>Sign In</Button>
+        <Button
+          color="tertiary"
+          onClick={(e) => this.handleSubmit(e)}
+          buttonText="Sign In"
+          isLoading={this.props.isLoading}
+        />
       </Form>
     );
   }
 }
 
-export default connect(null, { loginCustomer })(Login);
+const mapStateToProps = (state) => ({
+  isLoading: state.session.isLoading
+});
+
+export default connect(mapStateToProps, { loginCustomer })(Login);

@@ -16,7 +16,8 @@ import {
   Button as BSButton,
   Row as BSRow,
   Col as BSCol,
-  NavLink as BSNavLink
+  NavLink as BSNavLink,
+  Spinner,
 } from "reactstrap";
 
 import { colors } from "../../constants/theme";
@@ -54,11 +55,6 @@ export const ModalBody = styled(BSModalBody)`
 
 export const ModalFooter = styled(BSModalFooter)`
   background: ${colors.white};
-`;
-
-export const Button = styled(BSButton)`
-  background: ${(props) => colors[props.color]};
-  margin: 1rem 0 0 0;
 `;
 
 export const Form = styled(BSForm)`
@@ -142,15 +138,24 @@ export const InputErrorMessage = styled.small`
 `;
 
 export const OptionContainer = styled(BSCol)`
-  display:flex;
-
+  display: flex;
 `;
 
-export const OptionLabel = styled(BSLabel)`
-`;
+export const OptionLabel = styled(BSLabel)``;
 
-export const OptionInput = styled(BSInput)`
-`
+export const OptionInput = styled(BSInput)``;
 export const NavLink = styled(BSNavLink)`
-  cursor: pointer
-`
+  cursor: pointer;
+`;
+const ButtonBase = styled(BSButton)`
+  background: ${(props) => colors[props.color]};
+  margin: 1rem 0 0 0;
+`;
+
+export const Button = (props) => {
+  return (
+    <ButtonBase {...props} disabled={props.isLoading}>
+      {props.isLoading ? <Spinner /> : props.buttonText}
+    </ButtonBase>
+  );
+};

@@ -8,10 +8,11 @@ import {
   Row,
   Col,
   CardImg,
-  Button,
   Card,
 } from "reactstrap";
 import { removeFromCart } from "../../actions/cart";
+
+import {Button } from "../styles";
 
 const CartItem = (props) => {
   const { orderItem } = props;
@@ -37,9 +38,11 @@ const CartItem = (props) => {
               );
             })}
           </Row>
-          <Button onClick={() => props.removeFromCart(orderItem._id)}>
-            Remove
-          </Button>
+          <Button
+            onClick={() => props.removeFromCart(orderItem._id)}
+            buttonText="Remove"
+            isLoading={props.isLoading}
+          />
         </CardBody>
       </Card>
     </Col>
@@ -72,6 +75,7 @@ const SelectedOptions = (props) => (
 
 const mapStateToProps = (state) => ({
   selectedVendor: state.vendor.selectedVendor,
+  isLoading: state.cart.isLoading,
 });
 
 const mapDispatchToProps = {

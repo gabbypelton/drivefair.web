@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import {
   useStripe,
   useElements,
@@ -10,7 +10,8 @@ import { Label } from "reactstrap";
 import { connect } from "react-redux";
 
 import useResponsiveFontSize from "../../useResponsiveFontSize";
-import { sendCart } from "../../../actions/cart";
+import { pay } from "../../../actions/cart";
+import { Button, InputErrorMessage } from "../../styles";
 
 
 const useOptions = () => {
@@ -38,10 +39,11 @@ const useOptions = () => {
   return options;
 };
 
-const CardForm = () => {
+const CardForm = (props) => {
   const stripe = useStripe();
   const elements = useElements();
   const options = useOptions();
+  const [paymentError, setPaymentError] = useState("");
 
   const handleSubmit = async event => {
     event.preventDefault();
@@ -52,12 +54,14 @@ const CardForm = () => {
       return;
     }
 
-    const payload = await stripe.createPaymentMethod({
-      type: "card",
-      card: elements.getElement(CardNumberElement)
-    });
+    const payload = await stripe.createToken(elements.getElement(CardNumberElement));
+
+    if (payload.error) {
+      setPaymentError(payload.error.message);
+      return
+    }
     
-    this.props.sendCart(this.props.orderItems, this.props.vendorId, this.props.method, payload)
+    props.pay(payload)
   };
 
   return (
@@ -119,9 +123,8 @@ const CardForm = () => {
             console.log("CardNumberElement [focus]");
           }}
         />
-      <button type="submit" disabled={!stripe}>
-        Pay
-      </button>
+      <Button type="submit" disabled={!stripe} isLoading={props.isLoading} buttonText="Pay"/>
+      <InputErrorMessage>{paymentError}</InputErrorMessage>
     </form>
   );
 };
@@ -130,10 +133,11 @@ const mapStateToProps = state => ({
   orderItems: state.cart.orderItems,
   vendorId: state.cart.selectedVendorId,
   method: state.cart.selectedMethod,
+  isLoading: state.cart.isLoading
 })
 
 const mapDispatchToProps = {
-  sendCart
+  pay
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardForm);

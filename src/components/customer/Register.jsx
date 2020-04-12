@@ -152,7 +152,7 @@ class Register extends Component {
                 type="tel"
                 maxLength="12"
                 value={this.state.phoneNumber}
-                onInput={this.handleChange.bind(this)}
+                onChange={this.handleChange.bind(this)}
               />
               <InputErrorMessage>
                 {this.state.formErrors.phoneNumber}
@@ -161,9 +161,7 @@ class Register extends Component {
           </Col>
         </Row>
         <Row style={{ justifyContent: "center" }}>
-          <Button color="tertiary" onClick={(e) => this.handleSubmit(e)}>
-            Sign Up
-          </Button>
+          <Button color="tertiary" onClick={(e) => this.handleSubmit(e)} buttonText="Sign Up"/>
         </Row>
       </Form>
     );

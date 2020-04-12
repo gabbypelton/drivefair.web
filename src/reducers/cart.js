@@ -15,16 +15,17 @@ export default (state = initialState, { type, payload }) => {
     case types.ADD_TO_CART:
     case types.REMOVE_FROM_CART:
     case types.GET_CART:
+    case types.PAY:
       return { ...state, isLoading: true };
     case types.CREATE_CART_SUCCESS:
     case types.ADD_TO_CART_SUCCESS:
     case types.REMOVE_FROM_CART_SUCCESS:
     case types.GET_CART_SUCCESS:
       return { ...state, ...payload.savedCart, isLoading: false };
-    case types.CREATE_CART_FAIL ||
-      types.ADD_TO_CART_FAIL ||
-      types.REMOVE_FROM_CART_FAIL ||
-      types.GET_CART_FAIL:
+    case types.CREATE_CART_FAIL:
+    case types.ADD_TO_CART_FAIL:
+    case types.REMOVE_FROM_CART_FAIL:
+    case types.GET_CART_FAIL:
       return { ...state, ...payload, isLoading: false };
     case types.TOGGLE_READY_TO_PAY:
       return { ...state, readyToPay: payload.readyToPay };
@@ -36,6 +37,8 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, inProgress: false, items: [] };
     case types.TOGGLE_ORDER_METHOD:
       return { ...state, method: payload.orderMethod };
+    case types.PAY_SUCCESS:
+      return { ...initialState }
     default:
       return state;
   }
