@@ -14,7 +14,7 @@ export const loginCustomer = ({ email, password }) => async (dispatch) => {
     localStorage.setItem("authToken", token);
     localStorage.setItem("userType", "customer");
     setBearerToken(token);
-    dispatch({ type: types.LOG_IN_SUCCESS, payload: authResponse.data });
+    dispatch(loginWithToken(token, "customer"));
   } catch (error) {
     dispatch({ type: types.LOG_IN_FAIL, error });
   }
@@ -32,7 +32,7 @@ export const loginVendor = ({ email, password }) => async (dispatch) => {
     localStorage.setItem("authToken", token);
     localStorage.setItem("userType", "vendor");
     setBearerToken(token);
-    dispatch({ type: types.LOG_IN_SUCCESS, payload: authResponse.data });
+    dispatch(loginWithToken(token, "vendor"));
   } catch (error) {
     dispatch({ type: types.LOG_IN_FAIL, error });
   }
@@ -43,14 +43,18 @@ export const loginWithToken = (token, userType) => async (dispatch) => {
   try {
     setBearerToken(token);
     const authResponse = await Axios.get(`/${userType}s/me`);
-    dispatch({ type: types.LOG_IN_SUCCESS, payload: authResponse.data });
+    dispatch({
+      type: types.LOG_IN_SUCCESS,
+      payload: { ...authResponse.data, userType },
+    });
   } catch (error) {
+    localStorage.clear();
     dispatch({ type: types.LOG_IN_FAIL, error });
   }
 };
 
-export const logout = ()  => dispatch => {
+export const logout = () => (dispatch) => {
   setBearerToken("");
   localStorage.clear();
-  dispatch({ type: types.LOG_OUT})
-}
+  dispatch({ type: types.LOG_OUT });
+};

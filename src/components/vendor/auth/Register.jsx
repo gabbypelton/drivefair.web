@@ -8,41 +8,41 @@ import {
   Input,
   ModalBody,
   Label,
-  InputErrorMessage,
-} from "../styles";
-import { newCustomer } from "../../actions/customer";
-import { loadState } from "../../services/stateManagement";
+  InputErrorMessage
+} from "../../styles";
+import { newVendor } from "../../../actions/vendor";
+import { loadState } from "../../../services/stateManagement";
 import {
   passwordValidation,
   emailValidation,
-  confirmPasswordValidation,
-} from "../../services/inputValidation";
+  confirmPasswordValidation
+} from "../../../services/inputValidation";
 
 class Register extends Component {
   state = {
     email: "",
     password: "",
     confirmPassword: "",
-    fullName: "",
+    businessName: "",
     phoneNumber: "",
     street: "",
     unit: "",
     city: "",
     state: "",
     zip: "",
-    formErrors: {},
+    formErrors: {}
   };
 
   componentDidMount() {
     const loadableProperties = [
       "email",
-      "fullName",
+      "businessName",
       "phoneNumber",
       "street",
       "unit",
       "city",
       "state",
-      "zip",
+      "zip"
     ];
     loadState(this, loadableProperties);
   }
@@ -50,7 +50,7 @@ class Register extends Component {
   handleChange({ target }) {
     let { name, value } = target;
     if (name === "phoneNumber") {
-      if (value.match(/[^0-9\-]{1}/)) return
+      if (value.match(/[^0-9\-]{1}/)) return;
       if (value.match(/^[0-9]{3}$/) || value.match(/^[0-9]{3}-[0-9]{3}$/)) {
         value += "-";
       }
@@ -59,18 +59,36 @@ class Register extends Component {
     localStorage.setItem(name, value);
 
     this.setState({
-      [name]: value,
+      [name]: value
     });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    const { email, password, fullName, phoneNumber, address } = this.state;
+    const {
+      email,
+      password,
+      businessName,
+      phoneNumber,
+      street,
+      unit,
+      city,
+      state,
+      zip
+    } = this.state;
+
+    const address = {
+      street,
+      unit,
+      city,
+      state,
+      zip
+    };
 
     const formErrors = {
       email: emailValidation(email),
       password: passwordValidation(password),
-      confirmPassword: confirmPasswordValidation(confirmPasswordValidation),
+      confirmPassword: confirmPasswordValidation(confirmPasswordValidation)
     };
 
     if (formErrors.email || formErrors.password) {
@@ -78,12 +96,12 @@ class Register extends Component {
       return;
     }
 
-    this.props.newCustomer({
+    this.props.newVendor({
       email,
       password,
-      fullName,
+      businessName,
       phoneNumber,
-      address,
+      address
     });
   }
 
@@ -106,14 +124,14 @@ class Register extends Component {
           </Col>
           <Col xs="12" md="6">
             <FormGroup>
-              <Label to="fullName">Full Name</Label>
+              <Label to="businessName">Business Name</Label>
               <Input
-                name="fullName"
-                value={this.state.fullName}
+                name="businessName"
+                value={this.state.businessName}
                 onChange={this.handleChange.bind(this)}
               />
               <InputErrorMessage>
-                {this.state.formErrors.fullName}
+                {this.state.formErrors.businessName}
               </InputErrorMessage>
             </FormGroup>
           </Col>
@@ -152,7 +170,7 @@ class Register extends Component {
                 type="tel"
                 maxLength="12"
                 value={this.state.phoneNumber}
-                onChange={this.handleChange.bind(this)}
+                onInput={this.handleChange.bind(this)}
               />
               <InputErrorMessage>
                 {this.state.formErrors.phoneNumber}
@@ -160,12 +178,73 @@ class Register extends Component {
             </FormGroup>
           </Col>
         </Row>
+        <br />
+        <Row>
+          <Col xs="12">
+            <Label>Business Address</Label>
+          </Col>
+        </Row>
+        <Row>
+          <GroupedInput
+            name="street"
+            value={this.state.street}
+            placeholder="Street and Number"
+            inputError={this.state.formErrors.street}
+            onChange={this.handleChange.bind(this)}
+          />
+          <GroupedInput
+            name="unit"
+            value={this.state.unit}
+            placeholder="Apt/Unit"
+            inputError={this.state.formErrors.unit}
+            onChange={this.handleChange.bind(this)}
+          />
+          <GroupedInput
+            name="city"
+            value={this.state.city}
+            placeholder="City"
+            inputError={this.state.formErrors.city}
+            onChange={this.handleChange.bind(this)}
+          />
+          <GroupedInput
+            name="state"
+            maxLength="2"
+            value={this.state.state}
+            placeholder="State"
+            inputError={this.state.formErrors.state}
+            onChange={this.handleChange.bind(this)}
+          />
+          <GroupedInput
+            name="zip"
+            maxLength="5"
+            value={this.state.zip}
+            placeholder="Zip"
+            inputError={this.state.formErrors.zip}
+            onChange={this.handleChange.bind(this)}
+          />
+        </Row>
         <Row style={{ justifyContent: "center" }}>
-          <Button color="tertiary" onClick={(e) => this.handleSubmit(e)} buttonText="Sign Up"/>
+          <Button
+            color="tertiary"
+            isLoading={this.props.isLoading}
+            onClick={e => this.handleSubmit(e)}
+            buttonText="Sign up"
+          />
         </Row>
       </Form>
     );
   }
 }
 
-export default connect(null, { newCustomer })(Register);
+const GroupedInput = props => {
+  return (
+    <Col xs="12" md="6" xl="4">
+      <FormGroup>
+        <Input {...props} />
+        <InputErrorMessage>{props.inputError}</InputErrorMessage>
+      </FormGroup>
+    </Col>
+  );
+};
+
+export default connect(null, { newVendor })(Register);

@@ -18,11 +18,11 @@ const Example = (props) => {
   const history = useHistory();
   const customer = {
     phrase: "No wait I'm a customer!",
-    path: "/customer/landing",
+    path: "/",
   };
   const vendor = {
     phrase: "But I'm a vendor!",
-    path: "/vendor/landing",
+    path: "/vendor",
   };
   const switchTo = history.location.pathname.includes("vendor")
     ? customer

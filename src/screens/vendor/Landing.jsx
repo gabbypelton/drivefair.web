@@ -1,22 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Container, Col, Row, Jumbotron, Button } from "reactstrap";
-import AuthContainer from "../../components/vendor/AuthContainer";
+import AuthContainer from "../../components/vendor/auth/AuthContainer";
+import ActiveOrders from "./ActiveOrders";
 
-const Landing = (props) => {
+const Landing = props => {
   return (
     <div>
-      <div style={{backgroundColor: "#F7F9FB"}}>
-        <h1 className="display-3">Welcome, Vendor!</h1>
-        <p className="lead">Let's get you some orders.</p>
-        <p className="lead"></p>
-      </div>
-      <AuthContainer />
+      {props.isLoggedIn ? <ActiveOrders /> : <AuthContainer />}
     </div>
   );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = state => ({
+  isLoggedIn: state.session.isLoggedIn
+});
 
 const mapDispatchToProps = {};
 

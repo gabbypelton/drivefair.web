@@ -1,6 +1,7 @@
 import types from "../actions/types";
 
 const initialState = {
+  user: {},
   isLoggedIn: false,
   isLoading: false,
   error: "",
@@ -12,10 +13,12 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, isLoading: true };
     case types.LOG_IN_FAIL:
       return { ...state, isLoading: false, isLoggedIn: false };
-    case types.LOG_IN_SUCCESS || types.NEW_VENDOR_SUCCESS || types.NEW_CUSTOMER_SUCCESS:
+    case types.LOG_IN_SUCCESS ||
+      types.NEW_VENDOR_SUCCESS ||
+      types.NEW_CUSTOMER_SUCCESS:
       return {
         ...state,
-        token: payload.token,
+        ...payload,
         isLoading: false,
         isLoggedIn: true,
       };

@@ -8,9 +8,8 @@ import { setBaseURL } from "./services/http";
 import { loginWithToken } from "./actions/session";
 import { getVendors } from "./actions/vendor";
 import Navbar from "./components/Navbar";
-import Vendors from "./screens/customer/Vendors";
-import CustomerLanding from "./screens/customer/Landing";
 import VendorLanding from "./screens/vendor/Landing";
+import RootLanding from "./screens/RootLanding";
 import ActiveOrders from "./screens/vendor/ActiveOrders";
 import Menu from "./screens/customer/Menu";
 import Cart from "./screens/customer/Cart";
@@ -30,30 +29,24 @@ function App(props) {
         <Spinner />
       ) : (
         <Switch>
-          <Route path="/customer/vendors" component={Vendors} />
-          <Route path="/customer/landing" component={CustomerLanding} />
+          <Route path="/vendor" component={VendorLanding} />
           <Route path="/cart" component={Cart} />
-          <Route path="/vendor/landing" component={VendorLanding} />
-          <Route path="/vendor/orders/active" component={ActiveOrders} />
-          <Route path="/customer/menu" component={Menu} />
-          <Route
-            path="/"
-            component={props.isLoggedIn ? Vendors : CustomerLanding}
-          />
+          <Route path="/menu" component={Menu} />
+          <Route path="/" component={RootLanding} />
         </Switch>
       )}
     </Container>
   );
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
-  isLoading: state.session.isLoading,
+  isLoading: state.session.isLoading
 });
 
 const mapDispatchToProps = {
   loginWithToken,
-  getVendors,
+  getVendors
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -8,20 +8,20 @@ import {
   Form,
   Input,
   Label,
-  InputErrorMessage,
-} from "../styles";
-import { loginCustomer } from "../../actions/session";
-import { loadState } from "../../services/stateManagement";
+  InputErrorMessage
+} from "../../styles";
+import { loginVendor } from "../../../actions/session";
+import { loadState } from "../../../services/stateManagement";
 import {
   emailValidation,
-  passwordValidation,
-} from "../../services/inputValidation";
+  passwordValidation
+} from "../../../services/inputValidation";
 
 class Login extends Component {
   state = {
     email: "",
     password: "",
-    formErrors: {},
+    formErrors: {}
   };
 
   componentDidMount() {
@@ -33,14 +33,14 @@ class Login extends Component {
     const { value, name } = target;
     localStorage.setItem(name, value);
     this.setState({
-      [name]: value,
+      [name]: value
     });
   }
 
   handleSubmit(e) {
     e.preventDefault();
     const { email, password } = this.state;
-    this.props.loginCustomer({ email, password });
+    this.props.loginVendor({ email, password });
   }
 
   render() {
@@ -69,7 +69,7 @@ class Login extends Component {
         </FormGroup>
         <Button
           color="tertiary"
-          onClick={(e) => this.handleSubmit(e)}
+          onClick={e => this.handleSubmit(e)}
           buttonText="Sign In"
           isLoading={this.props.isLoading}
         />
@@ -78,8 +78,4 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  isLoading: state.session.isLoading
-});
-
-export default connect(mapStateToProps, { loginCustomer })(Login);
+export default connect(null, { loginVendor })(Login);

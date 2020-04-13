@@ -1,11 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Row } from "../styles";
+import { Col, Container, Jumbotron } from "reactstrap";
 
-import { Button, Modal, ModalHeader, ModalFooter } from "../styles";
+import { Button, Modal, ModalHeader, ModalFooter, Row } from "../../styles";
 import Login from "./Login";
 import Register from "./Register";
-import { Col } from "reactstrap";
 
 class AuthContainer extends React.Component {
   constructor(props) {
@@ -14,7 +13,7 @@ class AuthContainer extends React.Component {
       selectedModal: "",
       modalTitle: "",
       cta: "",
-      nestedModal: false,
+      nestedModal: false
     };
 
     this.toggleNested = this.toggleNested.bind(this);
@@ -24,19 +23,19 @@ class AuthContainer extends React.Component {
     this.setState({
       selectedModal: "register",
       modalTitle: "Sign up.",
-      cta: "Click here if you already have an account.",
+      cta: "Click here if you already have an account."
     });
   }
 
   toggleNested() {
     this.setState({
-      nestedModal: !this.state.nestedModal,
+      nestedModal: !this.state.nestedModal
     });
   }
 
   toggleAll() {
     this.setState({
-      nestedModal: !this.state.nestedModal,
+      nestedModal: !this.state.nestedModal
     });
   }
 
@@ -54,34 +53,41 @@ class AuthContainer extends React.Component {
     this.setState({
       selectedModal,
       modalTitle,
-      cta,
+      cta
     });
   }
 
   render() {
     return (
-      <Row>
-        <Col>
-          <Row>
-            <h1>{this.state.modalTitle}</h1>
-          </Row>
-          <Row>
-            <Button
-              color="link"
-              onClick={this.toggleSelectedModal.bind(this)}
-              buttonText={this.state.cta}
-            />
-          </Row>
-          <Row>
-            <ModalSelector selectedModal={this.state.selectedModal} />
-          </Row>
-        </Col>
-      </Row>
+      <Container>
+        <Jumbotron style={{ backgroundColor: "#F7F9FB" }}>
+          <h1 className="display-3">Welcome to Delivery</h1>
+          <p className="lead">Let's get you something to eat.</p>
+          <p className="lead"></p>
+        </Jumbotron>
+        <Row>
+          <Col>
+            <Row>
+              <h1>{this.state.modalTitle}</h1>
+            </Row>
+            <Row>
+              <Button
+                color="link"
+                onClick={this.toggleSelectedModal.bind(this)}
+                buttonText={this.state.cta}
+              />
+            </Row>
+            <Row>
+              <ModalSelector selectedModal={this.state.selectedModal} />
+            </Row>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
 
-const ModalSelector = (props) => {
+const ModalSelector = props => {
   return props.selectedModal === "login" ? <Login /> : <Register />;
 };
 
