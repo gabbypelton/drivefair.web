@@ -149,7 +149,9 @@ export const NavLink = styled(BSNavLink)`
 `;
 const ButtonBase = styled(BSButton)`
   background: ${(props) => colors[props.color]};
-  margin: 1rem 0 0 0;
+  width: 20%;
+  min-width: 100px;
+  margin: 1rem 5% 0 0;
 `;
 
 export const Button = (props) => {

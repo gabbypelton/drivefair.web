@@ -10,41 +10,56 @@ import {
   CardImg,
   Card,
 } from "reactstrap";
-import { completeOrder } from "../../actions/orders";
+import { completeOrder, refundOrder } from "../../actions/orders";
 
-import {Button } from "../styles";
+import { Button } from "../styles";
 
-const CartItem = (props) => {
-  const { orderItem } = props;
-  const { menuItem, modifications } = orderItem;
+const ActiveOrder = (props) => {
+  const { customer, orderItems } = props.activeOrder;
   return (
     <Col xs="12" md="6" lg="4">
-      <Card>
-        <CardBody>
-          <CardTitle>{menuItem.name}</CardTitle>
-          <CardText>${parseFloat(orderItem.price).toFixed(2)}</CardText>
-          <Row>
-            {Object.keys(modifications).map((modName) => {
-              const menuItemMod = menuItem.modifications.find(
-                (mod) => mod.name === modName
-              );
-              const selections = modifications[modName];
-              return (
-                <SelectedOptions
-                  menuItemMod={menuItemMod}
-                  selections={selections}
-                  key={menuItemMod._id}
-                />
-              );
-            })}
-          </Row>
+      <Row>
+        <Col>
+          {customer.firstName} {customer.lastName}
+        </Col>
+      </Row>
+      <Row>
+        {orderItems.map((orderItem) => {
+          return (
+            <Col key={orderItem._id} xs="12">
+              <Row>
+                <h4>{orderItem.menuItem.name}</h4>
+              </Row>
+              <Row>
+                {Object.keys(orderItem.modifications).map((modName) => {
+                  const selectedMod = orderItem.modifications[modName];
+                  return (
+                    <Col key={modName}>
+                      <p>
+                        <strong>{modName}:</strong> {selectedMod}
+                      </p>
+                    </Col>
+                  );
+                })}
+              </Row>
+            </Col>
+          );
+        })}
+      </Row>
+      <Row>
+        <Col>
           <Button
-            onClick={() => props.completeOrder(orderItem._id)}
-            buttonText="Remove"
-            isLoading={props.isLoading}
+            color="primary"
+            onClick={() => props.refundOrder()}
+            buttonText="Cancel"
           />
-        </CardBody>
-      </Card>
+          <Button
+            color="primary"
+            onClick={() => props.completeOrder()}
+            buttonText="Complete"
+          />
+        </Col>
+      </Row>
     </Col>
   );
 };
@@ -80,6 +95,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   completeOrder,
+  refundOrder,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CartItem);
+export default connect(mapStateToProps, mapDispatchToProps)(ActiveOrder);

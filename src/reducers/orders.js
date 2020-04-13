@@ -7,11 +7,11 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case types.GET_ORDERS:
+    case types.GET_ACTIVE_ORDERS:
       return { ...state, ...payload, isLoading: true };
-    case types.GET_ORDERS_FAIL:
+    case types.GET_ACTIVE_ORDERS_FAIL:
       return { ...state, ...payload, isLoading: false };
-    case types.GET_ORDERS_SUCCESS:
+    case types.GET_ACTIVE_ORDERS_SUCCESS:
       return { ...state, activeOrders: payload.activeOrders, isLoading: false };
 
     default:

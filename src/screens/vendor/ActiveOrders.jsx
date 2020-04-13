@@ -4,10 +4,9 @@ import { connect } from "react-redux";
 import { Container, Row, Col, Button } from "../../components/styles";
 import { getActiveOrders } from "../../actions/orders";
 import ActiveOrder from "../../components/vendor/ActiveOrder";
-import PaymentModal from "../../components/customer/payment/PaymentModal";
 import { formatPriceFromFloatString } from "../../services/formatting";
 
-export class Cart extends Component {
+export class ActiveOrders extends Component {
   componentDidMount() {
     this.props.getActiveOrders();
   }
@@ -21,13 +20,13 @@ export class Cart extends Component {
   }
 
   render() {
-    if (!this.props.orderItems.length) {
+    if (!this.props.activeOrders.length) {
       return (
         <Container>
           <br />
           <br />
           <Row>
-            <Col>Your cart is empty!</Col>
+            <Col>No active orders!</Col>
           </Row>
         </Container>
       );
@@ -37,59 +36,27 @@ export class Cart extends Component {
         <Row>
           <br />
           <br />
-          <Col>ActiveOrders for {this.props.selectedVendor.businessName}</Col>
+          <Col>Active orders for {this.props.user.businessName}</Col>
         </Row>
         <Row>
-          {this.props.orderItems.map((orderItem) => {
-            return <ActiveOrder key={orderItem._id} orderItem={orderItem} />;
+          {this.props.activeOrders.map((activeOrder) => {
+            return (
+              <ActiveOrder key={activeOrder._id} activeOrder={activeOrder} />
+            );
           })}
         </Row>
-        <Row>
-          <Col>
-            <Button
-              color="primary"
-              active={this.props.orderMethod === "DELIVERY"}
-              onClick={() => this.toggleOrderMethod("DELIVERY")}
-              buttonText="Delivery"
-            />
-            <Button
-              color="primary"
-              active={this.props.orderMethod === "PICKUP"}
-              onClick={() => this.toggleOrderMethod("PICKUP")}
-              buttonText="Pickup"
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col>{formatPriceFromFloatString(this.props.totalPrice)}</Col>
-        </Row>
-        <Row>
-          <Col>
-            <Button
-              color="primary"
-              isLoading={this.props.isLoading}
-              onClick={() => this.placeOrder()}
-              buttonText="Place Order"
-              isLoading={this.props.isLoading}
-            />
-          </Col>
-        </Row>
-        <PaymentModal />
       </Container>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  orderItems: state.cart.orderItems,
-  selectedVendor: state.vendor.selectedVendor,
-  orderMethod: state.cart.method,
-  totalPrice: state.cart.total,
-  isLoading: state.cart.isLoading,
+  activeOrders: state.orders.activeOrders,
+  user: state.session.profile,
 });
 
 const mapDispatchToProps = {
   getActiveOrders,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+export default connect(mapStateToProps, mapDispatchToProps)(ActiveOrders);

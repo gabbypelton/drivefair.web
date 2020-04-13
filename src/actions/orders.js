@@ -20,3 +20,13 @@ export const completeOrder = (orderId) => async (dispatch) => {
     dispatch({ type: types.COMPLETE_ORDER_FAIL, payload: { error } });
   }
 };
+
+export const refundOrder = (orderId) => async (dispatch) => {
+  try {
+    dispatch({ type: types.REFUND });
+    const response = await Axios.post("/orders/completeOrder", { orderId });
+    dispatch({ type: types.REFUND_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispatch({ type: types.REFUND_FAIL, payload: { error } });
+  }
+};
