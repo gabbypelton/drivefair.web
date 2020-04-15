@@ -9,19 +9,17 @@ const asyncActions = [
   "ADD_MENU_ITEM",
   "REMOVE_MENU_ITEM",
   "ADD_TO_CART",
+  "UPDATE_CART",
   "REMOVE_FROM_CART",
   "SAVE_CART",
   "GET_CART",
   "REMOVE_FROM_CART",
   "PAY",
+  "TOGGLE_ORDER_METHOD",
   "GET_ACTIVE_ORDERS",
   "LOG_IN",
 ];
-const syncActions = [
-  "LOG_OUT",
-  "TOGGLE_READY_TO_PAY",
-  "TOGGLE_ORDER_METHOD"
-];
+const syncActions = ["LOG_OUT", "TOGGLE_READY_TO_PAY"];
 
 syncActions.forEach((key) => {
   actionsObj[key] = key;

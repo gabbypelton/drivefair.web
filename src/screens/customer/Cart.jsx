@@ -5,7 +5,7 @@ import { Container, Row, Col, Button } from "../../components/styles";
 import {
   toggleOrderMethod,
   toggleReadyToPay,
-  getCart,
+  getCart
 } from "../../actions/cart";
 import { getVendors } from "../../actions/vendor";
 import CartItem from "../../components/customer/CartItem";

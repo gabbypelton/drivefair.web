@@ -35,7 +35,7 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, inProgress: false, error: payload.error };
     case types.SEND_CART_SUCCESS:
       return { ...state, inProgress: false, items: [] };
-    case types.TOGGLE_ORDER_METHOD:
+    case types.TOGGLE_ORDER_METHOD_SUCCESS:
       return { ...state, method: payload.orderMethod };
     case types.PAY_SUCCESS:
       return { ...initialState }

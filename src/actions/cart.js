@@ -39,6 +39,21 @@ export const removeFromCart = (orderItemId) => async (dispatch) => {
   }
 };
 
+export const toggleOrderMethod = (orderMethod) => async (dispatch) => {
+  try {
+    dispatch({ type: types.TOGGLE_ORDER_METHOD });
+    const response = await Axios.post("/orders/customerSetOrderMethod", {
+      orderMethod,
+    });
+    dispatch({
+      type: types.TOGGLE_ORDER_METHOD_SUCCESS,
+      payload: { orderMethod },
+    });
+  } catch (error) {
+    dispatch({ type: types.TOGGLE_ORDER_METHOD_FAIL, payload: { error } });
+  }
+};
+
 export const pay = (paymentDetails) => async (dispatch) => {
   try {
     dispatch({ type: types.PAY });
@@ -53,8 +68,4 @@ export const pay = (paymentDetails) => async (dispatch) => {
 
 export const toggleReadyToPay = (readyToPay) => (dispatch) => {
   dispatch({ type: types.TOGGLE_READY_TO_PAY, payload: { readyToPay } });
-};
-
-export const toggleOrderMethod = (orderMethod) => (dispatch) => {
-  dispatch({ type: types.TOGGLE_ORDER_METHOD, payload: { orderMethod } });
 };
