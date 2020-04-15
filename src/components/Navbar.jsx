@@ -11,7 +11,7 @@ import {
   NavbarText,
 } from "reactstrap";
 import { logout } from "../actions/session";
-import {  NavLink } from "../components/styles";
+import { NavLink } from "../components/styles";
 
 const Example = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -67,7 +67,11 @@ const Example = (props) => {
           </Nav>
           <Nav navbar>
             <NavItem>
-              <NavLink onClick={() => history.push("/cart")}>Cart</NavLink>
+              {props.userType === "customer" ? (
+                <NavLink onClick={() => history.push("/cart")}>Cart</NavLink>
+              ) : (
+                <NavLink onClick={() => history.push("/editMenu")}>Menu</NavLink>
+              )}
             </NavItem>
           </Nav>
         </Collapse>

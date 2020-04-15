@@ -11,6 +11,7 @@ import {
   Card,
 } from "reactstrap";
 import { completeOrder, refundOrder } from "../../actions/orders";
+import { formatPriceFromFloatString } from "../../services/formatting";
 
 import { Button } from "../styles";
 
@@ -45,6 +46,10 @@ const ActiveOrder = (props) => {
             </Col>
           );
         })}
+      </Row>
+      <Row>{props.activeOrder.method}</Row>
+      <Row>
+        <Col>{formatPriceFromFloatString(props.activeOrder.total)}</Col>
       </Row>
       <Row>
         <Col>

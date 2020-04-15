@@ -13,6 +13,7 @@ import RootLanding from "./screens/RootLanding";
 import ActiveOrders from "./screens/vendor/ActiveOrders";
 import Menu from "./screens/customer/Menu";
 import Cart from "./screens/customer/Cart";
+import EditMenu from "./screens/vendor/EditMenu";
 
 setBaseURL("http://localhost:5000");
 
@@ -32,6 +33,7 @@ function App(props) {
           <Route path="/vendor" component={VendorLanding} />
           <Route path="/cart" component={Cart} />
           <Route path="/menu" component={Menu} />
+          <Route path="/editMenu" component={EditMenu} />
           <Route path="/" component={RootLanding} />
         </Switch>
       )}
