@@ -5,6 +5,7 @@ const asyncActions = [
   "NEW_VENDOR",
   "GET_VENDORS",
   "GET_VENDOR_PROFILE",
+  "EDIT_VENDOR",
   "SELECT_VENDOR",
   "ADD_MENU_ITEM",
   "REMOVE_MENU_ITEM",

@@ -31,3 +31,13 @@ export const selectVendor = (vendorId) => (dispatch) => {
   localStorage.setItem("selectedVendorId", vendorId);
   dispatch({ type: types.SELECT_VENDOR, payload: { vendorId } });
 };
+
+export const editVendor = (changes) => async (dispatch) => {
+  try {
+    dispatch({ type: types.EDIT_VENDOR });
+    const response = await Axios.post("/vendors/editVendor", changes);
+    dispatch({ type: types.EDIT_VENDOR_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispatch({ type: types.EDIT_VENDOR_FAIL, error });
+  }
+};

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { FormGroup } from "reactstrap";
+import { FormGroup, Modal, ModalHeader, ModalBody } from "reactstrap";
 
 import {
   Button,
@@ -11,8 +11,7 @@ import {
   Label,
   InputErrorMessage,
 } from "../styles";
-import { newVendor } from "../../actions/vendor";
-import { loadState } from "../../services/stateManagement";
+import { editVendor } from "../../actions/vendor";
 import {
   passwordValidation,
   emailValidation,
@@ -33,6 +32,7 @@ class EditVendor extends Component {
     state: "",
     zip: "",
     formErrors: {},
+    showCheckPasswordModal: false,
   };
 
   componentDidMount() {
@@ -101,12 +101,19 @@ class EditVendor extends Component {
       return;
     }
 
-    this.props.newVendor({
+    this.props.editVendor({
       email,
       password,
       businessName,
       phoneNumber,
       address,
+    });
+  }
+
+  toggleCheckPasswordModal() {
+    const showCheckPasswordModal = !this.state.showCheckPasswordModal;
+    this.setState({
+      showCheckPasswordModal,
     });
   }
 
@@ -229,11 +236,17 @@ class EditVendor extends Component {
             <Button
               color="tertiary"
               isLoading={this.props.isLoading}
-              onClick={(e) => this.handleSubmit(e)}
+              onClick={() => this.toggleCheckPasswordModal()}
               buttonText="Save"
             />
           </Row>
         </Form>
+        <CheckPasswordModal
+          toggle={this.toggleCheckPasswordModal.bind(this)}
+          isOpen={this.state.showCheckPasswordModal}
+          handleChange={this.handleChange.bind(this)}
+          handleSubmit={this.handleSubmit.bind(this)}
+        />
       </Col>
     );
   }
@@ -241,12 +254,37 @@ class EditVendor extends Component {
 
 const GroupedInput = (props) => {
   return (
-    <Col xs="6" md="2">
+    <Col xs={6} md="">
       <FormGroup>
         <Input {...props} />
         <InputErrorMessage>{props.inputError}</InputErrorMessage>
       </FormGroup>
     </Col>
+  );
+};
+
+const CheckPasswordModal = (props) => {
+  return (
+    <Modal isOpen={props.isOpen} toggle={() => props.toggle()}>
+      <ModalHeader>Check Password</ModalHeader>
+      <ModalBody>
+        <Row>
+          <Form onSubmit={(e) => props.handleSubmit(e)}>
+            <FormGroup>
+              <Label to="password">
+                Enter your password to confirm changes
+              </Label>
+              <Input
+                name="password"
+                type="password"
+                onInput={(e) => props.handleChange(e)}
+              />
+              <Button buttonText="Submit" />
+            </FormGroup>
+          </Form>
+        </Row>
+      </ModalBody>
+    </Modal>
   );
 };
 
@@ -256,4 +294,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { newVendor })(EditVendor);
+export default connect(mapStateToProps, { editVendor })(EditVendor);
