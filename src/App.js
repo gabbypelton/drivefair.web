@@ -15,7 +15,7 @@ import Menu from "./screens/customer/Menu";
 import Cart from "./screens/customer/Cart";
 import EditMenu from "./screens/vendor/EditMenu";
 
-setBaseURL("http://localhost:5000");
+setBaseURL(process.env.REACT_APP_API_URL);
 
 function App(props) {
   const authToken = localStorage.getItem("authToken");
