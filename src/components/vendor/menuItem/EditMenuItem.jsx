@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { CardBody, FormGroup } from "reactstrap";
 import { Form, Col, Row, Label, Input, InputErrorMessage } from "../../styles";
+import ImageUploader from "../../ImageUploader";
 
 export class EditMenuItem extends Component {
   state = {
@@ -28,11 +29,7 @@ export class EditMenuItem extends Component {
           <Form>
             <FormGroup>
               <Label to="image">Name</Label>
-              <Input
-                type="file"
-                name="image"
-                onChange={this.handleChange.bind(this)}
-              />
+              <ImageUploader />
               <InputErrorMessage>
                 {this.state.formErrors.name}
               </InputErrorMessage>
