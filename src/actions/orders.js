@@ -24,7 +24,7 @@ export const completeOrder = (orderId) => async (dispatch) => {
 export const refundOrder = (orderId) => async (dispatch) => {
   try {
     dispatch({ type: types.REFUND });
-    const response = await Axios.post("/orders/completeOrder", { orderId });
+    const response = await Axios.post("/orders/refundOrder", { orderId });
     dispatch({ type: types.REFUND_SUCCESS, payload: response.data });
   } catch (error) {
     dispatch({ type: types.REFUND_FAIL, payload: { error } });

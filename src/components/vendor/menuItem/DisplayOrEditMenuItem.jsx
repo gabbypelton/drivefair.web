@@ -1,0 +1,52 @@
+import React, { Component } from "react";
+import { connect } from "react-redux";
+
+import DisplayMenuItem from "./DisplayMenuItem";
+import EditMenuItem from "./EditMenuItem";
+import { Button, Col, Card } from "../../styles";
+import { CardFooter } from "reactstrap";
+
+export class DisplayOrEditMenuItem extends Component {
+  state = {
+    editMenuItem: false,
+  };
+
+  toggleEditMenuItem() {
+    const editMenuItem = !this.state.editMenuItem;
+    this.setState({
+      editMenuItem,
+    });
+  }
+
+  render() {
+    const { menuItem } = this.props;
+    return (
+      <Col xs="12" md="6" lg="4">
+        <Card>
+          {this.state.editMenuItem ? (
+            <EditMenuItem menuItem={menuItem} />
+          ) : (
+            <DisplayMenuItem menuItem={menuItem} />
+          )}
+          <CardFooter>
+            <Button
+              color="primary"
+              onClick={() => this.toggleEditMenuItem()}
+              buttonText={this.state.editMenuItem ? "Cancel" : "Edit"}
+              isLoading={this.props.isLoading}
+            />
+          </CardFooter>
+        </Card>
+      </Col>
+    );
+  }
+}
+
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = {};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DisplayOrEditMenuItem);

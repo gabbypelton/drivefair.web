@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import EditVendor from "../../components/vendor/EditVendor";
 import DisplayVendor from "../../components/vendor/DisplayVendor";
-import DisplayMenuItem from "../../components/vendor/DisplayMenuItem";
+import DisplayOrEditMenuItem from "../../components/vendor/menuItem/DisplayOrEditMenuItem";
 import { Link, Container, Row, Col, Button } from "../../components/styles";
 import { Redirect } from "react-router";
 import { renderIntoDocument } from "react-dom/test-utils";
@@ -45,7 +45,7 @@ export class Menu extends Component {
         </Row>
         <Row>
           {menu.map((menuItem) => (
-            <DisplayMenuItem key={menuItem._id} menuItem={menuItem} />
+            <DisplayOrEditMenuItem key={menuItem._id} menuItem={menuItem} />
           ))}
         </Row>
       </Container>

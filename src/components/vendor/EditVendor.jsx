@@ -73,6 +73,7 @@ class EditVendor extends Component {
       email,
       password,
       newPassword,
+      confirmNewPassword,
       businessName,
       phoneNumber,
       street,
@@ -93,10 +94,10 @@ class EditVendor extends Component {
     const formErrors = {
       email: emailValidation(email),
       newPassword: passwordValidation(newPassword),
-      confirmPassword: confirmPasswordValidation(confirmPasswordValidation),
+      confirmNewPassword: confirmPasswordValidation(newPassword, confirmNewPassword),
     };
 
-    if (formErrors.email || formErrors.password) {
+    if (formErrors.email || formErrors.newPassword || formErrors.confirmNewPassword) {
       this.setState({ formErrors });
       return;
     }
@@ -104,6 +105,7 @@ class EditVendor extends Component {
     this.props.editVendor({
       email,
       password,
+      newPassword,
       businessName,
       phoneNumber,
       address,
@@ -220,7 +222,7 @@ class EditVendor extends Component {
               type="password"
               value={this.state.newPassword}
               placeholder="New Password"
-              inputError={this.state.formErrors.unit}
+              inputError={this.state.formErrors.newPassword}
               onChange={this.handleChange.bind(this)}
             />
             <GroupedInput
