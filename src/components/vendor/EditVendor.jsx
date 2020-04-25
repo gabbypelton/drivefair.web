@@ -17,6 +17,7 @@ import {
   emailValidation,
   confirmPasswordValidation,
 } from "../../services/inputValidation";
+import { formatImgurUrl } from "../../services/formatting";
 
 class EditVendor extends Component {
   state = {
@@ -31,18 +32,20 @@ class EditVendor extends Component {
     city: "",
     state: "",
     zip: "",
+    logoUrl: "",
     formErrors: {},
     showCheckPasswordModal: false,
   };
 
   componentDidMount() {
-    const { email, businessName, phoneNumber, address } = this.props.profile;
+    const { email, businessName, phoneNumber, address, logoUrl } = this.props.profile;
     const { street, unit, city, state, zip } = address;
 
     this.setState({
       email,
       businessName,
       phoneNumber,
+      logoUrl,
       street,
       unit,
       city,
@@ -74,6 +77,7 @@ class EditVendor extends Component {
       password,
       newPassword,
       confirmNewPassword,
+      logoUrl,
       businessName,
       phoneNumber,
       street,
@@ -94,10 +98,17 @@ class EditVendor extends Component {
     const formErrors = {
       email: emailValidation(email),
       newPassword: passwordValidation(newPassword),
-      confirmNewPassword: confirmPasswordValidation(newPassword, confirmNewPassword),
+      confirmNewPassword: confirmPasswordValidation(
+        newPassword,
+        confirmNewPassword
+      ),
     };
 
-    if (formErrors.email || formErrors.newPassword || formErrors.confirmNewPassword) {
+    if (
+      formErrors.email ||
+      formErrors.newPassword ||
+      formErrors.confirmNewPassword
+    ) {
       this.setState({ formErrors });
       return;
     }
@@ -109,6 +120,7 @@ class EditVendor extends Component {
       businessName,
       phoneNumber,
       address,
+      logoUrl,
     });
   }
 
@@ -119,10 +131,52 @@ class EditVendor extends Component {
     });
   }
 
+  uploadImage() {
+    const self = this;
+    const req = new XMLHttpRequest();
+    const formData = new FormData();
+    const element = document.getElementsByClassName("input-image")[0].files[0];
+    let logoUrl;
+
+    formData.append("image", element);
+
+    req.open("POST", "https://api.imgur.com/3/image/");
+    req.setRequestHeader(
+      "Authorization",
+      `Client-ID ${process.env.REACT_APP_IMGUR_CLIENT}`
+    );
+    req.onreadystatechange = function () {
+      if (req.status === 200 && req.readyState === 4) {
+        let res = JSON.parse(req.responseText);
+        logoUrl = `${res.data.id}`;
+        self.setState({
+          logoUrl,
+        });
+      }
+    };
+    req.send(formData);
+  }
+
   render() {
     return (
       <Col xs="12">
         <Form style={{ width: "100%" }}>
+          <Row>
+            <Col xs="6" md="4">
+              <FormGroup>
+                <Label to="logoUrl">Email</Label>
+                <img style={{width: "50%"}} src={formatImgurUrl(this.state.logoUrl)} />
+                <Input
+                  type="file"
+                  className="input-image"
+                  onChange={this.uploadImage.bind(this)}
+                />
+                <InputErrorMessage>
+                  {this.state.formErrors.logoUrl || " "}
+                </InputErrorMessage>
+              </FormGroup>
+            </Col>
+          </Row>
           <Row>
             <Col xs="6" md="4">
               <FormGroup>

@@ -11,6 +11,7 @@ import {
   Input,
   InputErrorMessage,
 } from "../../styles";
+import { formatImgurUrl } from "../../../services/formatting";
 
 export class EditMenuItem extends Component {
   state = {
@@ -68,21 +69,20 @@ export class EditMenuItem extends Component {
   }
 
   render() {
-    const fullImageUrl = `https://i.imgur.com/${this.state.imageUrl}.png`;
     return (
       <CardBody>
         <Row>
           <Form>
             <FormGroup>
               <Label to="image">Image</Label>
-              <CardImg src={fullImageUrl} />
+              <CardImg src={formatImgurUrl(this.state.imageUrl)} />
               <Input
                 type="file"
                 className="input-image"
                 onChange={this.uploadImage.bind(this)}
               />
               <InputErrorMessage>
-                {this.state.formErrors.name}
+                {this.state.formErrors.imageUrl}
               </InputErrorMessage>
             </FormGroup>
           </Form>

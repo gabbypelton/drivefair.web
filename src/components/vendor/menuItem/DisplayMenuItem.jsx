@@ -15,11 +15,14 @@ import {
   Card,
 } from "reactstrap";
 import { addToCart } from "../../../actions/cart";
-import { formatPriceFromFloatString } from "../../../services/formatting";
+import {
+  formatPriceFromFloatString,
+  formatImgurUrl,
+} from "../../../services/formatting";
 
-const MenuItem = (props) => {
+const DisplayMenuItem = (props) => {
   const { menuItem } = props;
-  const fullImageUrl = `https://i.imgur.com/${menuItem.imageUrl}.png`;
+  const fullImageUrl = formatImgurUrl(menuItem.imageUrl);
 
   return (
     <CardBody>
@@ -63,4 +66,4 @@ const mapDispatchToProps = {
   addToCart,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MenuItem);
+export default connect(mapStateToProps, mapDispatchToProps)(DisplayMenuItem);

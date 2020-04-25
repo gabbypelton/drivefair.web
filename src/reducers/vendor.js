@@ -14,10 +14,17 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case types.NEW_VENDOR:
-      return { ...state, ...payload };
     case types.GET_VENDORS:
+    case types.NEW_VENDOR:
       return { ...state, isLoading: true };
+
+    case types.GET_VENDORS_FAIL:
+    case types.NEW_VENDOR_FAIL:
+      return { ...state, isLoading: false, error: payload.error };
+
+    case types.NEW_VENDOR_SUCCESS:
+      return { ...state, isLoading: false };
+
     case types.GET_VENDORS_SUCCESS:
       return {
         ...state,
@@ -27,8 +34,7 @@ export default (state = initialState, { type, payload }) => {
           (vendor) => vendor._id === state.selectedVendorId
         ) || { ...state.selectedVendor },
       };
-    case types.GET_VENDORS_FAIL:
-      return { ...state, isLoading: false };
+
     case types.SELECT_VENDOR:
       return {
         ...state,
@@ -37,6 +43,7 @@ export default (state = initialState, { type, payload }) => {
           (vendor) => vendor._id === payload.vendorId
         ) || { ...state.selectedVendor },
       };
+
     default:
       return state;
   }
