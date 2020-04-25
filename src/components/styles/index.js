@@ -151,7 +151,7 @@ const ButtonBase = styled(BSButton)`
   background: ${(props) => colors[props.color]};
   width: ${props => props.color === "link" ? "" : "20%"};
   min-width: 100px;
-  margin: 1rem 2% 0 2%;
+  margin: 1rem 2% 2rem 2%;
 `;
 
 export const Button = (props) => {

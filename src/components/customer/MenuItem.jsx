@@ -43,7 +43,6 @@ const MenuItem = (props) => {
           price += menuItemMod[option].price;
         });
       } else {
-        console.log(menuItemMod.options[selectedMod].price);
         price += menuItemMod.options[selectedMod].price;
       }
     });

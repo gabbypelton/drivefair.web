@@ -1,12 +1,21 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { CardBody, FormGroup } from "reactstrap";
-import { Form, Col, Row, Label, Input, InputErrorMessage } from "../../styles";
-import ImageUploader from "../../ImageUploader";
+import { CardBody, FormGroup, CardImg } from "reactstrap";
+import { editMenuItem } from "../../../actions/menu";
+import {
+  Form,
+  Button,
+  Col,
+  Row,
+  Label,
+  Input,
+  InputErrorMessage,
+} from "../../styles";
 
 export class EditMenuItem extends Component {
   state = {
     name: "",
+    imageUrl: "",
     formErrors: {},
   };
 
@@ -22,14 +31,56 @@ export class EditMenuItem extends Component {
     });
   }
 
+  uploadImage() {
+    const self = this;
+    const req = new XMLHttpRequest();
+    const formData = new FormData();
+    const element = document.getElementsByClassName("input-image")[0].files[0];
+    let imageUrl;
+
+    formData.append("image", element);
+
+    req.open("POST", "https://api.imgur.com/3/image/");
+    req.setRequestHeader(
+      "Authorization",
+      `Client-ID ${process.env.REACT_APP_IMGUR_CLIENT}`
+    );
+    req.onreadystatechange = function () {
+      if (req.status === 200 && req.readyState === 4) {
+        let res = JSON.parse(req.responseText);
+        imageUrl = `${res.data.id}`;
+        self.setState({
+          imageUrl,
+        });
+      }
+    };
+    req.send(formData);
+  }
+
+  handleSubmit() {
+    const { imageUrl, name, description, price } = this.state;
+    this.props.editMenuItem(this.props.menuItem._id, {
+      imageUrl,
+      name,
+      description,
+      price,
+    });
+  }
+
   render() {
+    const fullImageUrl = `https://i.imgur.com/${this.state.imageUrl}.png`;
     return (
       <CardBody>
         <Row>
           <Form>
             <FormGroup>
-              <Label to="image">Name</Label>
-              <ImageUploader />
+              <Label to="image">Image</Label>
+              <CardImg src={fullImageUrl} />
+              <Input
+                type="file"
+                className="input-image"
+                onChange={this.uploadImage.bind(this)}
+              />
               <InputErrorMessage>
                 {this.state.formErrors.name}
               </InputErrorMessage>
@@ -79,6 +130,7 @@ export class EditMenuItem extends Component {
                 {this.state.formErrors.price}
               </InputErrorMessage>
             </FormGroup>
+            <Button onClick={() => this.handleSubmit()} buttonText="Save" />
           </Form>
         </Row>
       </CardBody>
@@ -88,6 +140,8 @@ export class EditMenuItem extends Component {
 
 const mapStateToProps = (state) => ({});
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  editMenuItem,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditMenuItem);

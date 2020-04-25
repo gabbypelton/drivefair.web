@@ -19,10 +19,11 @@ import { formatPriceFromFloatString } from "../../../services/formatting";
 
 const MenuItem = (props) => {
   const { menuItem } = props;
+  const fullImageUrl = `https://i.imgur.com/${menuItem.imageUrl}.png`;
 
   return (
     <CardBody>
-      <CardImg top width="100%" src={menuItem.imageUrl} alt="Card image cap" />
+      <CardImg top width="100%" src={fullImageUrl} alt="Card image cap" />
       <CardTitle>{menuItem.name}</CardTitle>
       <CardSubtitle>{menuItem.description}</CardSubtitle>
       <CardText>${parseFloat(menuItem.price).toFixed(2)}</CardText>

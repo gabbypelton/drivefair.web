@@ -21,10 +21,6 @@ import { formatPriceFromFloatString } from "../../../services/formatting";
 const MenuItem = (props) => {
   const { menuItem } = props;
 
-  const toggleEditMenuItem = () => {
-    console.log("okay");
-  }
-
   return (
     <Col xs="12" md="6" lg="4">
       <Card>
