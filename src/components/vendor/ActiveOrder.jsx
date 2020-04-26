@@ -37,7 +37,10 @@ const ActiveOrder = (props) => {
                   return (
                     <Col key={modName}>
                       <p>
-                        <strong>{modName}:</strong> {selectedMod}
+                        <strong>{modName}: </strong> 
+                        {Array.isArray(selectedMod)
+                          ? selectedMod.join(", ")
+                          : selectedMod}
                       </p>
                     </Col>
                   );
@@ -68,30 +71,6 @@ const ActiveOrder = (props) => {
     </Col>
   );
 };
-
-const SelectedOptions = (props) => (
-  <Col>
-    <Row>
-      <Col>{props.menuItemMod.displayName}</Col>
-    </Row>
-    {typeof props.selections === "object" ? (
-      <Col>
-        {props.selections.map((selection) => {
-          return (
-            <Row>
-              <Col>{selection}</Col>
-            </Row>
-          );
-        })}
-      </Col>
-    ) : (
-      <Row>
-        <Col>{props.selections}</Col>
-      </Row>
-    )}
-    <Row></Row>
-  </Col>
-);
 
 const mapStateToProps = (state) => ({
   selectedVendor: state.vendor.selectedVendor,

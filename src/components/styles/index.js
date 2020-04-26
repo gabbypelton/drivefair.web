@@ -10,6 +10,7 @@ import {
   InputGroup as BSInputGroup,
   ButtonGroup as BSButtonGroup,
   Form as BSForm,
+  FormGroup as BSFormGroup,
   Label as BSLabel,
   Card as BSCard,
   CardImg as BSCardImg,
@@ -57,9 +58,7 @@ export const ModalFooter = styled(BSModalFooter)`
   background: ${colors.white};
 `;
 
-export const Form = styled(BSForm)`
-  width: 50%;
-`;
+export const Form = styled(BSForm)``;
 
 export const SearchBarRow = styled(BSRow)`
   display: flex;
@@ -149,10 +148,17 @@ export const NavLink = styled(BSNavLink)`
 `;
 const ButtonBase = styled(BSButton)`
   background: ${(props) => colors[props.color]};
-  width: ${props => props.color === "link" ? "" : "20%"};
+  width: ${(props) => (props.color === "link" ? "" : "20%")};
   min-width: 100px;
   margin: 1rem 2% 2rem 2%;
 `;
+
+export const ModificationFormGroup = styled(BSFormGroup)`
+  padding: 1rem 5%;
+  border: lightgray 1px solid;
+`;
+
+export const ModificationInputGroup = styled(BSInputGroup)``;
 
 export const Button = (props) => {
   return (

@@ -10,6 +10,8 @@ import {
   Label,
   Input,
   InputErrorMessage,
+  ModificationFormGroup,
+  ModificationInputGroup,
 } from "../../styles";
 import { formatImgurUrl } from "../../../services/formatting";
 
@@ -17,6 +19,7 @@ export class EditMenuItem extends Component {
   state = {
     name: "",
     imageUrl: "",
+    modifications: [],
     formErrors: {},
   };
 
@@ -68,11 +71,17 @@ export class EditMenuItem extends Component {
     });
   }
 
+  handleModificationChange(index, name, value) {
+    const { modifications } = this.state;
+    modifications[index][name] = value;
+    this.setState({ modifications });
+  }
+
   render() {
     return (
       <CardBody>
-        <Row>
-          <Form>
+        <Form>
+          <Row>
             <FormGroup>
               <Label to="image">Image</Label>
               <CardImg src={formatImgurUrl(this.state.imageUrl)} />
@@ -85,10 +94,8 @@ export class EditMenuItem extends Component {
                 {this.state.formErrors.imageUrl}
               </InputErrorMessage>
             </FormGroup>
-          </Form>
-        </Row>
-        <Row>
-          <Form>
+          </Row>
+          <Row>
             <FormGroup>
               <Label to="name">Name</Label>
               <Input
@@ -100,10 +107,8 @@ export class EditMenuItem extends Component {
                 {this.state.formErrors.name}
               </InputErrorMessage>
             </FormGroup>
-          </Form>
-        </Row>
-        <Row>
-          <Form>
+          </Row>
+          <Row>
             <FormGroup>
               <Label to="description">Description</Label>
               <Input
@@ -115,10 +120,8 @@ export class EditMenuItem extends Component {
                 {this.state.formErrors.description}
               </InputErrorMessage>
             </FormGroup>
-          </Form>
-        </Row>
-        <Row>
-          <Form>
+          </Row>
+          <Row>
             <FormGroup>
               <Label to="price">Price</Label>
               <Input
@@ -130,13 +133,89 @@ export class EditMenuItem extends Component {
                 {this.state.formErrors.price}
               </InputErrorMessage>
             </FormGroup>
+          </Row>
+          <Row>Modifications</Row>
+          <Row>
+            {this.state.modifications.map((mod, index) => (
+              <EditModification
+                key={index}
+                index={index}
+                mod={mod}
+                handleModificationChange={this.handleModificationChange.bind(
+                  this
+                )}
+              />
+            ))}
+          </Row>
+          <Row>
             <Button onClick={() => this.handleSubmit()} buttonText="Save" />
-          </Form>
-        </Row>
+          </Row>
+        </Form>
       </CardBody>
     );
   }
 }
+
+const EditModification = (props) => {
+  const { mod, index, handleModificationChange } = props;
+
+  const handleButton = (e, index, name, value) => {
+    e.preventDefault();
+    props.handleModificationChange(index, name, value);
+  };
+
+  const handleOptionChange = () => {
+    return
+  }
+
+  return (
+    <ModificationFormGroup>
+      <Row>
+        <ModificationInputGroup>
+          <Label to="name">Name</Label>
+          <Input
+            name="name"
+            value={mod.name}
+            onChange={(e) =>
+              handleModificationChange(index, e.target.name, e.target.value)
+            }
+          />
+        </ModificationInputGroup>
+      </Row>
+      <Row>
+        <Button
+          color="primary"
+          active={mod.type === "single"}
+          buttonText="Single"
+          onChange={(e) => handleButton(index, "type", "single")}
+        />
+        <Button
+          color="primary"
+          active={mod.type === "multiple"}
+          buttonText="Multiple"
+          onChange={(e) => handleButton(index, "type", "multiple")}
+        />
+      </Row>
+      <Row>
+        {Object.keys(mod.options).map((optionName, index) => {
+          const option = mod.options[optionName];
+          return (
+            <Col>
+              <ModificationInputGroup>
+                <Label to="optionName">{`Option`}</Label>
+                <Input
+                  name="optionName"
+                  value={optionName}
+                  onChange={(e) => handleOptionChange()}
+                />
+              </ModificationInputGroup>
+            </Col>
+          );
+        })}
+      </Row>
+    </ModificationFormGroup>
+  );
+};
 
 const mapStateToProps = (state) => ({});
 
