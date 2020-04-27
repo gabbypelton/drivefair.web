@@ -12,7 +12,7 @@ import {
 } from "reactstrap";
 import { removeFromCart } from "../../actions/cart";
 
-import {Button } from "../styles";
+import { Button } from "../styles";
 
 const CartItem = (props) => {
   const { orderItem } = props;
@@ -24,16 +24,15 @@ const CartItem = (props) => {
           <CardTitle>{menuItem.name}</CardTitle>
           <CardText>${parseFloat(orderItem.price).toFixed(2)}</CardText>
           <Row>
-            {Object.keys(modifications).map((modName) => {
+            {modifications.map((selectedMod) => {
               const menuItemMod = menuItem.modifications.find(
-                (mod) => mod.name === modName
+                (a) => (a.name = selectedMod.name)
               );
-              const selections = modifications[modName];
               return (
                 <SelectedOptions
+                  selectedMod={selectedMod}
                   menuItemMod={menuItemMod}
-                  selections={selections}
-                  key={menuItemMod._id}
+                  key={selectedMod._id}
                 />
               );
             })}
@@ -54,19 +53,19 @@ const SelectedOptions = (props) => (
     <Row>
       <Col>{props.menuItemMod.displayName}</Col>
     </Row>
-    {typeof props.selections === "object" ? (
+    {Array.isArray(props.selectedMod.selectedOptions) ? (
       <Col>
-        {props.selections.map((selection) => {
+        {props.selectedMod.selectedOptions.map((option) => {
           return (
             <Row>
-              <Col>{selection}</Col>
+              <Col>{option.name}</Col>
             </Row>
           );
         })}
       </Col>
     ) : (
       <Row>
-        <Col>{props.selections}</Col>
+        <Col>{props.selectedMod.selectedOptions.name}</Col>
       </Row>
     )}
     <Row></Row>

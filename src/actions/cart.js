@@ -11,10 +11,10 @@ export const getCart = () => async (dispatch) => {
   }
 };
 
-export const addToCart = (menuItem, modifications, price, vendorId) => async (
+export const addToCart = (menuItem, modifications, vendorId) => async (
   dispatch
 ) => {
-  const orderItem = { menuItem, modifications, price };
+  const orderItem = { menuItem, modifications };
   try {
     dispatch({ type: types.ADD_TO_CART });
     const response = await Axios.post("/orders/addToCart", {

@@ -13,17 +13,18 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { selectVendor } from "../../actions/vendor";
+import { formatImgurUrl } from "../../services/formatting";
 
 export const VendorInfo = (props) => {
-  const { businessName, address, phoneNumber, _id } = props.vendor;
+  const { businessName, address, phoneNumber, _id, logoUrl } = props.vendor;
   return (
     <Col xs="12" md="6" lg="4">
       <Card>
         <CardImg
           top
           width="100%"
-          src="https://via.placeholder.com/200"
-          alt="Card image cap"
+          src={formatImgurUrl(logoUrl)}
+          alt={`Company logo for ${businessName}`}
         />
         <CardBody>
           <CardTitle>{businessName}</CardTitle>

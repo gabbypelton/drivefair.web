@@ -82,6 +82,7 @@ const Example = (props) => {
 
 const mapStateToProps = (state) => ({
   isLoggedIn: state.session.isLoggedIn,
+  userType: state.session.userType
 });
 
 const mapDispatchToProps = {
