@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { CardBody, FormGroup, CardImg } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { editMenuItem } from "../../../actions/menu";
 import {
   Form,
@@ -10,23 +12,28 @@ import {
   Label,
   Input,
   InputErrorMessage,
-  ModificationFormGroup,
-  ModificationInputGroup,
 } from "../../styles";
 import { formatImgurUrl } from "../../../services/formatting";
+import EditModification from "./EditModification";
+import { colors } from "../../../constants/theme";
+import { addMenuItem } from "../../../actions/menu";
 
 export class EditMenuItem extends Component {
   state = {
     name: "",
     imageUrl: "",
+    description: "",
+    price: "",
     modifications: [],
     formErrors: {},
   };
 
   componentDidMount() {
-    this.setState({
-      ...this.props.menuItem,
-    });
+    if (this.props.menuItem) {
+      this.setState({
+        ...this.props.menuItem,
+      });
+    }
   }
 
   handleChange({ target }) {
@@ -61,19 +68,43 @@ export class EditMenuItem extends Component {
     req.send(formData);
   }
 
-  handleSubmit() {
-    const { imageUrl, name, description, price } = this.state;
-    this.props.editMenuItem(this.props.menuItem._id, {
-      imageUrl,
-      name,
-      description,
-      price,
-    });
+  handleSubmit(e) {
+    e.preventDefault();
+    const { imageUrl, name, description, price, modifications } = this.state;
+    if (!this.props.menuItem) {
+      this.props.addMenuItem({
+        imageUrl,
+        name,
+        description,
+        price,
+        modifications,
+      });
+    } else {
+      this.props.editMenuItem(this.props.menuItem._id, {
+        imageUrl,
+        name,
+        description,
+        price,
+        modifications,
+      });
+    }
   }
 
-  handleModificationChange(index, name, value) {
-    const { modifications } = this.state;
-    modifications[index][name] = value;
+  handleModificationChange(modIndex, name, value, e) {
+    if (e) e.preventDefault();
+    const modifications = [...this.state.modifications];
+    const mod = { ...modifications[modIndex] };
+    mod[name] = value;
+    modifications.splice(modIndex, 1, mod);
+    this.setState({ modifications });
+  }
+
+  addModification() {
+    const modifications = [
+      ...this.state.modifications,
+      { name: "", options: [], type: "single" },
+    ];
+
     this.setState({ modifications });
   }
 
@@ -136,10 +167,10 @@ export class EditMenuItem extends Component {
           </Row>
           <Row>Modifications</Row>
           <Row>
-            {this.state.modifications.map((mod, index) => (
+            {this.state.modifications.map((mod, modIndex) => (
               <EditModification
-                key={index}
-                index={index}
+                key={modIndex}
+                modIndex={modIndex}
                 mod={mod}
                 handleModificationChange={this.handleModificationChange.bind(
                   this
@@ -148,7 +179,16 @@ export class EditMenuItem extends Component {
             ))}
           </Row>
           <Row>
-            <Button onClick={() => this.handleSubmit()} buttonText="Save" />
+            <Col>
+              <FontAwesomeIcon
+                icon={faPlus}
+                color={colors.primary}
+                onClick={() => this.addModification()}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Button onClick={(e) => this.handleSubmit(e)} buttonText="Save" />
           </Row>
         </Form>
       </CardBody>
@@ -156,71 +196,11 @@ export class EditMenuItem extends Component {
   }
 }
 
-const EditModification = (props) => {
-  const { mod, index, handleModificationChange } = props;
-
-  const handleButton = (e, index, name, value) => {
-    e.preventDefault();
-    props.handleModificationChange(index, name, value);
-  };
-
-  const handleOptionChange = () => {
-    return
-  }
-
-  return (
-    <ModificationFormGroup>
-      <Row>
-        <ModificationInputGroup>
-          <Label to="name">Name</Label>
-          <Input
-            name="name"
-            value={mod.name}
-            onChange={(e) =>
-              handleModificationChange(index, e.target.name, e.target.value)
-            }
-          />
-        </ModificationInputGroup>
-      </Row>
-      <Row>
-        <Button
-          color="primary"
-          active={mod.type === "single"}
-          buttonText="Single"
-          onChange={(e) => handleButton(index, "type", "single")}
-        />
-        <Button
-          color="primary"
-          active={mod.type === "multiple"}
-          buttonText="Multiple"
-          onChange={(e) => handleButton(index, "type", "multiple")}
-        />
-      </Row>
-      <Row>
-        {Object.keys(mod.options).map((optionName, index) => {
-          const option = mod.options[optionName];
-          return (
-            <Col>
-              <ModificationInputGroup>
-                <Label to="optionName">{`Option`}</Label>
-                <Input
-                  name="optionName"
-                  value={optionName}
-                  onChange={(e) => handleOptionChange()}
-                />
-              </ModificationInputGroup>
-            </Col>
-          );
-        })}
-      </Row>
-    </ModificationFormGroup>
-  );
-};
-
 const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = {
   editMenuItem,
+  addMenuItem,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditMenuItem);

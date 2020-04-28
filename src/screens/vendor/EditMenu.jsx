@@ -4,9 +4,16 @@ import { connect } from "react-redux";
 import EditVendor from "../../components/vendor/EditVendor";
 import DisplayVendor from "../../components/vendor/DisplayVendor";
 import DisplayOrEditMenuItem from "../../components/vendor/menuItem/DisplayOrEditMenuItem";
-import { Link, Container, Row, Col, Button } from "../../components/styles";
+import {
+  Link,
+  Container,
+  Row,
+  Col,
+  Button,
+  MenuRow,
+} from "../../components/styles";
 import { Redirect } from "react-router";
-import { renderIntoDocument } from "react-dom/test-utils";
+import EditMenuItem from "../../components/vendor/menuItem/EditMenuItem";
 
 export class Menu extends Component {
   state = {
@@ -38,16 +45,19 @@ export class Menu extends Component {
           <Col>
             <Button
               color="primary"
-              buttonText={this.state.showVendorEditor ? "Cancel" : "Edit Profile"}
+              buttonText={
+                this.state.showVendorEditor ? "Cancel" : "Edit Profile"
+              }
               onClick={() => this.toggleVendorEditor()}
             />
           </Col>
         </Row>
-        <Row>
+        <MenuRow>
           {menu.map((menuItem) => (
             <DisplayOrEditMenuItem key={menuItem._id} menuItem={menuItem} />
           ))}
-        </Row>
+          <DisplayOrEditMenuItem menuItem={null} />
+        </MenuRow>
       </Container>
     );
   }

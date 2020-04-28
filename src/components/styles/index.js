@@ -1,5 +1,11 @@
 import React from "react";
 import { Link as RRLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTimes,
+  faPlus,
+  faPlusCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   Container as BSContainer,
   Modal as BSModal,
@@ -158,7 +164,18 @@ export const ModificationFormGroup = styled(BSFormGroup)`
   border: lightgray 1px solid;
 `;
 
+export const MenuRow = styled(BSRow)`
+  align-items: flex-start;
+`;
+
 export const ModificationInputGroup = styled(BSInputGroup)``;
+
+export const TouchableHighlight = styled.div`
+  &:hover {
+    background-color: ${colors.black};
+    color: ${colors.white};
+  }
+`;
 
 export const Button = (props) => {
   return (
@@ -167,3 +184,5 @@ export const Button = (props) => {
     </ButtonBase>
   );
 };
+
+export const DeleteIcon = (props) => <FontAwesomeIcon icon={faTimes}/>;

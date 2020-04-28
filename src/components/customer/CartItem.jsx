@@ -51,7 +51,7 @@ const CartItem = (props) => {
 const SelectedOptions = (props) => (
   <Col>
     <Row>
-      <Col>{props.menuItemMod.displayName}</Col>
+      <Col>{props.menuItemMod.name}</Col>
     </Row>
     {Array.isArray(props.selectedMod.selectedOptions) ? (
       <Col>

@@ -32,15 +32,17 @@ const ActiveOrder = (props) => {
                 <h4>{orderItem.menuItem.name}</h4>
               </Row>
               <Row>
-                {Object.keys(orderItem.modifications).map((modName) => {
-                  const selectedMod = orderItem.modifications[modName];
+                {orderItem.modifications.map((orderItemMod) => {
+                  const menuItemMod = orderItem.menuItem.modifications.find(
+                    (a) => a.name === orderItemMod.name
+                  );
                   return (
-                    <Col key={modName}>
+                    <Col key={orderItemMod._id}>
                       <p>
-                        <strong>{modName}: </strong> 
-                        {Array.isArray(selectedMod)
-                          ? selectedMod.join(", ")
-                          : selectedMod}
+                        <strong>{menuItemMod.name}: </strong>
+                        {Array.isArray(orderItemMod.selectedOptions)
+                          ? orderItemMod.selectedOptions.map(a => a.name).join(", ")
+                          : orderItemMod.selectedOptions.name}
                       </p>
                     </Col>
                   );

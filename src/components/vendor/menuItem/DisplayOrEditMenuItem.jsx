@@ -23,18 +23,20 @@ export class DisplayOrEditMenuItem extends Component {
     return (
       <Col xs="12" md="6" lg="4">
         <Card>
-          {this.state.editMenuItem ? (
+          {this.state.editMenuItem || !menuItem ? (
             <EditMenuItem menuItem={menuItem} />
           ) : (
             <DisplayMenuItem menuItem={menuItem} />
           )}
           <CardFooter>
-            <Button
-              color="primary"
-              onClick={() => this.toggleEditMenuItem()}
-              buttonText={this.state.editMenuItem ? "Cancel" : "Edit"}
-              isLoading={this.props.isLoading}
-            />
+            {menuItem ? (
+              <Button
+                color="primary"
+                onClick={() => this.toggleEditMenuItem()}
+                buttonText={this.state.editMenuItem ? "Cancel" : "Edit"}
+                isLoading={this.props.isLoading}
+              />
+            ) : null}
           </CardFooter>
         </Card>
       </Col>

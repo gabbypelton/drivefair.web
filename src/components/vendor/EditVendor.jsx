@@ -71,7 +71,6 @@ class EditVendor extends Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault();
     const {
       email,
       password,

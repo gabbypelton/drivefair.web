@@ -92,7 +92,7 @@ class MenuItem extends Component {
               top
               width="100%"
               src={formatImgurUrl(menuItem.imageUrl)}
-              alt={`Image of ${menuItem.DisplayName}`}
+              alt={`Image of ${menuItem.name}`}
             />
             <CardTitle>{menuItem.name}</CardTitle>
             <CardSubtitle>{menuItem.description}</CardSubtitle>
@@ -128,7 +128,7 @@ const MenuItemMod = (props) => {
     <Col key={mod._id}>
       <Row>
         <Col>
-          <Label for={mod.name}>{mod.displayName}</Label>
+          <Label for={mod.name}>{mod.name}</Label>
         </Col>
       </Row>
       <Row>

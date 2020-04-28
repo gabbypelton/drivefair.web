@@ -5,28 +5,36 @@ import {
   CardTitle,
   CardSubtitle,
   CardText,
-  Row,
-  Col,
   CardImg,
-  FormGroup,
   Label,
-  Input,
-  InputGroup,
-  Card,
+  Modal,
+  ModalHeader,
+  ModalBody,
 } from "reactstrap";
-import { addToCart } from "../../../actions/cart";
+import { removeMenuItem } from "../../../actions/menu";
 import {
   formatPriceFromFloatString,
   formatImgurUrl,
 } from "../../../services/formatting";
+import { Row, Col, Button, DeleteIcon, TouchableHighlight } from "../../styles";
 
 const DisplayMenuItem = (props) => {
   const { menuItem } = props;
   const fullImageUrl = formatImgurUrl(menuItem.imageUrl);
 
+  const [showRemoveModal, setShowRemoveModal] = useState(false);
+
   return (
     <CardBody>
-      <CardImg top width="100%" src={fullImageUrl} alt="Card image cap" />
+      <TouchableHighlight onClick={() => setShowRemoveModal(true)}>
+        <DeleteIcon />
+      </TouchableHighlight>
+      <CardImg
+        top
+        width="100%"
+        src={fullImageUrl}
+        alt={`Image for ${menuItem.name}`}
+      />
       <CardTitle>{menuItem.name}</CardTitle>
       <CardSubtitle>{menuItem.description}</CardSubtitle>
       <CardText>${parseFloat(menuItem.price).toFixed(2)}</CardText>
@@ -35,6 +43,10 @@ const DisplayMenuItem = (props) => {
           <MenuItemMod key={mod._id} mod={mod} />
         ))}
       </Row>
+      <RemoveItemConfirmationModal
+        {...{ showRemoveModal, setShowRemoveModal }}
+        {...props}
+      />
     </CardBody>
   );
 };
@@ -45,14 +57,13 @@ const MenuItemMod = (props) => {
     <Col key={mod._id}>
       <Row>
         <Col>
-          <Label for={mod.name}>{mod.displayName}</Label>
+          <Label for={mod.name}>{mod.name}</Label>
         </Col>
       </Row>
       <Row>
-        {Object.keys(mod.options).map((optionName) => (
+        {mod.options.map((option) => (
           <p>
-            {optionName} -{" "}
-            {formatPriceFromFloatString(mod.options[optionName].price)}
+            {option.name} -{formatPriceFromFloatString(option.price)}
           </p>
         ))}
       </Row>
@@ -60,10 +71,40 @@ const MenuItemMod = (props) => {
   );
 };
 
+const RemoveItemConfirmationModal = (props) => {
+  return (
+    <Modal
+      isOpen={props.showRemoveModal}
+      toggle={() => props.setShowRemoveModal(false)}
+    >
+      <ModalHeader>Delete Item</ModalHeader>
+      <ModalBody>
+        <Row>
+          <Col>Are you sure?</Col>
+        </Row>
+        <Row>
+          <Col>
+            <Button
+              buttonText="Yes"
+              color="secondary"
+              onClick={() => props.removeMenuItem(props.menuItem._id)}
+            />
+            <Button
+              buttonText="No"
+              color="secondary"
+              onClick={() => props.setShowRemoveModal(false)}
+            />
+          </Col>
+        </Row>
+      </ModalBody>
+    </Modal>
+  );
+};
+
 const mapStateToProps = () => ({});
 
 const mapDispatchToProps = {
-  addToCart,
+  removeMenuItem,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DisplayMenuItem);

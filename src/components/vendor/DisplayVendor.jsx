@@ -23,7 +23,7 @@ export class DisplayVendor extends Component {
           </Row>
           <Row>
             <Col>
-              {address.street} #{address.unit}
+              {address.street} {address.unit ? `#${address.unit}` : ""}
             </Col>
           </Row>
           <Row>
