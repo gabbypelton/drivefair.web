@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { CardBody, FormGroup, CardImg } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { editMenuItem } from "../../../actions/menu";
 import {
   Form,
@@ -12,11 +12,15 @@ import {
   Label,
   Input,
   InputErrorMessage,
+  TouchableHighlight,
+  ModificationSelect,
+  ModificationOption,
 } from "../../styles";
 import { formatImgurUrl } from "../../../services/formatting";
 import EditModification from "./EditModification";
 import { colors } from "../../../constants/theme";
 import { addMenuItem } from "../../../actions/menu";
+import { useState } from "react";
 
 export class EditMenuItem extends Component {
   state = {
@@ -24,16 +28,21 @@ export class EditMenuItem extends Component {
     imageUrl: "",
     description: "",
     price: "",
-    modifications: [],
+    modifications: [{}],
     formErrors: {},
   };
 
   componentDidMount() {
+    const modifications = this.props.modifications;
     if (this.props.menuItem) {
-      this.setState({
-        ...this.props.menuItem,
+      this.props.menuItem.modifications.forEach((menuItemMod) => {
+        modifications.find((a) => (a._id = menuItemMod._id)).selected = true;
       });
     }
+    this.setState({
+      ...this.props.menuItem,
+      modifications,
+    });
   }
 
   handleChange({ target }) {
@@ -71,13 +80,14 @@ export class EditMenuItem extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const { imageUrl, name, description, price, modifications } = this.state;
+    const selectedModifications = modifications.filter((m) => m.selected);
     if (!this.props.menuItem) {
       this.props.addMenuItem({
         imageUrl,
         name,
         description,
         price,
-        modifications,
+        modifications: selectedModifications,
       });
     } else {
       this.props.editMenuItem(this.props.menuItem._id, {
@@ -85,7 +95,7 @@ export class EditMenuItem extends Component {
         name,
         description,
         price,
-        modifications,
+        modifications: selectedModifications,
       });
     }
   }
@@ -99,12 +109,11 @@ export class EditMenuItem extends Component {
     this.setState({ modifications });
   }
 
-  addModification() {
-    const modifications = [
-      ...this.state.modifications,
-      { name: "", options: [], type: "single" },
-    ];
-
+  toggleModification(modificationIndex) {
+    const { modifications } = this.state;
+    modifications[modificationIndex].selected = !modifications[
+      modificationIndex
+    ].selected;
     this.setState({ modifications });
   }
 
@@ -166,26 +175,25 @@ export class EditMenuItem extends Component {
             </FormGroup>
           </Row>
           <Row>Modifications</Row>
+          <Row>(click to select)</Row>
           <Row>
-            {this.state.modifications.map((mod, modIndex) => (
-              <EditModification
-                key={modIndex}
-                modIndex={modIndex}
-                mod={mod}
-                handleModificationChange={this.handleModificationChange.bind(
-                  this
-                )}
-              />
-            ))}
+            <ModificationSelect>
+              {this.state.modifications.map((existingMod, index) => {
+                return (
+                  <ModificationOption
+                    key={existingMod._id}
+                    value={index}
+                    selected={existingMod.selected}
+                    onClick={() => this.toggleModification(index)}
+                  >
+                    {existingMod.name}
+                  </ModificationOption>
+                );
+              })}
+            </ModificationSelect>
           </Row>
           <Row>
-            <Col>
-              <FontAwesomeIcon
-                icon={faPlus}
-                color={colors.primary}
-                onClick={() => this.addModification()}
-              />
-            </Col>
+            <EditModification modification={null} />
           </Row>
           <Row>
             <Button onClick={(e) => this.handleSubmit(e)} buttonText="Save" />
@@ -196,7 +204,9 @@ export class EditMenuItem extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  modifications: state.menu.modifications,
+});
 
 const mapDispatchToProps = {
   editMenuItem,

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlusCircle} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusCircle, faSave } from "@fortawesome/free-solid-svg-icons";
 
 import {
   Button,
@@ -9,115 +9,160 @@ import {
   Row,
   Label,
   Input,
+  EditOptionContainer,
   ModificationFormGroup,
   ModificationInputGroup,
+  TouchableHighlight,
 } from "../../styles";
-
 import { colors } from "../../../constants/theme";
+import { editModification, addModification } from "../../../actions/menu";
 
-const EditModification = (props) => {
-  const { mod, modIndex, handleModificationChange } = props;
+class EditModification extends Component {
+  state = {
+    name: "",
+    options: [],
+    type: "",
+    defaultOption: null,
+  };
 
-  const handleOptionChange = (optionIndex, name, value) => {
-    const options = [...mod.options];
+  componentDidMount() {
+    if (this.props.modification) {
+      this.setState({
+        ...this.props.modification,
+      });
+    } else {
+      this.addOption();
+    }
+  }
+
+  handleModificationChange(name, value) {
+    console.log({ name, value });
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  handleOptionChange(optionIndex, name, value) {
+    const options = [...this.state.options];
     const updatedOption = { ...options[optionIndex] };
     updatedOption[name] = value;
     options.splice(optionIndex, 1, updatedOption);
-    handleModificationChange(modIndex, "options", options);
-  };
+    this.handleModificationChange("options", options);
+  }
 
-  const addOption = () => {
-    const modOptions = [...mod.options, { name: "", price: "" }];
-    handleModificationChange(modIndex, "options", modOptions);
-  };
+  addOption() {
+    const options = [...this.state.options, { name: "", price: "" }];
+    this.setState({ options });
+  }
 
-  return (
-    <ModificationFormGroup>
-      <Row>
-        <ModificationInputGroup>
-          <Label to="name">Name</Label>
-          <Input
-            name="name"
-            value={mod.name}
-            onChange={(e) =>
-              handleModificationChange(modIndex, e.target.name, e.target.value)
+  render() {
+    const { name, options, price, type, defaultOption } = this.state;
+    return (
+      <ModificationFormGroup>
+        <Row>{this.props.modification ? "Edit" : "New"} Modification</Row>
+        <Row>
+          <ModificationInputGroup>
+            <Label to="name">Name</Label>
+            <Input
+              name="name"
+              value={name}
+              onChange={(e) =>
+                this.handleModificationChange(e.target.name, e.target.value)
+              }
+            />
+          </ModificationInputGroup>
+        </Row>
+        <Row>
+          <Button
+            color="primary"
+            active={type === "single"}
+            buttonText="Single"
+            onClick={(e) => this.handleModificationChange("type", "single", e)}
+          />
+          <Button
+            color="primary"
+            active={type === "multiple"}
+            buttonText="Multiple"
+            onClick={(e) =>
+              this.handleModificationChange("type", "multiple", e)
             }
           />
-        </ModificationInputGroup>
-      </Row>
-      <Row>
-        <Button
-          color="primary"
-          active={mod.type === "single"}
-          buttonText="Single"
-          onClick={(e) =>
-            handleModificationChange(modIndex, "type", "single", e)
-          }
-        />
-        <Button
-          color="primary"
-          active={mod.type === "multiple"}
-          buttonText="Multiple"
-          onClick={(e) =>
-            handleModificationChange(modIndex, "type", "multiple", e)
-          }
-        />
-      </Row>
-      <Row>
-        {mod.options.map((option, optionIndex) => {
-          return (
-            <Row>
-              <Col>
-                <ModificationInputGroup>
-                  <Label to="name">Name</Label>
+        </Row>
+        <Row>Options</Row>
+        <Row>(click to select default)</Row>
+        <Row>
+          {options.map((option, optionIndex) => {
+            return (
+              <EditOptionContainer
+                selected={defaultOption === optionIndex}
+                onClick={(e) =>
+                  this.handleModificationChange(
+                    "defaultOption",
+                    defaultOption === optionIndex ? null : optionIndex
+                  )
+                }
+              >
+                <Col>
                   <Input
                     name="name"
+                    placeholder="Name"
                     value={option.name}
+                    onClick={(e) => e.stopPropagation()}
                     onChange={(e) =>
-                      handleOptionChange(
+                      this.handleOptionChange(
                         optionIndex,
                         e.target.name,
                         e.target.value
                       )
                     }
                   />
-                </ModificationInputGroup>
-              </Col>
-              <Col>
-                <ModificationInputGroup>
-                  <Label to="price">Price</Label>
+                </Col>
+                <Col>
                   <Input
                     name="price"
+                    placeholder="Price"
                     value={option.price}
+                    onClick={(e) => e.stopPropagation()}
                     onChange={(e) =>
-                      handleOptionChange(
+                      this.handleOptionChange(
                         optionIndex,
                         e.target.name,
                         e.target.value
                       )
                     }
                   />
-                </ModificationInputGroup>
-              </Col>
-            </Row>
-          );
-        })}
+                </Col>
+              </EditOptionContainer>
+            );
+          })}
+        </Row>
         <Row>
           <Col>
-            <FontAwesomeIcon
-              icon={faPlusCircle}
-              color={colors.primary}
-              onClick={() => addOption()}
-            />
+            <TouchableHighlight onClick={() => this.addOption()}>
+              <FontAwesomeIcon icon={faPlusCircle} color={colors.primary} /> New
+              Option
+            </TouchableHighlight>
           </Col>
         </Row>
-      </Row>
-    </ModificationFormGroup>
-  );
+        <Row>
+          <Col>
+            <TouchableHighlight onClick={() => this.saveModification()}>
+              <FontAwesomeIcon icon={faSave} color={colors.primary} /> Save
+            </TouchableHighlight>
+          </Col>
+        </Row>
+      </ModificationFormGroup>
+    );
+  }
+}
+
+const mapStateToProps = (state) => ({
+  modifications: state.menu.modifications,
+});
+
+const mapDispatchToProps = {
+  editModification,
+  addModification,
 };
-
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditModification);

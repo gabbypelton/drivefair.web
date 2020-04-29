@@ -6,9 +6,11 @@ import orders from "./orders";
 import vendor from "./vendor";
 import session from "./session";
 import cart from "./cart";
+import menu from "./menu";
 
 const rootReducer = combineReducers({
   customer,
+  menu,
   orders,
   vendor,
   session,

@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router";
 
 import EditVendor from "../../components/vendor/EditVendor";
 import DisplayVendor from "../../components/vendor/DisplayVendor";
 import DisplayOrEditMenuItem from "../../components/vendor/menuItem/DisplayOrEditMenuItem";
+import { getMenu } from "../../actions/menu";
 import {
   Link,
   Container,
@@ -12,8 +14,6 @@ import {
   Button,
   MenuRow,
 } from "../../components/styles";
-import { Redirect } from "react-router";
-import EditMenuItem from "../../components/vendor/menuItem/EditMenuItem";
 
 export class Menu extends Component {
   state = {
@@ -27,20 +27,23 @@ export class Menu extends Component {
     });
   }
 
+  componentDidMount() {
+    this.props.getMenu();
+  }
+
   render() {
     if (!this.props.vendor || !this.props.vendor._id)
       return <Redirect to="/" />;
-    const { menu, _id } = this.props.vendor;
+    const { menuItems, vendor } = this.props;
     return (
       <Container>
         <Row>
           {this.state.showVendorEditor ? (
-            <EditVendor vendor={this.props.vendor} />
+            <EditVendor vendor={vendor} />
           ) : (
-            <DisplayVendor vendor={this.props.vendor} />
+            <DisplayVendor vendor={vendor} />
           )}
         </Row>
-
         <Row>
           <Col>
             <Button
@@ -53,7 +56,7 @@ export class Menu extends Component {
           </Col>
         </Row>
         <MenuRow>
-          {menu.map((menuItem) => (
+          {menuItems.map((menuItem) => (
             <DisplayOrEditMenuItem key={menuItem._id} menuItem={menuItem} />
           ))}
           <DisplayOrEditMenuItem menuItem={null} />
@@ -65,8 +68,11 @@ export class Menu extends Component {
 
 const mapStateToProps = (state) => ({
   vendor: state.session.profile,
+  menuItems: state.menu.menuItems,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  getMenu,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Menu);

@@ -161,7 +161,6 @@ const ButtonBase = styled(BSButton)`
 
 export const ModificationFormGroup = styled(BSFormGroup)`
   padding: 1rem 5%;
-  border: lightgray 1px solid;
 `;
 
 export const MenuRow = styled(BSRow)`
@@ -172,8 +171,38 @@ export const ModificationInputGroup = styled(BSInputGroup)``;
 
 export const TouchableHighlight = styled.div`
   &:hover {
+    cursor: pointer;
     background-color: ${colors.black};
     color: ${colors.white};
+  }
+`;
+
+export const ModificationSelect = styled.div`
+  width: 100%;
+  height: 5rem;
+  overflow-y: scroll;
+`;
+
+export const ModificationOption = styled.div`
+  ${(props) =>
+    props.selected
+      ? `
+        background-color: ${colors.black};
+        color: ${colors.white};
+      `
+      : `
+        background-color: ${colors.white};
+        color: ${colors.black};
+      `}
+`;
+
+export const EditOptionContainer = styled(BSRow)`
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+  background-color: ${(props) =>
+    props.selected ? colors.black : colors.white};
+  &:hover {
+    cursor: pointer;
   }
 `;
 
@@ -185,4 +214,4 @@ export const Button = (props) => {
   );
 };
 
-export const DeleteIcon = (props) => <FontAwesomeIcon icon={faTimes}/>;
+export const DeleteIcon = (props) => <FontAwesomeIcon icon={faTimes} />;

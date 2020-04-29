@@ -1,5 +1,13 @@
 const actionsObj = {};
+
 const asyncActions = [
+  "ADD_MODIFICATION",
+  "REMOVE_MODIFICATION",
+  "EDIT_MODIFICATION",
+  "ADD_MENU_ITEM",
+  "REMOVE_MENU_ITEM",
+  "EDIT_MENU_ITEM",
+  "GET_MENU",
   "GET_CUSTOMER_PROFILE",
   "NEW_CUSTOMER",
   "NEW_VENDOR",
@@ -7,8 +15,6 @@ const asyncActions = [
   "GET_VENDOR_PROFILE",
   "EDIT_VENDOR",
   "SELECT_VENDOR",
-  "ADD_MENU_ITEM",
-  "REMOVE_MENU_ITEM",
   "ADD_TO_CART",
   "UPDATE_CART",
   "REMOVE_FROM_CART",
@@ -18,7 +24,7 @@ const asyncActions = [
   "PAY",
   "TOGGLE_ORDER_METHOD",
   "GET_ACTIVE_ORDERS",
-  "LOG_IN",
+  "LOG_IN"
 ];
 const syncActions = ["LOG_OUT", "TOGGLE_READY_TO_PAY"];
 

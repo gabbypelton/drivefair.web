@@ -2,6 +2,8 @@ import types from "../actions/types";
 
 const initialState = {
   profile: {},
+  userType: "",
+  token: "",
   isLoggedIn: false,
   isLoading: false,
   error: "",
@@ -28,7 +30,9 @@ export default (state = initialState, { type, payload }) => {
     case types.NEW_CUSTOMER_SUCCESS:
       return {
         ...state,
-        ...payload,
+        token: payload.token,
+        userType: payload.userType,
+        profile: payload.profile,
         isLoading: false,
         isLoggedIn: true,
       };

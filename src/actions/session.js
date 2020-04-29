@@ -45,7 +45,7 @@ export const loginWithToken = (token, userType) => async (dispatch) => {
     const authResponse = await Axios.get(`/${userType}s/me`);
     dispatch({
       type: types.LOG_IN_SUCCESS,
-      payload: { ...authResponse.data, userType },
+      payload: { ...authResponse.data, userType, token },
     });
   } catch (error) {
     localStorage.clear();
