@@ -21,7 +21,7 @@ const INITAL_STATE = {
   name: "",
   options: [],
   type: "",
-  defaultOption: null,
+  defaultOptionIndex: null,
 };
 class EditModification extends Component {
   state = INITAL_STATE;
@@ -70,20 +70,20 @@ class EditModification extends Component {
 
   saveModification() {
     const existingMod = this.props.modification;
-    const { name, options, type, defaultOption } = this.state;
+    const { name, options, type, defaultOptionIndex } = this.state;
     if (existingMod) {
       this.props.editModification(existingMod._id, {
         name,
         options,
         type,
-        defaultOption,
+        defaultOptionIndex,
       });
     }
-    // else this.props.addModification({ name, options, type, defaultOption });
+    else this.props.addModification({ name, options, type, defaultOptionIndex });
   }
 
   render() {
-    const { name, options, price, type, defaultOption } = this.state;
+    const { name, options, price, type, defaultOptionIndex } = this.state;
     return (
       <ModificationFormGroup>
         <Row>{this.props.modification ? "Edit" : "New"} Modification</Row>
@@ -121,11 +121,11 @@ class EditModification extends Component {
           {options.map((option, optionIndex) => {
             return (
               <EditOptionContainer
-                selected={defaultOption === optionIndex}
+                selected={defaultOptionIndex === optionIndex}
                 onClick={(e) =>
                   this.handleModificationChange(
-                    "defaultOption",
-                    defaultOption === optionIndex ? null : optionIndex
+                    "defaultOptionIndex",
+                    defaultOptionIndex === optionIndex ? null : optionIndex
                   )
                 }
               >

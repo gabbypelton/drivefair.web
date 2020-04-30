@@ -62,9 +62,9 @@ const MenuItemMod = (props) => {
       </Row>
       <Row>
         {mod.options.map((option) => (
-          <p>
-            {option.name} -{formatPriceFromFloatString(option.price)}
-          </p>
+          <Col xs="6">
+            {option.name} - {formatPriceFromFloatString(option.price)}
+          </Col>
         ))}
       </Row>
     </Col>

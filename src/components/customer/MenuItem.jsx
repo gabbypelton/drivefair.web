@@ -29,9 +29,8 @@ class MenuItem extends Component {
   componentDidMount() {
     const INITIAL_MOD_SELECTIONS = this.props.menuItem.modifications.map(
       (modification) => {
-        const defaultSelectedOption = modification.options.find(
-          (a) => a.name === modification.defaultOption
-        );
+        const defaultSelectedOption =
+          modification.options[modification.defaultOptionIndex];
         return {
           name: modification.name,
           selectedOptions:
@@ -132,7 +131,7 @@ const MenuItemMod = (props) => {
         </Col>
       </Row>
       <Row>
-        {mod.options.map((option) => (
+        {mod.options.map((option, index) => (
           <OptionContainer key={option.name}>
             <OptionLabel for={option.name}>
               {option.name} ( +{formatPriceFromFloatString(option.price)})
@@ -141,13 +140,7 @@ const MenuItemMod = (props) => {
               name={mod.name}
               id={option.name}
               value={option.name}
-              checked={
-                mod.type === "multiple"
-                  ? modSelection.selectedOptions.find(
-                      (a) => a.name === option.name
-                    )
-                  : modSelection.selectedOptions.name === option.name
-              }
+              checked={index === mod.defaultOptionIndex}
               type={mod.type === "multiple" ? "checkbox" : "radio"}
               onChange={(e) =>
                 updateModSelection(mod, option, e.target.checked)
