@@ -177,13 +177,13 @@ export const TouchableHighlight = styled.div`
   }
 `;
 
-export const ModificationSelect = styled.div`
-  width: 100%;
+export const ModificationSelect = styled(Col)`
   height: 5rem;
   overflow-y: scroll;
 `;
 
-export const ModificationOption = styled.div`
+export const ModificationOption = styled(Row)`
+  justify-content: space-around;
   ${(props) =>
     props.selected
       ? `
@@ -195,6 +195,7 @@ export const ModificationOption = styled.div`
         color: ${colors.black};
       `}
 `;
+
 
 export const EditOptionContainer = styled(BSRow)`
   padding: 0 0 0 0;

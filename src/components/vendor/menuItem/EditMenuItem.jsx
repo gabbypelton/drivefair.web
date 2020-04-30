@@ -19,6 +19,7 @@ import {
 import { formatImgurUrl } from "../../../services/formatting";
 import EditModification from "./EditModification";
 import { addMenuItem } from "../../../actions/menu";
+import { colors } from "../../../constants/theme";
 
 export class EditMenuItem extends Component {
   state = {
@@ -27,6 +28,7 @@ export class EditMenuItem extends Component {
     description: "",
     price: "",
     modifications: [{}],
+    editableMod: null,
     formErrors: {},
   };
 
@@ -41,6 +43,17 @@ export class EditMenuItem extends Component {
       ...this.props.menuItem,
       modifications,
     });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.modifications.length > prevProps.modifications.length) {
+      this.setState({
+        modifications: [
+          ...this.state.modifications,
+          this.props.modifications[this.props.modifications.length - 1],
+        ],
+      });
+    }
   }
 
   handleChange({ target }) {
@@ -78,14 +91,14 @@ export class EditMenuItem extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const { imageUrl, name, description, price, modifications } = this.state;
-    const selectedModifications = modifications.filter((m) => m.selected);
+    const editableMods = modifications.filter((m) => m.selected);
     if (!this.props.menuItem) {
       this.props.addMenuItem({
         imageUrl,
         name,
         description,
         price,
-        modifications: selectedModifications,
+        modifications: editableMods,
       });
     } else {
       this.props.editMenuItem(this.props.menuItem._id, {
@@ -93,7 +106,7 @@ export class EditMenuItem extends Component {
         name,
         description,
         price,
-        modifications: selectedModifications,
+        modifications: editableMods,
       });
     }
   }
@@ -108,11 +121,20 @@ export class EditMenuItem extends Component {
   }
 
   toggleModification(modificationIndex) {
-    const { modifications } = this.state;
-    modifications[modificationIndex].selected = !modifications[
-      modificationIndex
-    ].selected;
-    this.setState({ modifications });
+    let { modifications, editableMod } = this.state;
+    if (modificationIndex !== null) {
+      const mod = modifications[modificationIndex];
+      if (!mod.selected) {
+        editableMod = mod;
+      }
+      modifications[modificationIndex].selected = !modifications[
+        modificationIndex
+      ].selected;
+    }
+    if (modificationIndex === null) {
+      editableMod = null;
+    }
+    this.setState({ modifications, editableMod });
   }
 
   render() {
@@ -191,7 +213,15 @@ export class EditMenuItem extends Component {
             </ModificationSelect>
           </Row>
           <Row>
-            <EditModification modification={null} />
+            <Col>
+              <TouchableHighlight onClick={() => this.toggleModification(null)}>
+                <FontAwesomeIcon icon={faPlusCircle} color={colors.primary} />
+                New Modification
+              </TouchableHighlight>
+            </Col>
+          </Row>
+          <Row>
+            <EditModification modification={this.state.editableMod} />
           </Row>
           <Row>
             <Button onClick={(e) => this.handleSubmit(e)} buttonText="Save" />

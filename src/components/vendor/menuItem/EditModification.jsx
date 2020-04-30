@@ -17,13 +17,14 @@ import {
 import { colors } from "../../../constants/theme";
 import { editModification, addModification } from "../../../actions/menu";
 
+const INITAL_STATE = {
+  name: "",
+  options: [],
+  type: "",
+  defaultOption: null,
+};
 class EditModification extends Component {
-  state = {
-    name: "",
-    options: [],
-    type: "",
-    defaultOption: null,
-  };
+  state = INITAL_STATE;
 
   componentDidMount() {
     if (this.props.modification) {
@@ -32,6 +33,18 @@ class EditModification extends Component {
       });
     } else {
       this.addOption();
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const oldMod = prevProps.modification;
+    const newMod = this.props.modification;
+    if (newMod && (!oldMod || newMod._id !== oldMod._id)) {
+      this.setState({
+        ...this.props.modification,
+      });
+    } else if (!newMod && oldMod) {
+      this.setState({...INITAL_STATE});
     }
   }
 
@@ -56,8 +69,17 @@ class EditModification extends Component {
   }
 
   saveModification() {
+    const existingMod = this.props.modification;
     const { name, options, type, defaultOption } = this.state;
-    this.props.addModification({ name, options, type, defaultOption });
+    if (existingMod) {
+      this.props.editModification(existingMod._id, {
+        name,
+        options,
+        type,
+        defaultOption,
+      });
+    }
+    // else this.props.addModification({ name, options, type, defaultOption });
   }
 
   render() {

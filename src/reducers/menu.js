@@ -4,6 +4,7 @@ const initialState = {
   menuItems: [],
   modifications: [],
   isLoading: false,
+  modificationsLoading: false
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -11,18 +12,12 @@ export default (state = initialState, { type, payload }) => {
     case types.ADD_MENU_ITEM:
     case types.REMOVE_MENU_ITEM:
     case types.EDIT_MENU_ITEM:
-    case types.ADD_MODIFICATION:
-    case types.REMOVE_MODIFICATION:
-    case types.EDIT_MODIFICATION:
     case types.GET_MENU:
     case types.LOG_IN:
       return { ...state, ...payload, isLoading: true };
     case types.ADD_MENU_ITEM_FAIL:
     case types.REMOVE_MENU_ITEM_FAIL:
     case types.EDIT_MENU_ITEM_FAIL:
-    case types.ADD_MODIFICATION_FAIL:
-    case types.REMOVE_MODIFICATION_FAIL:
-    case types.EDIT_MODIFICATION_FAIL:
     case types.LOG_IN_FAIL:
     case types.GET_MENU_FAIL:
       return { ...state, error: payload.error, isLoading: false };
@@ -30,13 +25,21 @@ export default (state = initialState, { type, payload }) => {
     case types.REMOVE_MENU_ITEM_SUCCESS:
     case types.EDIT_MENU_ITEM_SUCCESS:
       return { ...state, menuItems: payload.menuItems, isLoading: false };
+    case types.ADD_MODIFICATION:
+    case types.REMOVE_MODIFICATION:
+    case types.EDIT_MODIFICATION:
+      return { ...state, modificationsLoading: true };
+    case types.ADD_MODIFICATION_FAIL:
+    case types.REMOVE_MODIFICATION_FAIL:
+    case types.EDIT_MODIFICATION_FAIL:
+      return { ...state, modificationsLoading: false };
     case types.ADD_MODIFICATION_SUCCESS:
     case types.REMOVE_MODIFICATION_SUCCESS:
     case types.EDIT_MODIFICATION_SUCCESS:
       return {
         ...state,
         modifications: payload.savedModifications,
-        isLoading: false,
+        modificationsLoading: false,
       };
     case types.GET_MENU_SUCCESS:
       return {
