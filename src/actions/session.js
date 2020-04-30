@@ -60,7 +60,7 @@ export const loginWithToken = (token, userType) => async (dispatch) => {
 export const sendConfirmationEmail = (userType) => async (dispatch) => {
   dispatch({ type: types.SEND_CONFIRMATION_EMAIL });
   try {
-    const response = await Axios.post(`/${userType}/sendConfirmationEmail`);
+    const response = await Axios.post(`/${userType}s/sendConfirmationEmail`);
     dispatch({
       type: types.SEND_CONFIRMATION_EMAIL_SUCCESS,
       payload: { ...response },

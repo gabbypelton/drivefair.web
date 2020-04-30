@@ -45,9 +45,10 @@ export default (state = initialState, { type, payload }) => {
         isLoggedIn: true,
       };
       
-    case type.SEND_CONFIRMATION_EMAIL_SUCCESS:
+    case types.SEND_CONFIRMATION_EMAIL_SUCCESS:
       return {
         ...state,
+        isLoading: false,
         emailConfirmationSent: true
       }
 

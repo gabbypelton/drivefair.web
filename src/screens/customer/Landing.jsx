@@ -20,7 +20,7 @@ const Landing = (props) => {
                 <Button
                   buttonText="Resend Email"
                   color="primary"
-                  onClick={() => props.sendConfirmationEmail("customers")}
+                  onClick={() => props.sendConfirmationEmail("customer")}
                 />
               </Row>
             </Col>

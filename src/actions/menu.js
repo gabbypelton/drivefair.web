@@ -85,3 +85,4 @@ export const getMenu = () => async (dispatch) => {
     dispatch({ type: types.GET_MENU_FAIL, payload: { error } });
   }
 };
+

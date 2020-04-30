@@ -14,13 +14,19 @@ const Landing = (props) => {
         ) : (
           <Row>
             <Col>
-              <Row>Confirm your email!</Row>
               <Row>
-                <Button
-                  buttonText="Resend Email"
-                  color="primary"
-                  onClick={() => props.sendConfirmationEmail("vendors")}
-                />
+                {props.emailConfirmationSent
+                  ? `Go check your inbox at ${props.email}`
+                  : "Confirm your email!"}
+              </Row>
+              <Row>
+                {props.emailConfirmationSent ? null : (
+                  <Button
+                    buttonText="Resend Email"
+                    color="primary"
+                    onClick={() => props.sendConfirmationEmail("vendor")}
+                  />
+                )}
               </Row>
             </Col>
           </Row>
@@ -35,7 +41,9 @@ const Landing = (props) => {
 const mapStateToProps = (state) => ({
   isLoggedIn: state.session.isLoggedIn,
   isLoading: state.session.isLoading,
+  email: state.session.profile.email,
   emailIsConfirmed: state.session.profile.emailIsConfirmed,
+  emailConfirmationSent: state.session.emailConfirmationSent,
 });
 
 const mapDispatchToProps = {
