@@ -16,7 +16,14 @@ import {
   formatPriceFromFloatString,
   formatImgurUrl,
 } from "../../../services/formatting";
-import { Row, Col, Button, DeleteIcon, TouchableHighlight } from "../../styles";
+import {
+  Row,
+  Col,
+  Button,
+  DeleteIcon,
+  TouchableHighlight,
+  ViewOptionContainer,
+} from "../../styles";
 
 const DisplayMenuItem = (props) => {
   const { menuItem } = props;
@@ -54,17 +61,18 @@ const DisplayMenuItem = (props) => {
 const MenuItemMod = (props) => {
   const { mod } = props;
   return (
-    <Col key={mod._id}>
+    <Col>
       <Row>
-        <Col>
-          <Label for={mod.name}>{mod.name}</Label>
-        </Col>
+        <Col>{mod.name}</Col>
       </Row>
       <Row>
-        {mod.options.map((option) => (
-          <Col xs="6">
+        {mod.options.map((option, optionIndex) => (
+          <ViewOptionContainer
+            xs="6"
+            selected={optionIndex === mod.defaultOptionIndex}
+          >
             {option.name} - {formatPriceFromFloatString(option.price)}
-          </Col>
+          </ViewOptionContainer>
         ))}
       </Row>
     </Col>

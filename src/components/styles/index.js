@@ -196,15 +196,29 @@ export const ModificationOption = styled(Row)`
       `}
 `;
 
-
 export const EditOptionContainer = styled(BSRow)`
   padding: 0 0 0 0;
   margin: 0 0 0 0;
+  height: 4rem;
+  align-items: center;
   background-color: ${(props) =>
     props.selected ? colors.black : colors.white};
   &:hover {
     cursor: pointer;
   }
+`;
+
+export const ViewOptionContainer = styled(BSCol)`
+  ${(props) =>
+    props.selected
+      ? `
+      background-color: ${colors.black};
+      color: ${colors.white};
+    `
+      : `
+      background-color: ${colors.white};
+      color: ${colors.black};
+    `}
 `;
 
 export const Button = (props) => {
