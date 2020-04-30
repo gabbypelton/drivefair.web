@@ -15,12 +15,19 @@ export default (state = initialState, { type, payload }) => {
     case types.EDIT_VENDOR:
     case types.NEW_VENDOR:
     case types.NEW_CUSTOMER:
+    case types.SEND_CONFIRMATION_EMAIL:
       return { ...state, isLoading: true };
 
     case types.LOG_IN_FAIL:
     case types.NEW_VENDOR_FAIL:
     case types.NEW_CUSTOMER_FAIL:
-      return { ...state, isLoading: false, isLoggedIn: false };
+    case types.SEND_CONFIRMATION_EMAIL_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        error: payload.error,
+        isLoggedIn: false,
+      };
 
     case types.EDIT_VENDOR_FAIL:
       return { ...state, isLoading: false };
@@ -33,9 +40,16 @@ export default (state = initialState, { type, payload }) => {
         token: payload.token,
         userType: payload.userType,
         profile: payload.profile,
+        emailIsConfirmed: payload.emailIsConfirmed,
         isLoading: false,
         isLoggedIn: true,
       };
+      
+    case type.SEND_CONFIRMATION_EMAIL_SUCCESS:
+      return {
+        ...state,
+        emailConfirmationSent: true
+      }
 
     case types.EDIT_VENDOR_SUCCESS:
       return {
@@ -43,6 +57,9 @@ export default (state = initialState, { type, payload }) => {
         profile: payload.savedVendor,
         isLoading: false,
       };
+
+    case types.LOG_OUT:
+      return { ...initialState };
 
     default:
       return state;

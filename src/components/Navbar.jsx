@@ -65,15 +65,19 @@ const Example = (props) => {
               <NavLink onClick={() => history.goBack()}>Go Back</NavLink>
             </NavItem>
           </Nav>
-          <Nav navbar>
-            <NavItem>
-              {props.userType === "customer" ? (
-                <NavLink onClick={() => history.push("/cart")}>Cart</NavLink>
-              ) : (
-                <NavLink onClick={() => history.push("/editMenu")}>Menu</NavLink>
-              )}
-            </NavItem>
-          </Nav>
+          {props.emailIsConfirmed ? (
+            <Nav navbar>
+              <NavItem>
+                {props.userType === "customer" ? (
+                  <NavLink onClick={() => history.push("/cart")}>Cart</NavLink>
+                ) : (
+                  <NavLink onClick={() => history.push("/editMenu")}>
+                    Menu
+                  </NavLink>
+                )}
+              </NavItem>
+            </Nav>
+          ) : null}
         </Collapse>
       </Navbar>
     </div>
@@ -82,7 +86,8 @@ const Example = (props) => {
 
 const mapStateToProps = (state) => ({
   isLoggedIn: state.session.isLoggedIn,
-  userType: state.session.userType
+  userType: state.session.userType,
+  emailIsConfirmed: state.session.profile.emailIsConfirmed,
 });
 
 const mapDispatchToProps = {

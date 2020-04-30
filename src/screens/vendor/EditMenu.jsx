@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
+import { Spinner } from "reactstrap";
 
 import EditVendor from "../../components/vendor/EditVendor";
 import DisplayVendor from "../../components/vendor/DisplayVendor";
@@ -32,6 +33,7 @@ export class Menu extends Component {
   }
 
   render() {
+    if (this.props.isLoading) return <Spinner />;
     if (!this.props.vendor || !this.props.vendor._id)
       return <Redirect to="/" />;
     const { menuItems, vendor } = this.props;
@@ -69,6 +71,7 @@ export class Menu extends Component {
 const mapStateToProps = (state) => ({
   vendor: state.session.profile,
   menuItems: state.menu.menuItems,
+  isLoading: state.menu.isLoading,
 });
 
 const mapDispatchToProps = {

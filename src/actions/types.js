@@ -24,7 +24,8 @@ const asyncActions = [
   "PAY",
   "TOGGLE_ORDER_METHOD",
   "GET_ACTIVE_ORDERS",
-  "LOG_IN"
+  "LOG_IN",
+  "SEND_CONFIRMATION_EMAIL"
 ];
 const syncActions = ["LOG_OUT", "TOGGLE_READY_TO_PAY"];
 

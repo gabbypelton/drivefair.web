@@ -18,9 +18,7 @@ import {
 } from "../../styles";
 import { formatImgurUrl } from "../../../services/formatting";
 import EditModification from "./EditModification";
-import { colors } from "../../../constants/theme";
 import { addMenuItem } from "../../../actions/menu";
-import { useState } from "react";
 
 export class EditMenuItem extends Component {
   state = {

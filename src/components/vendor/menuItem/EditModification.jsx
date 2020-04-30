@@ -55,6 +55,11 @@ class EditModification extends Component {
     this.setState({ options });
   }
 
+  saveModification() {
+    const { name, options, type, defaultOption } = this.state;
+    this.props.addModification({ name, options, type, defaultOption });
+  }
+
   render() {
     const { name, options, price, type, defaultOption } = this.state;
     return (

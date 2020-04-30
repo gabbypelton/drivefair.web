@@ -13,7 +13,7 @@ export const newVendor = (details) => async (dispatch) => {
     setBearerToken(response.data.token);
     dispatch({ type: types.NEW_VENDOR_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.NEW_VENDOR_FAIL, error });
+    dispatch({ type: types.NEW_VENDOR_FAIL, payload: { error } });
   }
 };
 
