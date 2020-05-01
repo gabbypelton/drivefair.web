@@ -33,14 +33,14 @@ export class EditMenuItem extends Component {
   };
 
   componentDidMount() {
-    const modifications = this.props.modifications;
-    if (this.props.menuItem) {
-      this.props.menuItem.modifications.forEach((menuItemMod) => {
+    const { modifications, menuItem } = this.props;
+    if (menuItem) {
+      menuItem.modifications.forEach((menuItemMod) => {
         modifications.find((a) => (a._id = menuItemMod._id)).selected = true;
       });
     }
     this.setState({
-      ...this.props.menuItem,
+      ...menuItem,
       modifications,
     });
   }
@@ -91,14 +91,14 @@ export class EditMenuItem extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const { imageUrl, name, description, price, modifications } = this.state;
-    const editableMods = modifications.filter((m) => m.selected);
+    const selectedMods = modifications.filter((m) => m.selected);
     if (!this.props.menuItem) {
       this.props.addMenuItem({
         imageUrl,
         name,
         description,
         price,
-        modifications: editableMods,
+        modifications: selectedMods,
       });
     } else {
       this.props.editMenuItem(this.props.menuItem._id, {
@@ -106,7 +106,7 @@ export class EditMenuItem extends Component {
         name,
         description,
         price,
-        modifications: editableMods,
+        modifications: selectedMods,
       });
     }
   }
@@ -224,7 +224,11 @@ export class EditMenuItem extends Component {
             <EditModification modification={this.state.editableMod} />
           </Row>
           <Row>
-            <Button onClick={(e) => this.handleSubmit(e)} buttonText="Save" />
+            <Button
+              onClick={(e) => this.handleSubmit(e)}
+              color="primary"
+              buttonText="Save"
+            />
           </Row>
         </Form>
       </CardBody>

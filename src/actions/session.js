@@ -45,7 +45,7 @@ export const loginWithToken = (token, userType) => async (dispatch) => {
     const response = await Axios.get(`/${userType}s/me`);
     if (!response.data || !response.data.profile) {
       localStorage.clear();
-      dispatch({ type: types.LOG_IN_FAIL, payload: { ...response.data } });
+      dispatch({ type: types.LOG_IN_FAIL, payload: response.data });
     }
     dispatch({
       type: types.LOG_IN_SUCCESS,
@@ -63,7 +63,7 @@ export const sendConfirmationEmail = (userType) => async (dispatch) => {
     const response = await Axios.post(`/${userType}s/sendConfirmationEmail`);
     dispatch({
       type: types.SEND_CONFIRMATION_EMAIL_SUCCESS,
-      payload: { ...response },
+      payload: response.data,
     });
   } catch (error) {
     dispatch({ type: types.SEND_CONFIRMATION_EMAIL_FAIL, payload: { error } });

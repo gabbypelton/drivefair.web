@@ -22,7 +22,9 @@ import {
   Button,
   DeleteIcon,
   TouchableHighlight,
-  ViewOptionContainer,
+  ViewOptionsList,
+  ViewOptionsItem,
+  ViewModificationsList,
 } from "../../styles";
 
 const DisplayMenuItem = (props) => {
@@ -45,11 +47,11 @@ const DisplayMenuItem = (props) => {
       <CardTitle>{menuItem.name}</CardTitle>
       <CardSubtitle>{menuItem.description}</CardSubtitle>
       <CardText>${parseFloat(menuItem.price).toFixed(2)}</CardText>
-      <Row>
+      <ViewModificationsList>
         {menuItem.modifications.map((mod) => (
           <MenuItemMod key={mod._id} mod={mod} />
         ))}
-      </Row>
+      </ViewModificationsList>
       <RemoveItemConfirmationModal
         {...{ showRemoveModal, setShowRemoveModal }}
         {...props}
@@ -61,20 +63,20 @@ const DisplayMenuItem = (props) => {
 const MenuItemMod = (props) => {
   const { mod } = props;
   return (
-    <Col>
+    <Col xs="6">
       <Row>
         <Col>{mod.name}</Col>
       </Row>
-      <Row>
+      <ViewOptionsList>
         {mod.options.map((option, optionIndex) => (
-          <ViewOptionContainer
-            xs="6"
+          <ViewOptionsItem
+            xs="12"
             selected={optionIndex === mod.defaultOptionIndex}
           >
             {option.name} - {formatPriceFromFloatString(option.price)}
-          </ViewOptionContainer>
+          </ViewOptionsItem>
         ))}
-      </Row>
+      </ViewOptionsList>
     </Col>
   );
 };

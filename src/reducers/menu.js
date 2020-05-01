@@ -44,8 +44,8 @@ export default (state = initialState, { type, payload }) => {
     case types.GET_MENU_SUCCESS:
       return {
         ...state,
-        menuItems: payload.menuItems,
-        modifications: payload.modifications,
+        menuItems: payload.foundMenu.menuItems,
+        modifications: payload.foundMenu.modifications,
         isLoading: false,
       };
     case type.LOG_IN_SUCCESS:

@@ -208,7 +208,14 @@ export const EditOptionContainer = styled(BSRow)`
   }
 `;
 
-export const ViewOptionContainer = styled(BSCol)`
+export const ViewOptionsList = styled(BSRow)`
+`
+
+export const ViewModificationsList = styled(BSRow)`
+  align-items: flex-start;
+`
+
+export const ViewOptionsItem = styled(BSCol)`
   ${(props) =>
     props.selected
       ? `

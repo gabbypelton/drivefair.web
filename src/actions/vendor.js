@@ -9,7 +9,7 @@ export const newVendor = (details) => async (dispatch) => {
     const response = await Axios.post("/vendors/register", details);
     localStorage.clear();
     localStorage.setItem("authToken", response.data.token);
-    localStorage.setItem("sessionUri", "vendors");
+    localStorage.setItem("userType", "vendor");
     setBearerToken(response.data.token);
     dispatch({ type: types.NEW_VENDOR_SUCCESS, payload: response.data });
   } catch (error) {

@@ -38,7 +38,13 @@ class EditVendor extends Component {
   };
 
   componentDidMount() {
-    const { email, businessName, phoneNumber, address, logoUrl } = this.props.profile;
+    const {
+      email,
+      businessName,
+      phoneNumber,
+      address,
+      logoUrl,
+    } = this.props.profile;
     const { street, unit, city, state, zip } = address;
 
     this.setState({
@@ -163,8 +169,11 @@ class EditVendor extends Component {
           <Row>
             <Col xs="6" md="4">
               <FormGroup>
-                <Label to="logoUrl">Email</Label>
-                <img style={{width: "50%"}} src={formatImgurUrl(this.state.logoUrl)} />
+                <Row><Col>Logo</Col></Row>
+                <img
+                  style={{ width: "50%" }}
+                  src={formatImgurUrl(this.state.logoUrl)}
+                />
                 <Input
                   type="file"
                   className="input-image"
