@@ -48,7 +48,6 @@ class MenuItem extends Component {
   updateModSelection(mod, option, checked) {
     let { modSelections } = this.state;
     let currentModSelection = modSelections.find((a) => a.name === mod.name);
-    console.log({ currentModSelection });
     if (mod.type === "single") {
       currentModSelection.selectedOptions = option;
     } else {
@@ -97,11 +96,11 @@ class MenuItem extends Component {
             <CardSubtitle>{menuItem.description}</CardSubtitle>
             <CardText>${parseFloat(menuItem.price).toFixed(2)}</CardText>
             <Row>
-              {menuItem.modifications.map((mod) => (
+              {menuItem.modifications.map((mod, modIndex) => (
                 <MenuItemMod
                   key={mod._id}
                   mod={mod}
-                  modSelections={this.state.modSelections}
+                  modSelection={this.state.modSelections[modIndex]}
                   updateModSelection={this.updateModSelection.bind(this)}
                 />
               ))}
@@ -120,8 +119,7 @@ class MenuItem extends Component {
 }
 
 const MenuItemMod = (props) => {
-  const { mod, updateModSelection, modSelections } = props;
-  const modSelection = modSelections.find((a) => a.name === mod.name);
+  const { mod, updateModSelection, modSelection } = props;
   if (!modSelection) return null;
   return (
     <Col key={mod._id}>
@@ -131,23 +129,37 @@ const MenuItemMod = (props) => {
         </Col>
       </Row>
       <Row>
-        {mod.options.map((option, index) => (
-          <OptionContainer key={option.name}>
-            <OptionLabel for={option.name}>
-              {option.name} ( +{formatPriceFromFloatString(option.price)})
-            </OptionLabel>
-            <OptionInput
-              name={mod.name}
-              id={option.name}
-              value={option.name}
-              checked={index === mod.defaultOptionIndex}
-              type={mod.type === "multiple" ? "checkbox" : "radio"}
-              onChange={(e) =>
-                updateModSelection(mod, option, e.target.checked)
-              }
-            />
-          </OptionContainer>
-        ))}
+        <Col>
+          {mod.options.map((option) => (
+            <Row key={option.name}>
+              <Col xs="3">
+                <OptionInput
+                  name={mod.name}
+                  id={option.name}
+                  value={option.name}
+                  checked={
+                    mod.type === "multiple"
+                      ? modSelection.selectedOptions.find(
+                          (a) => a._id === option._id
+                        )
+                      : modSelection.selectedOptions._id === option._id
+                  }
+                  type={mod.type === "multiple" ? "checkbox" : "radio"}
+                  onChange={(e) =>
+                    updateModSelection(mod, option, e.target.checked)
+                  }
+                />
+              </Col>
+              <Col xs="9">
+                <Row>
+                  <OptionLabel for={option.name}>
+                    {option.name} ( +{formatPriceFromFloatString(option.price)})
+                  </OptionLabel>
+                </Row>
+              </Col>
+            </Row>
+          ))}
+        </Col>
       </Row>
     </Col>
   );

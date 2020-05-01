@@ -1,22 +1,16 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import {
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  CardText,
   Row,
   Col,
-  CardImg,
-  Card,
 } from "reactstrap";
-import { completeOrder, refundOrder } from "../../actions/orders";
+import { deliverOrder, refundOrder } from "../../actions/orders";
 import { formatPriceFromFloatString } from "../../services/formatting";
 
 import { Button } from "../styles";
 
-const ActiveOrder = (props) => {
-  const { customer, orderItems } = props.activeOrder;
+const completedOrder = (props) => {
+  const { customer, orderItems } = props.completedOrder;
   return (
     <Col xs="12" md="6" lg="4">
       <Row>
@@ -49,21 +43,21 @@ const ActiveOrder = (props) => {
           );
         })}
       </Row>
-      <Row>{props.activeOrder.method}</Row>
+      <Row>{props.completedOrder.method}</Row>
       <Row>
-        <Col>{formatPriceFromFloatString(props.activeOrder.total)}</Col>
+        <Col>{formatPriceFromFloatString(props.completedOrder.total)}</Col>
       </Row>
       <Row>
         <Col>
           <Button
             color="primary"
-            onClick={() => props.refundOrder(props.activeOrder._id)}
+            onClick={() => props.refundOrder(props.completedOrder._id)}
             buttonText="Refund"
           />
           <Button
             color="primary"
-            onClick={() => props.completeOrder(props.activeOrder._id)}
-            buttonText="Complete"
+            onClick={() => props.deliverOrder(props.completedOrder._id)}
+            buttonText="Deliver"
           />
         </Col>
       </Row>
@@ -77,8 +71,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  completeOrder,
+  deliverOrder,
   refundOrder,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ActiveOrder);
+export default connect(mapStateToProps, mapDispatchToProps)(completedOrder);

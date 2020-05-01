@@ -13,6 +13,7 @@ import {
 import { removeFromCart } from "../../actions/cart";
 
 import { Button } from "../styles";
+import { formatImgurUrl } from "../../services/formatting";
 
 const CartItem = (props) => {
   const { orderItem } = props;
@@ -25,13 +26,9 @@ const CartItem = (props) => {
           <CardText>${parseFloat(orderItem.price).toFixed(2)}</CardText>
           <Row>
             {modifications.map((selectedMod) => {
-              const menuItemMod = menuItem.modifications.find(
-                (a) => (a.name = selectedMod.name)
-              );
               return (
                 <SelectedOptions
                   selectedMod={selectedMod}
-                  menuItemMod={menuItemMod}
                   key={selectedMod._id}
                 />
               );
@@ -51,7 +48,7 @@ const CartItem = (props) => {
 const SelectedOptions = (props) => (
   <Col>
     <Row>
-      <Col>{props.menuItemMod.name}</Col>
+      <Col>{props.selectedMod.name}</Col>
     </Row>
     {Array.isArray(props.selectedMod.selectedOptions) ? (
       <Col>

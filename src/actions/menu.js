@@ -76,13 +76,14 @@ export const removeModification = (modificationId) => async (dispatch) => {
   }
 };
 
-export const getMenu = () => async (dispatch) => {
+export const getMenu = (vendorId) => async (dispatch) => {
   try {
     dispatch({ type: types.GET_MENU });
-    const response = await Axios.get("/vendors/menu");
+    const response = await Axios.get(
+      `/vendors/menu?${vendorId ? "vendorId=" + vendorId : ""}`
+    );
     dispatch({ type: types.GET_MENU_SUCCESS, payload: response.data });
   } catch (error) {
     dispatch({ type: types.GET_MENU_FAIL, payload: { error } });
   }
 };
-

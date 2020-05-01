@@ -9,6 +9,10 @@ import {
   Navbar,
   NavItem,
   NavbarText,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownItem,
+  DropdownMenu,
 } from "reactstrap";
 import { logout } from "../actions/session";
 import { NavLink } from "../components/styles";
@@ -76,6 +80,22 @@ const Example = (props) => {
                   </NavLink>
                 )}
               </NavItem>
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  Orders
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem>
+                    <NavLink onClick={() => history.push("/")}>Active</NavLink>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <NavLink onClick={() => history.push("/orderHistory")}>
+                      History
+                    </NavLink>
+                  </DropdownItem>
+                  <DropdownItem divider />
+                </DropdownMenu>
+              </UncontrolledDropdown>
             </Nav>
           ) : null}
         </Collapse>

@@ -142,13 +142,10 @@ export const InputErrorMessage = styled.small`
   color: red;
 `;
 
-export const OptionContainer = styled(BSCol)`
-  display: flex;
-`;
-
 export const OptionLabel = styled(BSLabel)``;
 
 export const OptionInput = styled(BSInput)``;
+
 export const NavLink = styled(BSNavLink)`
   cursor: pointer;
 `;
@@ -156,6 +153,11 @@ const ButtonBase = styled(BSButton)`
   background: ${(props) => colors[props.color]};
   width: ${(props) => (props.color === "link" ? "" : "20%")};
   min-width: 100px;
+  margin: 1rem 2% 2rem 2%;
+`;
+
+export const SmallButton = styled(BSButton)`
+  background: ${(props) => colors[props.color]};
   margin: 1rem 2% 2rem 2%;
 `;
 
@@ -208,12 +210,11 @@ export const EditOptionContainer = styled(BSRow)`
   }
 `;
 
-export const ViewOptionsList = styled(BSRow)`
-`
+export const ViewOptionsList = styled(BSRow)``;
 
 export const ViewModificationsList = styled(BSRow)`
   align-items: flex-start;
-`
+`;
 
 export const ViewOptionsItem = styled(BSCol)`
   ${(props) =>

@@ -10,13 +10,13 @@ import {
   CardImg,
   Card,
 } from "reactstrap";
-import { completeOrder, refundOrder } from "../../actions/orders";
+import { refundOrder } from "../../actions/orders";
 import { formatPriceFromFloatString } from "../../services/formatting";
 
 import { Button } from "../styles";
 
-const ActiveOrder = (props) => {
-  const { customer, orderItems } = props.activeOrder;
+const OrderHistoryItem = (props) => {
+  const { customer, orderItems } = props.orderHistoryItem;
   return (
     <Col xs="12" md="6" lg="4">
       <Row>
@@ -38,7 +38,7 @@ const ActiveOrder = (props) => {
                       <p>
                         <strong>{mod.name}: </strong>
                         {Array.isArray(mod.selectedOptions)
-                          ? mod.selectedOptions.map(a => a.name).join(", ")
+                          ? mod.selectedOptions.map((a) => a.name).join(", ")
                           : mod.selectedOptions.name}
                       </p>
                     </Col>
@@ -49,21 +49,18 @@ const ActiveOrder = (props) => {
           );
         })}
       </Row>
-      <Row>{props.activeOrder.method}</Row>
       <Row>
-        <Col>{formatPriceFromFloatString(props.activeOrder.total)}</Col>
+        <Col>{props.orderHistoryItem.method}</Col>
+      </Row>
+      <Row>
+        <Col>{formatPriceFromFloatString(props.orderHistoryItem.total)}</Col>
       </Row>
       <Row>
         <Col>
           <Button
             color="primary"
-            onClick={() => props.refundOrder(props.activeOrder._id)}
+            onClick={() => props.refundOrder(props.orderHistoryItem._id)}
             buttonText="Refund"
-          />
-          <Button
-            color="primary"
-            onClick={() => props.completeOrder(props.activeOrder._id)}
-            buttonText="Complete"
           />
         </Col>
       </Row>
@@ -77,8 +74,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  completeOrder,
   refundOrder,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ActiveOrder);
+export default connect(mapStateToProps, mapDispatchToProps)(OrderHistoryItem);

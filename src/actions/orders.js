@@ -11,6 +11,32 @@ export const getActiveOrders = () => async (dispatch) => {
   }
 };
 
+export const getCompletedOrders = () => async (dispatch) => {
+  try {
+    dispatch({ type: types.GET_COMPLETED_ORDERS });
+    const response = await Axios.get("/orders/completedOrders");
+    dispatch({
+      type: types.GET_COMPLETED_ORDERS_SUCCESS,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({ type: types.GET_COMPLETED_ORDERS_FAIL, payload: { error } });
+  }
+};
+
+export const getOrderHistory = () => async (dispatch) => {
+  try {
+    dispatch({ type: types.GET_ORDER_HISTORY });
+    const response = await Axios.get("/orders/orderHistory");
+    dispatch({
+      type: types.GET_ORDER_HISTORY_SUCCESS,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({ type: types.GET_ORDER_HISTORY_FAIL, payload: { error } });
+  }
+};
+
 export const completeOrder = (orderId) => async (dispatch) => {
   try {
     dispatch({ type: types.COMPLETE_ORDER });
@@ -33,10 +59,10 @@ export const deliverOrder = (orderId) => async (dispatch) => {
 
 export const refundOrder = (orderId) => async (dispatch) => {
   try {
-    dispatch({ type: types.REFUND });
+    dispatch({ type: types.REFUND_ORDER });
     const response = await Axios.post("/orders/refundOrder", { orderId });
-    dispatch({ type: types.REFUND_SUCCESS, payload: response.data });
+    dispatch({ type: types.REFUND_ORDER_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.REFUND_FAIL, payload: { error } });
+    dispatch({ type: types.REFUND_ORDER_FAIL, payload: { error } });
   }
 };

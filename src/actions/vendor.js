@@ -1,4 +1,5 @@
 import types from "./types";
+import { getMenu } from "./menu";
 import Axios from "axios";
 
 import { setBearerToken } from "../services/http";
@@ -29,6 +30,7 @@ export const getVendors = () => async (dispatch) => {
 
 export const selectVendor = (vendorId) => (dispatch) => {
   localStorage.setItem("selectedVendorId", vendorId);
+  dispatch(getMenu(vendorId));
   dispatch({ type: types.SELECT_VENDOR, payload: { vendorId } });
 };
 

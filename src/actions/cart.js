@@ -54,6 +54,21 @@ export const toggleOrderMethod = (orderMethod) => async (dispatch) => {
   }
 };
 
+export const setTip = (tipAmount) => async (dispatch) => {
+  try {
+    dispatch({ type: types.SET_TIP });
+    const response = await Axios.post("/orders/setTip", {
+      tipAmount,
+    });
+    dispatch({
+      type: types.SET_TIP_SUCCESS,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({ type: types.SET_TIP_FAIL, payload: { error } });
+  }
+};
+
 export const pay = (paymentDetails) => async (dispatch) => {
   try {
     dispatch({ type: types.PAY });

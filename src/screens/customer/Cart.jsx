@@ -1,21 +1,48 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { Container, Row, Col, Button } from "../../components/styles";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Label,
+  Input,
+  SmallButton,
+} from "../../components/styles";
 import {
   toggleOrderMethod,
   toggleReadyToPay,
-  getCart
+  getCart,
+  setTip,
 } from "../../actions/cart";
 import { getVendors } from "../../actions/vendor";
 import CartItem from "../../components/customer/CartItem";
 import PaymentModal from "../../components/customer/payment/PaymentModal";
 import { formatPriceFromFloatString } from "../../services/formatting";
+import { InputGroupAddon, InputGroupText, InputGroup } from "reactstrap";
 
 export class Cart extends Component {
+  state = {
+    tip: "0.00",
+    total: "",
+  };
+
   componentDidMount() {
     this.props.getVendors();
     this.props.getCart();
+    this.setState({
+      total: parseFloat(this.props.totalPrice) + parseFloat(this.state.tip),
+    });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.totalPrice !== prevProps.totalPrice) {
+      console.log(this.props.totalPrice, this.state.tip);
+      this.setState({
+        total: parseFloat(this.props.totalPrice) + parseFloat(this.state.tip),
+      });
+    }
   }
 
   toggleOrderMethod(orderMethod) {
@@ -23,7 +50,15 @@ export class Cart extends Component {
   }
 
   placeOrder() {
+    this.props.setTip(this.state.tip);
     this.props.toggleReadyToPay(true);
+  }
+
+  updateTip(value) {
+    this.setState({
+      tip: value,
+      total: parseFloat(this.props.totalPrice) + parseFloat(value),
+    });
   }
 
   render() {
@@ -41,9 +76,9 @@ export class Cart extends Component {
     return (
       <Container>
         <Row>
-          <br />
-          <br />
-          <Col>Cart for {this.props.selectedVendor.businessName}</Col>
+          <Col>
+            <h4>Cart for {this.props.selectedVendor.businessName}</h4>
+          </Col>
         </Row>
         <Row>
           {this.props.orderItems.map((orderItem) => {
@@ -67,7 +102,48 @@ export class Cart extends Component {
           </Col>
         </Row>
         <Row>
-          <Col>{formatPriceFromFloatString(this.props.totalPrice)}</Col>
+          <Col>Total: {formatPriceFromFloatString(this.state.total)}</Col>
+        </Row>
+        <Row>
+          <Col xs="6" md="4">
+            <Row>
+              <Col xs="3">
+                <Label to="tip">Tip: </Label>
+              </Col>
+              <Col xs="12">
+                <InputGroup>
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>$</InputGroupText>
+                  </InputGroupAddon>
+                  <Input
+                    name="tip"
+                    value={this.state.tip}
+                    onChange={(e) => this.updateTip(e.target.value)}
+                  />
+                </InputGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs="6">
+                <SmallButton
+                  onClick={() =>
+                    this.updateTip((this.props.totalPrice * 0.15).toFixed(2))
+                  }
+                >
+                  15%
+                </SmallButton>
+              </Col>
+              <Col xs="6">
+                <SmallButton
+                  onClick={() =>
+                    this.updateTip((this.props.totalPrice * 0.2).toFixed(2))
+                  }
+                >
+                  20%
+                </SmallButton>
+              </Col>
+            </Row>
+          </Col>
         </Row>
         <Row>
           <Col>
@@ -91,7 +167,7 @@ const mapStateToProps = (state) => ({
   selectedVendor: state.vendor.selectedVendor,
   orderMethod: state.cart.method,
   totalPrice: state.cart.total,
-  isLoading: state.cart.isLoading
+  isLoading: state.cart.isLoading,
 });
 
 const mapDispatchToProps = {
@@ -99,6 +175,7 @@ const mapDispatchToProps = {
   getVendors,
   getCart,
   toggleReadyToPay,
+  setTip,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

@@ -10,7 +10,7 @@ import { getVendors } from "./actions/vendor";
 import Navbar from "./components/Navbar";
 import VendorLanding from "./screens/vendor/Landing";
 import RootLanding from "./screens/RootLanding";
-import ActiveOrders from "./screens/vendor/ActiveOrders";
+import OrderHistory from "./screens/vendor/OrderHistory";
 import Menu from "./screens/customer/Menu";
 import Cart from "./screens/customer/Cart";
 import EditMenu from "./screens/vendor/EditMenu";
@@ -31,6 +31,7 @@ function App(props) {
       ) : (
         <Switch>
           <Route path="/vendor" component={VendorLanding} />
+          <Route path="/orderHistory" component={OrderHistory} />
           <Route path="/cart" component={Cart} />
           <Route path="/menu" component={Menu} />
           <Route path="/editMenu" component={EditMenu} />
