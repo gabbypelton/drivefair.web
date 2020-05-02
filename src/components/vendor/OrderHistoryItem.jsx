@@ -68,10 +68,7 @@ const OrderHistoryItem = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  selectedVendor: state.vendor.selectedVendor,
-  isLoading: state.cart.isLoading,
-});
+const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = {
   refundOrder,

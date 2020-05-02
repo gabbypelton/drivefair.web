@@ -38,7 +38,7 @@ const ActiveOrder = (props) => {
                       <p>
                         <strong>{mod.name}: </strong>
                         {Array.isArray(mod.selectedOptions)
-                          ? mod.selectedOptions.map(a => a.name).join(", ")
+                          ? mod.selectedOptions.map((a) => a.name).join(", ")
                           : mod.selectedOptions.name}
                       </p>
                     </Col>
@@ -71,10 +71,7 @@ const ActiveOrder = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  selectedVendor: state.vendor.selectedVendor,
-  isLoading: state.cart.isLoading,
-});
+const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = {
   completeOrder,

@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import {
-  Row,
-  Col,
-} from "reactstrap";
+import { Row, Col } from "reactstrap";
 import { deliverOrder, refundOrder } from "../../actions/orders";
 import { formatPriceFromFloatString } from "../../services/formatting";
 
@@ -32,7 +29,7 @@ const completedOrder = (props) => {
                       <p>
                         <strong>{mod.name}: </strong>
                         {Array.isArray(mod.selectedOptions)
-                          ? mod.selectedOptions.map(a => a.name).join(", ")
+                          ? mod.selectedOptions.map((a) => a.name).join(", ")
                           : mod.selectedOptions.name}
                       </p>
                     </Col>
@@ -65,10 +62,7 @@ const completedOrder = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  selectedVendor: state.vendor.selectedVendor,
-  isLoading: state.cart.isLoading,
-});
+const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = {
   deliverOrder,

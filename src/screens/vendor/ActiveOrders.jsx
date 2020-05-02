@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { Container, Row, Col, Button } from "../../components/styles";
+import {
+  Container,
+  Row,
+  OrderList,
+  OrderListHeading,
+  OrderListBody,
+} from "../../components/styles";
 import { getActiveOrders, getCompletedOrders } from "../../actions/orders";
 import ActiveOrder from "../../components/vendor/ActiveOrder";
 import CompletedOrder from "../../components/vendor/CompletedOrder";
@@ -23,14 +29,12 @@ export class ActiveOrders extends Component {
   render() {
     return (
       <Container>
-        {this.props.activeOrders.length ? (
-          <div>
-            <Row>
-              <Col>
-                <h4>Active Orders</h4>
-              </Col>
-            </Row>
-            <Row>
+        <OrderList>
+          <OrderListHeading>
+            <h4>Active Orders</h4>
+          </OrderListHeading>
+          {this.props.activeOrders.length ? (
+            <OrderListBody>
               {this.props.activeOrders.map((activeOrder) => {
                 return (
                   <ActiveOrder
@@ -39,21 +43,19 @@ export class ActiveOrders extends Component {
                   />
                 );
               })}
-            </Row>
-          </div>
-        ) : (
-          <Row>
-            <h4>No Active Orders!</h4>
-          </Row>
-        )}
-        {this.props.activeOrders.length ? (
-          <div>
-            <Row>
-              <Col>
-                <h4>Completed Orders</h4>
-              </Col>
-            </Row>
-            <Row>
+            </OrderListBody>
+          ) : (
+            <OrderListBody>
+              <h5>No Active Orders!</h5>
+            </OrderListBody>
+          )}
+        </OrderList>
+        {this.props.completedOrders.length ? (
+          <OrderList>
+            <OrderListHeading xs="12">
+              <h4>Completed Orders</h4>
+            </OrderListHeading>
+            <OrderListBody>
               {this.props.completedOrders.map((completedOrder) => {
                 return (
                   <CompletedOrder
@@ -62,12 +64,14 @@ export class ActiveOrders extends Component {
                   />
                 );
               })}
-            </Row>
-          </div>
+            </OrderListBody>
+          </OrderList>
         ) : (
-          <Row>
-            <h4>No Completed Orders!</h4>
-          </Row>
+          <OrderList>
+            <OrderListHeading xs="12">
+              <h4>No Completed Orders!</h4>
+            </OrderListHeading>
+          </OrderList>
         )}
       </Container>
     );
