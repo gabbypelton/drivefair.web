@@ -66,7 +66,7 @@ const Example = (props) => {
           </Nav>
           <Nav navbar>
             <NavItem>
-              <NavLink onClick={() => history.goBack()}>Go Back</NavLink>
+              <NavLink onClick={() => history.push("/")}>Home</NavLink>
             </NavItem>
           </Nav>
           {props.emailIsConfirmed ? (
@@ -86,7 +86,7 @@ const Example = (props) => {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    <NavLink onClick={() => history.push("/")}>Active</NavLink>
+                    <NavLink onClick={() => history.push("/activeOrders")}>Active</NavLink>
                   </DropdownItem>
                   <DropdownItem>
                     <NavLink onClick={() => history.push("/orderHistory")}>
