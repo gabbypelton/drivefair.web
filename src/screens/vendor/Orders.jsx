@@ -1,15 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Spinner } from "reactstrap";
 
 import {
   Container,
+  Row,
+  OrderList,
   OrderListHeading,
   OrderListBody,
-  OrderList,
 } from "../../components/styles";
 import { getActiveOrders, getCompletedOrders } from "../../actions/orders";
-import Order from "../../components/customer/Order";
-import { Spinner } from "reactstrap";
+import ActiveOrder from "../../components/vendor/ActiveOrder";
+import CompletedOrder from "../../components/vendor/CompletedOrder";
 
 export class ActiveOrders extends Component {
   componentDidMount() {
@@ -38,30 +40,42 @@ export class ActiveOrders extends Component {
 const OrderContainer = (props) => (
   <OrderList>
     <OrderListHeading>
-      <h4>{props.orderType} Orders</h4>
+      <h4>Order History</h4>
     </OrderListHeading>
-    {props.orders.length ? (
+    {props.isLoading ? (
       <OrderListBody>
-        {props.isLoading ? (
-          <Spinner />
-        ) : (
-          props.orders.map((order) => {
-            return <Order key={order._id} order={order} />;
-          })
-        )}
+        <Spinner />
+      </OrderListBody>
+    ) : props.orders.length ? (
+      <OrderListBody>
+        {props.orders.map((order) => (
+          <Order
+            key={order._id}
+            order={order}
+            orderType={props.orderType}
+          />
+        ))}
       </OrderListBody>
     ) : (
       <OrderListBody>
-        <h5>No {props.orderType} Orders!</h5>
+        <h5>None yet!</h5>
       </OrderListBody>
     )}
   </OrderList>
 );
 
+const Order = (props) =>
+  props.orderType === "Active" ? (
+    <ActiveOrder activeOrder={props.order} />
+  ) : (
+    <CompletedOrder completedOrder={props.order} />
+  );
+
 const mapStateToProps = (state) => ({
   activeOrders: state.orders.activeOrders,
   completedOrders: state.orders.completedOrders,
   user: state.session.profile,
+  isLoading: state.orders.isLoading
 });
 
 const mapDispatchToProps = {

@@ -2,9 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { Col, Container, Jumbotron } from "reactstrap";
 
-import { Button, Modal, ModalHeader, ModalFooter, Row } from "../../styles";
-import Login from "./Login";
-import Register from "./Register";
+import { Button, Row } from "../../components/styles";
+import Login from "../../components/vendor/auth/Login";
+import Register from "../../components/vendor/auth/Register";
 
 class AuthContainer extends React.Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class AuthContainer extends React.Component {
       selectedModal: "",
       modalTitle: "",
       cta: "",
-      nestedModal: false
+      nestedModal: false,
     };
 
     this.toggleNested = this.toggleNested.bind(this);
@@ -23,19 +23,19 @@ class AuthContainer extends React.Component {
     this.setState({
       selectedModal: "register",
       modalTitle: "Sign up.",
-      cta: "Click here if you already have an account."
+      cta: "Click here if you already have an account.",
     });
   }
 
   toggleNested() {
     this.setState({
-      nestedModal: !this.state.nestedModal
+      nestedModal: !this.state.nestedModal,
     });
   }
 
   toggleAll() {
     this.setState({
-      nestedModal: !this.state.nestedModal
+      nestedModal: !this.state.nestedModal,
     });
   }
 
@@ -53,7 +53,7 @@ class AuthContainer extends React.Component {
     this.setState({
       selectedModal,
       modalTitle,
-      cta
+      cta,
     });
   }
 
@@ -61,8 +61,8 @@ class AuthContainer extends React.Component {
     return (
       <Container>
         <Jumbotron style={{ backgroundColor: "#F7F9FB" }}>
-          <h1 className="display-3">Welcome to Delivery</h1>
-          <p className="lead">Let's get you something to eat.</p>
+          <h1 className="display-3">Welcome, Vendor!</h1>
+          <p className="lead">Let's get you some orders.</p>
           <p className="lead"></p>
         </Jumbotron>
         <Row>
@@ -87,7 +87,7 @@ class AuthContainer extends React.Component {
   }
 }
 
-const ModalSelector = props => {
+const ModalSelector = (props) => {
   return props.selectedModal === "login" ? <Login /> : <Register />;
 };
 

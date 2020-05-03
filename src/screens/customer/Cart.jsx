@@ -38,7 +38,6 @@ export class Cart extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.totalPrice !== prevProps.totalPrice) {
-      console.log(this.props.totalPrice, this.state.tip);
       this.setState({
         total: parseFloat(this.props.totalPrice) + parseFloat(this.state.tip),
       });

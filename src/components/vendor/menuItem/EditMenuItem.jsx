@@ -36,7 +36,7 @@ export class EditMenuItem extends Component {
     const { modifications, menuItem } = this.props;
     if (menuItem) {
       menuItem.modifications.forEach((menuItemMod) => {
-        modifications.find((a) => (a._id = menuItemMod._id)).selected = true;
+        modifications.find((a) => (a._id === menuItemMod._id)).selected = true;
       });
     }
     this.setState({

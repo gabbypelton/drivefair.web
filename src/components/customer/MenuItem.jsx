@@ -8,14 +8,10 @@ import {
   Row,
   Col,
   CardImg,
-  FormGroup,
-  Label,
-  Input,
-  InputGroup,
   Card,
 } from "reactstrap";
 import { addToCart } from "../../actions/cart";
-import { OptionContainer, OptionLabel, OptionInput, Button } from "../styles";
+import { Button, ModificationSelect, ModificationOption } from "../styles";
 import {
   formatPriceFromFloatString,
   formatImgurUrl,
@@ -23,58 +19,46 @@ import {
 
 class MenuItem extends Component {
   state = {
-    modSelections: [],
+    modifications: [],
   };
 
   componentDidMount() {
-    const INITIAL_MOD_SELECTIONS = this.props.menuItem.modifications.map(
-      (modification) => {
-        const defaultSelectedOption =
-          modification.options[modification.defaultOptionIndex];
-        return {
-          name: modification.name,
-          selectedOptions:
-            modification.type === "single"
-              ? defaultSelectedOption
-              : [defaultSelectedOption],
-        };
-      }
-    );
+    const { modifications } = this.props.menuItem;
+    modifications.forEach((modification) => {
+      modification.options[modification.defaultOptionIndex].selected = true;
+    });
     this.setState({
-      modSelections: INITIAL_MOD_SELECTIONS,
+      modifications,
     });
   }
 
-  updateModSelection(mod, option, checked) {
-    let { modSelections } = this.state;
-    let currentModSelection = modSelections.find((a) => a.name === mod.name);
-    if (mod.type === "single") {
-      currentModSelection.selectedOptions = option;
-    } else {
-      if (checked) {
-        currentModSelection.selectedOptions = [
-          ...currentModSelection.selectedOptions,
-          option,
-        ];
+  toggleModificationOption(modIndex, optionIndex) {
+    let { modifications } = this.state;
+    if (modIndex !== null && optionIndex !== null) {
+      const modification = modifications[modIndex];
+      const option = modification.options[optionIndex];
+      if (modification.type === "single") {
+        modification.options.forEach((option, index) => {
+          if (index === optionIndex) {
+            option.selected = true;
+          } else {
+            option.selected = false;
+          }
+        });
       } else {
-        currentModSelection.selectedOptions = currentModSelection.selectedOptions.filter(
-          (a) => a.name === option.name
-        );
+        option.selected = !option.selected;
       }
     }
-    modSelections = [
-      ...modSelections.filter((a) => a.name !== currentModSelection.name),
-      currentModSelection,
-    ];
-    this.setState({
-      modSelections,
-    });
+    this.setState({ modifications });
   }
 
   addToCart() {
+    const modifications = this.state.modifications.map((mod) => {
+      return { ...mod, options: mod.options.filter((a) => a.selected) };
+    });
     this.props.addToCart(
       this.props.menuItem,
-      this.state.modSelections,
+      modifications,
       this.props.selectedVendor._id
     );
   }
@@ -96,13 +80,26 @@ class MenuItem extends Component {
             <CardSubtitle>{menuItem.description}</CardSubtitle>
             <CardText>${parseFloat(menuItem.price).toFixed(2)}</CardText>
             <Row>
-              {menuItem.modifications.map((mod, modIndex) => (
-                <MenuItemMod
-                  key={mod._id}
-                  mod={mod}
-                  modSelection={this.state.modSelections[modIndex]}
-                  updateModSelection={this.updateModSelection.bind(this)}
-                />
+              {this.state.modifications.map((mod, modIndex) => (
+                <Col key={mod._id}>
+                  <h4>{mod.name}</h4>
+                  <ModificationSelect>
+                    {mod.options.map((option, optionIndex) => {
+                      return (
+                        <ModificationOption
+                          key={option._id}
+                          value={optionIndex}
+                          selected={option.selected}
+                          onClick={() =>
+                            this.toggleModificationOption(modIndex, optionIndex)
+                          }
+                        >
+                          {option.name}
+                        </ModificationOption>
+                      );
+                    })}
+                  </ModificationSelect>{" "}
+                </Col>
               ))}
             </Row>
             <Button
@@ -117,53 +114,6 @@ class MenuItem extends Component {
     );
   }
 }
-
-const MenuItemMod = (props) => {
-  const { mod, updateModSelection, modSelection } = props;
-  if (!modSelection) return null;
-  return (
-    <Col key={mod._id}>
-      <Row>
-        <Col>
-          <Label for={mod.name}>{mod.name}</Label>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          {mod.options.map((option) => (
-            <Row key={option.name}>
-              <Col xs="3">
-                <OptionInput
-                  name={mod.name}
-                  id={option.name}
-                  value={option.name}
-                  checked={
-                    mod.type === "multiple"
-                      ? modSelection.selectedOptions.find(
-                          (a) => a._id === option._id
-                        )
-                      : modSelection.selectedOptions._id === option._id
-                  }
-                  type={mod.type === "multiple" ? "checkbox" : "radio"}
-                  onChange={(e) =>
-                    updateModSelection(mod, option, e.target.checked)
-                  }
-                />
-              </Col>
-              <Col xs="9">
-                <Row>
-                  <OptionLabel for={option.name}>
-                    {option.name} ( +{formatPriceFromFloatString(option.price)})
-                  </OptionLabel>
-                </Row>
-              </Col>
-            </Row>
-          ))}
-        </Col>
-      </Row>
-    </Col>
-  );
-};
 
 const mapStateToProps = (state) => ({
   selectedVendor: state.vendor.selectedVendor,

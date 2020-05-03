@@ -2,10 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { Col, Container, Jumbotron } from "reactstrap";
 
-import { Button, Modal, ModalHeader, ModalFooter } from "../../styles";
-import Login from "./Login";
-import Register from "./Register";
-import { Row } from "../../styles";
+import { Button, Row } from "../../components/styles";
+import Login from "../../components/customer/auth/Login";
+import Register from "../../components/customer/auth/Register";
 
 class AuthContainer extends React.Component {
   constructor(props) {
@@ -62,8 +61,8 @@ class AuthContainer extends React.Component {
     return (
       <Container>
         <Jumbotron style={{ backgroundColor: "#F7F9FB" }}>
-          <h1 className="display-3">Welcome, Vendor!</h1>
-          <p className="lead">Let's get you some orders.</p>
+          <h1 className="display-3">Welcome to Delivery</h1>
+          <p className="lead">Let's get you something to eat.</p>
           <p className="lead"></p>
         </Jumbotron>
         <Row>

@@ -29,6 +29,12 @@ export default (state = initialState, { type, payload }) => {
         completedOrders: [...payload.completedOrders],
         isLoading: false,
       };
+    case types.GET_ORDER_HISTORY_SUCCESS:
+      return {
+        ...state,
+        orderHistory: [...payload.orderHistory],
+        isLoading: false,
+      };
     case types.COMPLETE_ORDER_SUCCESS:
       return {
         ...state,

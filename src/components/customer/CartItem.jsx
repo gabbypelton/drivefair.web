@@ -13,7 +13,6 @@ import {
 import { removeFromCart } from "../../actions/cart";
 
 import { Button } from "../styles";
-import { formatImgurUrl } from "../../services/formatting";
 
 const CartItem = (props) => {
   const { orderItem } = props;
@@ -27,7 +26,7 @@ const CartItem = (props) => {
           <Row>
             {modifications.map((selectedMod) => {
               return (
-                <SelectedOptions
+                <Options
                   selectedMod={selectedMod}
                   key={selectedMod._id}
                 />
@@ -45,14 +44,14 @@ const CartItem = (props) => {
   );
 };
 
-const SelectedOptions = (props) => (
+const Options = (props) => (
   <Col>
     <Row>
       <Col>{props.selectedMod.name}</Col>
     </Row>
-    {Array.isArray(props.selectedMod.selectedOptions) ? (
+    {Array.isArray(props.selectedMod.options) ? (
       <Col>
-        {props.selectedMod.selectedOptions.map((option) => {
+        {props.selectedMod.options.map((option) => {
           return (
             <Row>
               <Col>{option.name}</Col>
@@ -62,7 +61,7 @@ const SelectedOptions = (props) => (
       </Col>
     ) : (
       <Row>
-        <Col>{props.selectedMod.selectedOptions.name}</Col>
+        <Col>{props.selectedMod.options.name}</Col>
       </Row>
     )}
     <Row></Row>

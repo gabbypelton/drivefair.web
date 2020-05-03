@@ -86,7 +86,7 @@ const Example = (props) => {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    <NavLink onClick={() => history.push("/activeOrders")}>Active</NavLink>
+                    <NavLink onClick={() => history.push("/orders")}>Active</NavLink>
                   </DropdownItem>
                   <DropdownItem>
                     <NavLink onClick={() => history.push("/orderHistory")}>

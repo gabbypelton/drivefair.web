@@ -19,32 +19,38 @@ export class ActiveOrders extends Component {
   render() {
     return (
       <OrderList>
-      <OrderListHeading>
-        <h4>Order History</h4>
-      </OrderListHeading>
-      {this.props.orderHistory.length ? (
-        <OrderListBody>
-          {this.props.isLoading ? (
+        <OrderListHeading>
+          <h4>Order History</h4>
+        </OrderListHeading>
+        {this.props.isLoading ? (
+          <OrderListBody>
             <Spinner />
-          ) : (
-            this.props.orderHistory.map((order) => {
-              return <Order key={order._id} order={order} />;
-            })
-          )}
-        </OrderListBody>
-      ) : (
-        <OrderListBody>
-          <h5>Looks like we haven't helped you yet!</h5>
-        </OrderListBody>
-      )}
-    </OrderList>
+          </OrderListBody>
+        ) : this.props.orderHistory.length ? (
+          <OrderListBody>
+            {this.props.orderHistory.map((order) => (
+              <Order
+                key={order._id}
+                order={order}
+                orderType={this.props.orderType}
+              />
+            ))}
+          </OrderListBody>
+        ) : (
+          <OrderListBody>
+            <h5>None yet!</h5>
+          </OrderListBody>
+        )}
+      </OrderList>
     );
   }
 }
 
+
 const mapStateToProps = (state) => ({
   orderHistory: state.orders.orderHistory,
   user: state.session.profile,
+  isLoading: state.orders.isLoading
 });
 
 const mapDispatchToProps = {

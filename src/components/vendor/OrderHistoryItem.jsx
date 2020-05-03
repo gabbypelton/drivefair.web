@@ -16,7 +16,7 @@ import { formatPriceFromFloatString } from "../../services/formatting";
 import { Button } from "../styles";
 
 const OrderHistoryItem = (props) => {
-  const { customer, orderItems } = props.orderHistoryItem;
+  const { customer, orderItems } = props.order;
   return (
     <Col xs="12" md="6" lg="4">
       <Row>
@@ -37,9 +37,9 @@ const OrderHistoryItem = (props) => {
                     <Col key={mod._id}>
                       <p>
                         <strong>{mod.name}: </strong>
-                        {Array.isArray(mod.selectedOptions)
-                          ? mod.selectedOptions.map((a) => a.name).join(", ")
-                          : mod.selectedOptions.name}
+                        {Array.isArray(mod.options)
+                          ? mod.options.map((a) => a.name).join(", ")
+                          : mod.options.name}
                       </p>
                     </Col>
                   );
@@ -50,16 +50,16 @@ const OrderHistoryItem = (props) => {
         })}
       </Row>
       <Row>
-        <Col>{props.orderHistoryItem.method}</Col>
+        <Col>{props.order.method}</Col>
       </Row>
       <Row>
-        <Col>{formatPriceFromFloatString(props.orderHistoryItem.total)}</Col>
+        <Col>{formatPriceFromFloatString(props.order.total)}</Col>
       </Row>
       <Row>
         <Col>
           <Button
             color="primary"
-            onClick={() => props.refundOrder(props.orderHistoryItem._id)}
+            onClick={() => props.refundOrder(props.order._id)}
             buttonText="Refund"
           />
         </Col>

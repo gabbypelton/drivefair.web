@@ -20,7 +20,7 @@ import { editModification, addModification } from "../../../actions/menu";
 const INITAL_STATE = {
   name: "",
   options: [],
-  type: "",
+  type: "single",
   defaultOptionIndex: null,
 };
 class EditModification extends Component {
@@ -49,7 +49,6 @@ class EditModification extends Component {
   }
 
   handleModificationChange(name, value) {
-    console.log({ name, value });
     this.setState({
       [name]: value,
     });
@@ -83,7 +82,7 @@ class EditModification extends Component {
   }
 
   render() {
-    const { name, options, price, type, defaultOptionIndex } = this.state;
+    const { name, options, type, defaultOptionIndex } = this.state;
     return (
       <ModificationFormGroup>
         <Row>{this.props.modification ? "Edit" : "New"} Modification</Row>

@@ -28,9 +28,9 @@ const completedOrder = (props) => {
                     <Col key={mod._id}>
                       <p>
                         <strong>{mod.name}: </strong>
-                        {Array.isArray(mod.selectedOptions)
-                          ? mod.selectedOptions.map((a) => a.name).join(", ")
-                          : mod.selectedOptions.name}
+                        {Array.isArray(mod.options)
+                          ? mod.options.map((a) => a.name).join(", ")
+                          : mod.options.name}
                       </p>
                     </Col>
                   );
