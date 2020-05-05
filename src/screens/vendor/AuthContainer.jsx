@@ -10,49 +10,34 @@ class AuthContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedModal: "",
-      modalTitle: "",
+      authType: "",
+      title: "",
       cta: "",
-      nestedModal: false,
     };
-
-    this.toggleNested = this.toggleNested.bind(this);
   }
 
   componentDidMount() {
     this.setState({
-      selectedModal: "register",
-      modalTitle: "Sign up.",
+      authType: "register",
+      title: "Sign up.",
       cta: "Click here if you already have an account.",
     });
   }
 
-  toggleNested() {
-    this.setState({
-      nestedModal: !this.state.nestedModal,
-    });
-  }
-
-  toggleAll() {
-    this.setState({
-      nestedModal: !this.state.nestedModal,
-    });
-  }
-
-  toggleSelectedModal() {
-    let { selectedModal, modalTitle, cta } = this.state;
-    if (selectedModal === "register") {
-      selectedModal = "login";
-      modalTitle = "Sign In.";
+  toggleAuthType() {
+    let { authType, title, cta } = this.state;
+    if (authType === "register") {
+      authType = "login";
+      title = "Sign In.";
       cta = "Click here if you need an account.";
     } else {
-      selectedModal = "register";
-      modalTitle = "Sign Up.";
+      authType = "register";
+      title = "Sign Up.";
       cta = "Click here if you already have an account.";
     }
     this.setState({
-      selectedModal,
-      modalTitle,
+      authType,
+      title,
       cta,
     });
   }
@@ -61,24 +46,19 @@ class AuthContainer extends React.Component {
     return (
       <Container>
         <Jumbotron style={{ backgroundColor: "#F7F9FB" }}>
-          <h1 className="display-3">Welcome, Vendor!</h1>
-          <p className="lead">Let's get you some orders.</p>
-          <p className="lead"></p>
+          <h1>Deliver, Denton.</h1>
         </Jumbotron>
         <Row>
           <Col>
             <Row>
-              <h1>{this.state.modalTitle}</h1>
+              <ModalSelector authType={this.state.authType} />
             </Row>
             <Row>
               <Button
                 color="link"
-                onClick={this.toggleSelectedModal.bind(this)}
+                onClick={this.toggleAuthType.bind(this)}
                 buttonText={this.state.cta}
               />
-            </Row>
-            <Row>
-              <ModalSelector selectedModal={this.state.selectedModal} />
             </Row>
           </Col>
         </Row>
@@ -88,7 +68,7 @@ class AuthContainer extends React.Component {
 }
 
 const ModalSelector = (props) => {
-  return props.selectedModal === "login" ? <Login /> : <Register />;
+  return props.authType === "login" ? <Login /> : <Register />;
 };
 
 export default connect()(AuthContainer);

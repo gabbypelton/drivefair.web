@@ -32,6 +32,11 @@ const asyncActions = [
   "DELIVER_ORDER",
   "LOG_IN",
   "SEND_CONFIRMATION_EMAIL",
+  "EDIT_ADDRESS",
+  "ADD_ADDRESS",
+  "GET_ADDRESSES",
+  "REMOVE_ADDRESS",
+  "SELECT_ADDRESS",
 ];
 const syncActions = ["LOG_OUT", "TOGGLE_READY_TO_PAY"];
 

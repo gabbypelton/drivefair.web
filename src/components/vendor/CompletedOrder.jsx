@@ -1,31 +1,30 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Row, Col } from "reactstrap";
 import moment from "moment";
 import { deliverOrder, refundOrder } from "../../actions/orders";
 import { formatPriceFromFloatString } from "../../services/formatting";
 
-import { Button } from "../styles";
+import { Row, Col, Button, OrderContainer, OrderItemContainer } from "../styles";
 
 const completedOrder = (props) => {
-  const { customer, orderItems, createdOn } = props.completedOrder;
-  // const { street, unit, city, state, zip } = customer.address;
+  const { customer, orderItems, createdOn, address } = props.completedOrder;
+  const { street, unit, city, state, zip } = address[0] ? address[0] : {};
   return (
-    <Col xs="12" md="6" lg="4">
+    <OrderContainer xs="12" md="6" lg="4">
       <Row>
         <Col>{moment(createdOn).format("MM-DD-YYYY @ hh:mm")}</Col>
       </Row>
       <Row>
-        <Col>
-          {customer.firstName} {customer.lastName}
-        </Col>
+        <Col>{customer.firstName}</Col>
       </Row>
       <Row>
         {orderItems.map((orderItem) => {
           return (
-            <Col key={orderItem._id} xs="12">
+            <OrderItemContainer key={orderItem._id} xs="12">
               <Row>
-                <h4>{orderItem.menuItem.name}</h4>
+                <Col>
+                  <h4>{orderItem.menuItem.name}</h4>
+                </Col>
               </Row>
               <Row>
                 {orderItem.modifications.map((mod) => {
@@ -41,13 +40,31 @@ const completedOrder = (props) => {
                   );
                 })}
               </Row>
-            </Col>
+            </OrderItemContainer>
           );
         })}
       </Row>
-      <Row>{props.completedOrder.method}</Row>
       <Row>
         <Col>{formatPriceFromFloatString(props.completedOrder.total)}</Col>
+      </Row>
+      {props.completedOrder.method === "DELIVERY" ? (
+        <Row>
+          <Col>
+            <Row>
+              <Col>
+                {street} {unit ? "#" + unit : null}
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                {city}, {state} {zip}
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      ) : null}
+      <Row>
+        <Col>{props.completedOrder.method}</Col>
       </Row>
       <Row>
         <Col>
@@ -63,7 +80,7 @@ const completedOrder = (props) => {
           />
         </Col>
       </Row>
-    </Col>
+    </OrderContainer>
   );
 };
 

@@ -172,6 +172,7 @@ export const MenuRow = styled(BSRow)`
 export const ModificationInputGroup = styled(BSInputGroup)``;
 
 export const TouchableHighlight = styled.div`
+  text-align: center;
   &:hover {
     cursor: pointer;
     background-color: ${colors.black};
@@ -226,7 +227,6 @@ export const OrderListHeading = styled(BSRow)`
 
 export const OrderListBody = styled(BSRow)`
   justify-content: center;
-  align-items: center;
 `;
 
 export const ViewOptionsItem = styled(BSCol)`
@@ -242,10 +242,17 @@ export const ViewOptionsItem = styled(BSCol)`
     `}
 `;
 
-export const OrderItemContainer = styled(BSCol)`
-  border: solid ${colors.black} 1px;
+export const OrderContainer = styled(BSCol)`
   margin: 0 0 1rem;
 `;
+
+export const OrderHistoryContainer = styled(BSCol)`
+  border: solid ${colors.black} 1px;
+`;
+
+export const OrderItemContainer = styled(BSCol)`
+  margin: 1rem 0;
+`
 
 export const Button = (props) => {
   return (

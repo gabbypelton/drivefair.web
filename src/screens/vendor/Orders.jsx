@@ -40,7 +40,7 @@ export class ActiveOrders extends Component {
 const OrderContainer = (props) => (
   <OrderList>
     <OrderListHeading>
-      <h4>Order History</h4>
+      <h4>{props.orderType} Orders</h4>
     </OrderListHeading>
     {props.isLoading ? (
       <OrderListBody>

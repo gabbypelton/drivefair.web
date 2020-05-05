@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   Collapse,
@@ -41,11 +41,13 @@ const Example = (props) => {
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="mr-auto" navbar>
+              <NavbarText>Now serving Denton, TX</NavbarText>
+            </Nav>
+            <Nav navbar>
               <NavItem>
                 <NavLink href={switchTo.path}>{switchTo.phrase}</NavLink>
               </NavItem>
             </Nav>
-            <NavbarText>Now serving Denton, TX</NavbarText>
           </Collapse>
         </Navbar>
       </div>
@@ -86,7 +88,9 @@ const Example = (props) => {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    <NavLink onClick={() => history.push("/orders")}>Active</NavLink>
+                    <NavLink onClick={() => history.push("/orders")}>
+                      Active
+                    </NavLink>
                   </DropdownItem>
                   <DropdownItem>
                     <NavLink onClick={() => history.push("/orderHistory")}>
