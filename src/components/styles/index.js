@@ -216,20 +216,18 @@ export const ViewModificationsList = styled(BSRow)`
   align-items: flex-start;
 `;
 
-export const OrderList = styled(BSCol)`
-`
+export const OrderList = styled(BSCol)``;
 
 export const OrderListHeading = styled(BSRow)`
   justify-content: center;
   background: ${colors.primary};
   color: ${colors.white};
-`
+`;
 
 export const OrderListBody = styled(BSRow)`
   justify-content: center;
   align-items: center;
-`
-
+`;
 
 export const ViewOptionsItem = styled(BSCol)`
   ${(props) =>
@@ -245,8 +243,9 @@ export const ViewOptionsItem = styled(BSCol)`
 `;
 
 export const OrderItemContainer = styled(BSCol)`
-    border: solid ${colors.black} 1px
-`
+  border: solid ${colors.black} 1px;
+  margin: 0 0 1rem;
+`;
 
 export const Button = (props) => {
   return (

@@ -4,7 +4,7 @@ import {
   useElements,
   CardNumberElement,
   CardCvcElement,
-  CardExpiryElement
+  CardExpiryElement,
 } from "@stripe/react-stripe-js";
 import { Label } from "reactstrap";
 import { connect } from "react-redux";
@@ -12,7 +12,6 @@ import { connect } from "react-redux";
 import useResponsiveFontSize from "../../useResponsiveFontSize";
 import { pay } from "../../../actions/cart";
 import { Button, InputErrorMessage } from "../../styles";
-
 
 const useOptions = () => {
   const fontSize = useResponsiveFontSize();
@@ -25,13 +24,13 @@ const useOptions = () => {
           letterSpacing: "0.025em",
           fontFamily: "Source Code Pro, monospace",
           "::placeholder": {
-            color: "#aab7c4"
-          }
+            color: "#aab7c4",
+          },
         },
         invalid: {
-          color: "#9e2146"
-        }
-      }
+          color: "#9e2146",
+        },
+      },
     }),
     [fontSize]
   );
@@ -45,7 +44,7 @@ const CardForm = (props) => {
   const options = useOptions();
   const [paymentError, setPaymentError] = useState("");
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!stripe || !elements) {
@@ -54,90 +53,91 @@ const CardForm = (props) => {
       return;
     }
 
-    const payload = await stripe.createToken(elements.getElement(CardNumberElement));
+    const payload = await stripe.createToken(
+      elements.getElement(CardNumberElement)
+    );
 
     if (payload.error) {
       setPaymentError(payload.error.message);
-      return
+      return;
     }
-    
-    props.pay(payload)
+
+    props.pay(payload);
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <Label to="cardNumber">
-        Card number
-      </Label>
-        <CardNumberElement
-          options={options}
-          name="cardNumber"
-          onReady={() => {
-            console.log("CardNumberElement [ready]");
-          }}
-          onChange={event => {
-            console.log("CardNumberElement [change]", event);
-          }}
-          onBlur={() => {
-            console.log("CardNumberElement [blur]");
-          }}
-          onFocus={() => {
-            console.log("CardNumberElement [focus]");
-          }}
-        />
-      <Label to="expiry">
-        Expiration date
-      </Label>
-        <CardExpiryElement
-          options={options}
-          name="expiry"
-          onReady={() => {
-            console.log("CardNumberElement [ready]");
-          }}
-          onChange={event => {
-            console.log("CardNumberElement [change]", event);
-          }}
-          onBlur={() => {
-            console.log("CardNumberElement [blur]");
-          }}
-          onFocus={() => {
-            console.log("CardNumberElement [focus]");
-          }}
-        />
-      <Label to="cvc">
-        CVC
-      </Label>
-        <CardCvcElement
-          options={options}
-          name="cvc"
-          onReady={() => {
-            console.log("CardNumberElement [ready]");
-          }}
-          onChange={event => {
-            console.log("CardNumberElement [change]", event);
-          }}
-          onBlur={() => {
-            console.log("CardNumberElement [blur]");
-          }}
-          onFocus={() => {
-            console.log("CardNumberElement [focus]");
-          }}
-        />
-      <Button type="submit" disabled={!stripe} isLoading={props.isLoading} buttonText="Pay"/>
+      <Label to="cardNumber">Card number</Label>
+      <CardNumberElement
+        options={options}
+        name="cardNumber"
+        onReady={() => {
+          console.log("CardNumberElement [ready]");
+        }}
+        onChange={(event) => {
+          console.log("CardNumberElement [change]", event);
+        }}
+        onBlur={() => {
+          console.log("CardNumberElement [blur]");
+        }}
+        onFocus={() => {
+          console.log("CardNumberElement [focus]");
+        }}
+      />
+      <Label to="expiry">Expiration date</Label>
+      <CardExpiryElement
+        options={options}
+        name="expiry"
+        onReady={() => {
+          console.log("CardNumberElement [ready]");
+        }}
+        onChange={(event) => {
+          console.log("CardNumberElement [change]", event);
+        }}
+        onBlur={() => {
+          console.log("CardNumberElement [blur]");
+        }}
+        onFocus={() => {
+          console.log("CardNumberElement [focus]");
+        }}
+      />
+      <Label to="cvc">CVC</Label>
+      <CardCvcElement
+        options={options}
+        name="cvc"
+        onReady={() => {
+          console.log("CardNumberElement [ready]");
+        }}
+        onChange={(event) => {
+          console.log("CardNumberElement [change]", event);
+        }}
+        onBlur={() => {
+          console.log("CardNumberElement [blur]");
+        }}
+        onFocus={() => {
+          console.log("CardNumberElement [focus]");
+        }}
+      />
+      <Button
+        type="submit"
+        disabled={!stripe}
+        isLoading={props.isLoading}
+        buttonText="Pay"
+      />
       <InputErrorMessage>{paymentError}</InputErrorMessage>
     </form>
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   orderItems: state.cart.orderItems,
   vendorId: state.cart.selectedVendorId,
   method: state.cart.selectedMethod,
-  isLoading: state.cart.isLoading
-})
+  isLoading: state.cart.isLoading,
+});
 
 const mapDispatchToProps = {
-  pay
-}
+  pay,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardForm);

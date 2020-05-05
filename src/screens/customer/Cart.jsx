@@ -41,6 +41,8 @@ export class Cart extends Component {
       this.setState({
         total: parseFloat(this.props.totalPrice) + parseFloat(this.state.tip),
       });
+    } if (prevProps.orderItems.length && !this.props.orderItems.length) {
+      this.props.history.push("/orders")
     }
   }
 
