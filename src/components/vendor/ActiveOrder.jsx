@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import moment from "moment";
 import {
   CardBody,
   CardTitle,
@@ -16,9 +17,12 @@ import { formatPriceFromFloatString } from "../../services/formatting";
 import { Button } from "../styles";
 
 const ActiveOrder = (props) => {
-  const { customer, orderItems } = props.activeOrder;
+  const { customer, orderItems, createdOn } = props.activeOrder;
   return (
     <Col xs="12" md="6" lg="4">
+      <Row>
+        <Col>{moment(createdOn).format("MM-DD-YYYY @ hh:mm")}</Col>
+      </Row>
       <Row>
         <Col>
           {customer.firstName} {customer.lastName}

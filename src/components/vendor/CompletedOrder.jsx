@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Row, Col } from "reactstrap";
+import moment from "moment";
 import { deliverOrder, refundOrder } from "../../actions/orders";
 import { formatPriceFromFloatString } from "../../services/formatting";
 
 import { Button } from "../styles";
 
 const completedOrder = (props) => {
-  const { customer, orderItems } = props.completedOrder;
+  const { customer, orderItems, createdOn } = props.completedOrder;
+  // const { street, unit, city, state, zip } = customer.address;
   return (
     <Col xs="12" md="6" lg="4">
+      <Row>
+        <Col>{moment(createdOn).format("MM-DD-YYYY @ hh:mm")}</Col>
+      </Row>
       <Row>
         <Col>
           {customer.firstName} {customer.lastName}

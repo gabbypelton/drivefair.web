@@ -1,15 +1,14 @@
 import React from "react";
+import moment from "moment";
 import { Row, Col, OrderItemContainer } from "../styles";
 import { formatPriceFromFloatString } from "../../services/formatting";
 
 const Order = (props) => {
-  const { vendor, orderItems } = props.order;
+  const { vendor, orderItems, createdOn } = props.order;
   return (
     <OrderItemContainer xs="12" md="6" lg="4">
       <Row>
-        <Col>
-          {vendor.businessName}
-        </Col>
+        <Col>{vendor.businessName}</Col>
       </Row>
       <Row>
         {orderItems.map((orderItem) => {
@@ -39,6 +38,9 @@ const Order = (props) => {
       <Row>{props.order.method}</Row>
       <Row>
         <Col>{formatPriceFromFloatString(props.order.total)}</Col>
+      </Row>
+      <Row>
+        <Col>{moment(createdOn).format("MM-DD-YYYY @ hh:mm")}</Col>
       </Row>
     </OrderItemContainer>
   );

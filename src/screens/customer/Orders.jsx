@@ -38,7 +38,7 @@ export class ActiveOrders extends Component {
 const OrderContainer = (props) => (
   <OrderList>
     <OrderListHeading>
-      <h4>Order History</h4>
+      <h4>{props.orderType} Orders</h4>
     </OrderListHeading>
     {props.isLoading ? (
       <OrderListBody>
@@ -47,11 +47,7 @@ const OrderContainer = (props) => (
     ) : props.orders.length ? (
       <OrderListBody>
         {props.orders.map((order) => (
-          <Order
-            key={order._id}
-            order={order}
-            orderType={props.orderType}
-          />
+          <Order key={order._id} order={order} orderType={props.orderType} />
         ))}
       </OrderListBody>
     ) : (
@@ -66,7 +62,7 @@ const mapStateToProps = (state) => ({
   activeOrders: state.orders.activeOrders,
   completedOrders: state.orders.completedOrders,
   user: state.session.profile,
-  isLoading: state.orders.isLoading
+  isLoading: state.orders.isLoading,
 });
 
 const mapDispatchToProps = {
