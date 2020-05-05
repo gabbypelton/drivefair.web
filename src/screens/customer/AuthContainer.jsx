@@ -13,10 +13,7 @@ class AuthContainer extends React.Component {
       selectedModal: "",
       modalTitle: "",
       cta: "",
-      nestedModal: false
     };
-
-    this.toggleNested = this.toggleNested.bind(this);
   }
 
   componentDidMount() {
@@ -27,19 +24,7 @@ class AuthContainer extends React.Component {
     });
   }
 
-  toggleNested() {
-    this.setState({
-      nestedModal: !this.state.nestedModal
-    });
-  }
-
-  toggleAll() {
-    this.setState({
-      nestedModal: !this.state.nestedModal
-    });
-  }
-
-  toggleSelectedModal() {
+  toggleAuthType() {
     let { selectedModal, modalTitle, cta } = this.state;
     if (selectedModal === "register") {
       selectedModal = "login";
@@ -61,24 +46,19 @@ class AuthContainer extends React.Component {
     return (
       <Container>
         <Jumbotron style={{ backgroundColor: "#F7F9FB" }}>
-          <h1 className="display-3">Welcome to Delivery</h1>
-          <p className="lead">Let's get you something to eat.</p>
-          <p className="lead"></p>
+          <h1>Denton. Delivered.</h1>
         </Jumbotron>
         <Row>
           <Col>
             <Row>
-              <h1>{this.state.modalTitle}</h1>
+              <ModalSelector selectedModal={this.state.selectedModal} />
             </Row>
             <Row>
               <Button
                 color="link"
-                onClick={this.toggleSelectedModal.bind(this)}
+                onClick={this.toggleAuthType.bind(this)}
                 buttonText={this.state.cta}
               />
-            </Row>
-            <Row>
-              <ModalSelector selectedModal={this.state.selectedModal} />
             </Row>
           </Col>
         </Row>

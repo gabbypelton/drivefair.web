@@ -1,35 +1,59 @@
 import React, { useState } from "react";
+import moment from "moment";
 import { connect } from "react-redux";
-import {
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  CardText,
-  Row,
-  Col,
-  CardImg,
-  Card,
-} from "reactstrap";
 import { refundOrder } from "../../actions/orders";
 import { formatPriceFromFloatString } from "../../services/formatting";
 
-import { Button } from "../styles";
+import {
+  Row,
+  Col,
+  Button,
+  OrderHistoryContainer,
+  OrderItemContainer,
+} from "../styles";
+import { colors } from "../../constants/theme";
 
 const OrderHistoryItem = (props) => {
-  const { customer, orderItems } = props.order;
+  const [selected, setSelected] = useState(false);
+  const { customer, orderItems, createdOn } = props.order;
+  if (!selected) {
+    return (
+      <OrderHistoryContainer
+        xs="12"
+        onClick={() => {
+          setSelected(!selected);
+        }}
+      >
+        <Row>
+          <Col>{moment(createdOn).format("MM-DD-YYYY @ hh:mm a")}</Col>
+        </Row>
+        <Row>
+          <Col>{customer.firstName}</Col>
+        </Row>
+      </OrderHistoryContainer>
+    );
+  }
   return (
-    <Col xs="12" md="6" lg="4">
+    <OrderHistoryContainer
+      xs="12"
+      onClick={() => {
+        setSelected(!selected);
+      }}
+    >
       <Row>
-        <Col>
-          {customer.firstName} {customer.lastName}
-        </Col>
+        <Col>{moment(createdOn).format("MM-DD-YYYY @ hh:mm a")}</Col>
+      </Row>
+      <Row>
+        <Col>{customer.firstName}</Col>
       </Row>
       <Row>
         {orderItems.map((orderItem) => {
           return (
-            <Col key={orderItem._id} xs="12">
+            <OrderItemContainer key={orderItem._id} xs="12">
               <Row>
-                <h4>{orderItem.menuItem.name}</h4>
+                <Col>
+                  <h4>{orderItem.menuItem.name}</h4>
+                </Col>
               </Row>
               <Row>
                 {orderItem.modifications.map((mod) => {
@@ -45,15 +69,15 @@ const OrderHistoryItem = (props) => {
                   );
                 })}
               </Row>
-            </Col>
+            </OrderItemContainer>
           );
         })}
       </Row>
       <Row>
-        <Col>{props.order.method}</Col>
+        <Col>{formatPriceFromFloatString(props.order.total)}</Col>
       </Row>
       <Row>
-        <Col>{formatPriceFromFloatString(props.order.total)}</Col>
+        <Col>{props.order.method}</Col>
       </Row>
       <Row>
         <Col>
@@ -64,7 +88,7 @@ const OrderHistoryItem = (props) => {
           />
         </Col>
       </Row>
-    </Col>
+    </OrderHistoryContainer>
   );
 };
 

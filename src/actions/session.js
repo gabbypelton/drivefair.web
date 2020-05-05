@@ -17,6 +17,7 @@ export const loginCustomer = ({ email, password }) => async (dispatch) => {
     dispatch(loginWithToken(token, "customer"));
   } catch (error) {
     dispatch({ type: types.LOG_IN_FAIL, payload: { error } });
+    dispatch(logout());
   }
 };
 
@@ -35,6 +36,7 @@ export const loginVendor = ({ email, password }) => async (dispatch) => {
     dispatch(loginWithToken(token, "vendor"));
   } catch (error) {
     dispatch({ type: types.LOG_IN_FAIL, payload: { error } });
+    dispatch(logout());
   }
 };
 
@@ -46,6 +48,7 @@ export const loginWithToken = (token, userType) => async (dispatch) => {
     if (!response.data || !response.data.profile) {
       localStorage.clear();
       dispatch({ type: types.LOG_IN_FAIL, payload: response.data });
+      dispatch(logout());
     }
     dispatch({
       type: types.LOG_IN_SUCCESS,
@@ -54,6 +57,7 @@ export const loginWithToken = (token, userType) => async (dispatch) => {
   } catch (error) {
     localStorage.clear();
     dispatch({ type: types.LOG_IN_FAIL, payload: { error } });
+    dispatch(logout());
   }
 };
 
