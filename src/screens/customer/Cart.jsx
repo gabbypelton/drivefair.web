@@ -18,7 +18,7 @@ import {
 } from "../../actions/cart";
 import { getVendors } from "../../actions/vendor";
 import CartItem from "../../components/customer/CartItem";
-import PaymentModal from "../../components/customer/payment/PaymentModal";
+import CheckoutModal from "../../components/customer/checkout/CheckoutModal";
 import { formatPriceFromFloatString } from "../../services/formatting";
 import { InputGroupAddon, InputGroupText, InputGroup } from "reactstrap";
 
@@ -157,7 +157,7 @@ export class Cart extends Component {
             />
           </Col>
         </Row>
-        <PaymentModal />
+        <CheckoutModal />
       </Container>
     );
   }
