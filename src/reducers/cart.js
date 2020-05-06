@@ -26,6 +26,7 @@ export default (state = initialState, { type, payload }) => {
     case types.ADD_TO_CART_FAIL:
     case types.REMOVE_FROM_CART_FAIL:
     case types.GET_CART_FAIL:
+    case types.PAY_FAIL:
       return { ...state, ...payload, isLoading: false };
     case types.TOGGLE_READY_TO_PAY:
       return { ...state, readyToPay: payload.readyToPay };
