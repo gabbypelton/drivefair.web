@@ -12,7 +12,7 @@ export const newCustomer = (details) => async (dispatch) => {
     setBearerToken(response.data.token);
     dispatch({ type: types.NEW_CUSTOMER_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.NEW_CUSTOMER_FAIL, error });
+    dispatch({ type: types.NEW_CUSTOMER_FAIL, payload: { error } });
   }
 };
 
