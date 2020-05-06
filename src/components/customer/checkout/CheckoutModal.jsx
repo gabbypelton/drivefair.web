@@ -42,7 +42,9 @@ class CheckoutForm extends React.Component {
       selectedAddressIndex,
       selectedAddress,
     });
-    this.props.selectAddress(selectedAddress._id);
+    if (selectedAddress) {
+      this.props.selectAddress(selectedAddress._id);
+    }
   }
 
   render() {
