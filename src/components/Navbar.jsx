@@ -13,12 +13,15 @@ import {
   DropdownToggle,
   DropdownItem,
   DropdownMenu,
+  Badge,
 } from "reactstrap";
 import { logout } from "../actions/session";
 import { NavLink } from "../components/styles";
 
 const Example = (props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { activeOrders, completedOrders } = props;
+  const orders = [...activeOrders, ...completedOrders];
   const history = useHistory();
   const customer = {
     phrase: "No wait I'm a customer!",
@@ -84,12 +87,26 @@ const Example = (props) => {
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
-                  Orders
+                  Orders{" "}
+                  {orders.length ? (
+                    <Badge color="primary">{orders.length}</Badge>
+                  ) : null}
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
                     <NavLink onClick={() => history.push("/orders")}>
-                      Active
+                      Active{" "}
+                      {activeOrders.length ? (
+                        <Badge color="primary">{activeOrders.length}</Badge>
+                      ) : null}
+                    </NavLink>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <NavLink onClick={() => history.push("/orders")}>
+                      Completed{" "}
+                      {completedOrders.length ? (
+                        <Badge color="primary">{completedOrders.length}</Badge>
+                      ) : null}
                     </NavLink>
                   </DropdownItem>
                   <DropdownItem>
@@ -112,6 +129,8 @@ const mapStateToProps = (state) => ({
   isLoggedIn: state.session.isLoggedIn,
   userType: state.session.userType,
   emailIsConfirmed: state.session.profile.emailIsConfirmed,
+  activeOrders: state.orders.activeOrders,
+  completedOrders: state.orders.completedOrders,
 });
 
 const mapDispatchToProps = {
