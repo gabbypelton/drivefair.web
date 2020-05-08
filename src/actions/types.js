@@ -36,9 +36,9 @@ const asyncActions = [
   "ADD_ADDRESS",
   "GET_ADDRESSES",
   "REMOVE_ADDRESS",
-  "SELECT_ADDRESS",
+  "SELECT_ADDRESS"
 ];
-const syncActions = ["LOG_OUT", "TOGGLE_READY_TO_PAY"];
+const syncActions = ["LOG_OUT", "TOGGLE_READY_TO_PAY", "SEARCH_MENU"];
 
 syncActions.forEach((key) => {
   actionsObj[key] = key;
