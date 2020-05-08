@@ -117,3 +117,7 @@ export const getMenu = (vendorId) => async (dispatch) => {
     dispatch({ type: types.GET_MENU_FAIL, payload: { error } });
   }
 };
+
+export const searchMenu = (searchString) => async (dispatch) => {
+  dispatch({ type: types.SEARCH_MENU, payload: { searchString } });
+};
