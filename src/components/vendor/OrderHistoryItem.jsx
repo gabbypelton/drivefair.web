@@ -49,26 +49,24 @@ const OrderHistoryItem = (props) => {
       <Row>
         {orderItems.map((orderItem) => {
           return (
-            <OrderItemContainer key={orderItem._id} xs="12">
+            <OrderItemContainer key={orderItem._id} xs="4">
               <Row>
                 <Col>
                   <h4>{orderItem.menuItem.name}</h4>
                 </Col>
               </Row>
-              <Row>
                 {orderItem.modifications.map((mod) => {
                   return (
-                    <Col key={mod._id}>
+                    <Row key={mod._id}>
                       <p>
                         <strong>{mod.name}: </strong>
                         {Array.isArray(mod.options)
                           ? mod.options.map((a) => a.name).join(", ")
                           : mod.options.name}
                       </p>
-                    </Col>
+                    </Row>
                   );
                 })}
-              </Row>
             </OrderItemContainer>
           );
         })}

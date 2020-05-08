@@ -15,6 +15,7 @@ import {
   Button,
   MenuRow,
 } from "../../components/styles";
+import MenuSearchBar from "../../components/MenuSearchBar";
 
 export class Menu extends Component {
   state = {
@@ -36,7 +37,7 @@ export class Menu extends Component {
     if (this.props.isLoading) return <Spinner />;
     if (!this.props.vendor || !this.props.vendor._id)
       return <Redirect to="/" />;
-    const { menuItems, vendor } = this.props;
+    const { visibleMenuItems, vendor } = this.props;
     return (
       <Container>
         <Row>
@@ -57,8 +58,13 @@ export class Menu extends Component {
             />
           </Col>
         </Row>
+        <Row>
+          <Col>
+            <MenuSearchBar />
+          </Col>
+        </Row>
         <MenuRow>
-          {menuItems.map((menuItem) => (
+          {visibleMenuItems.map((menuItem) => (
             <DisplayOrEditMenuItem key={menuItem._id} menuItem={menuItem} />
           ))}
           <DisplayOrEditMenuItem menuItem={null} />
@@ -70,7 +76,7 @@ export class Menu extends Component {
 
 const mapStateToProps = (state) => ({
   vendor: state.session.profile,
-  menuItems: state.menu.menuItems,
+  visibleMenuItems: state.menu.visibleMenuItems,
   isLoading: state.menu.isLoading,
 });
 

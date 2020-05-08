@@ -246,13 +246,17 @@ export const OrderContainer = styled(BSCol)`
   margin: 0 0 1rem;
 `;
 
+export const OrderTitle = styled(BSCol)`
+  margin: 1rem 0;
+`;
+
 export const OrderHistoryContainer = styled(BSCol)`
   border: solid ${colors.black} 1px;
 `;
 
 export const OrderItemContainer = styled(BSCol)`
   margin: 1rem 0;
-`
+`;
 
 export const Button = (props) => {
   return (

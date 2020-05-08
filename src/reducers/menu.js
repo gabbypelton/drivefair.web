@@ -2,9 +2,11 @@ import types from "../actions/types";
 
 const initialState = {
   menuItems: [],
+  visibleMenuItems: [],
+  searchString: "",
   modifications: [],
   isLoading: false,
-  modificationsLoading: false
+  modificationsLoading: false,
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -24,7 +26,12 @@ export default (state = initialState, { type, payload }) => {
     case types.ADD_MENU_ITEM_SUCCESS:
     case types.REMOVE_MENU_ITEM_SUCCESS:
     case types.EDIT_MENU_ITEM_SUCCESS:
-      return { ...state, menuItems: payload.menuItems, isLoading: false };
+      return {
+        ...state,
+        menuItems: payload.menuItems,
+        visiblmenuItems: payload.menuItems,
+        isLoading: false,
+      };
     case types.ADD_MODIFICATION:
     case types.REMOVE_MODIFICATION:
     case types.EDIT_MODIFICATION:
@@ -45,11 +52,27 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         menuItems: payload.foundMenu.menuItems,
+        visibleMenuItems: payload.foundMenu.menuItems,
         modifications: payload.foundMenu.modifications,
         isLoading: false,
       };
     case type.LOG_IN_SUCCESS:
-      return { ...state, isLoading: false, menuItems: payload.profile.menu };
+      return {
+        ...state,
+        isLoading: false,
+        menuItems: payload.profile.menu,
+        visibleMenuItems: payload.profile.menu,
+      };
+    case types.SEARCH_MENU:
+      return {
+        ...state,
+        searchString: payload.searchString,
+        visibleMenuItems: [...state.menuItems].filter(
+          (a) =>
+            a.name.toLowerCase().includes(payload.searchString.toLowerCase()) ||
+            a.description.toLowerCase().includes(payload.searchString.toLowerCase())
+        ),
+      };
     default:
       return state;
   }
