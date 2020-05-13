@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import moment from "moment";
-import { completeOrder, refundOrder } from "../../actions/orders";
+import { readyOrder, refundOrder } from "../../actions/orders";
 import { formatPriceFromFloatString } from "../../services/formatting";
 
 import {
@@ -11,12 +11,21 @@ import {
   OrderContainer,
   OrderItemContainer,
 } from "../styles";
+import AcceptOrderModal from "./AcceptOrderModal";
 
 const ActiveOrder = (props) => {
-  const { customer, orderItems, createdOn, address } = props.activeOrder;
+  const {
+    customer,
+    orderItems,
+    createdOn,
+    address,
+    method,
+    disposition,
+  } = props.activeOrder;
   const { street, unit, city, state, zip } = address[0] ? address[0] : {};
+  const [showAcceptOrderModal, setShowAcceptOrderModal] = useState(false);
   return (
-    <OrderContainer xs="12" md="6" lg="4">
+    <OrderContainer xs="12" md="5" lg="3" disposition={disposition}>
       <Row>
         <Col>{moment(createdOn).format("MM-DD-YYYY @ hh:mm")}</Col>
       </Row>
@@ -53,7 +62,10 @@ const ActiveOrder = (props) => {
       <Row>
         <Col>{formatPriceFromFloatString(props.activeOrder.total)}</Col>
       </Row>
-      {props.activeOrder.method === "DELIVERY" ? (
+      <Row>
+        <Col>{method}</Col>
+      </Row>
+      {method === "DELIVERY" ? (
         <Row>
           <Col>
             <Row>
@@ -68,25 +80,38 @@ const ActiveOrder = (props) => {
             </Row>
           </Col>
         </Row>
+      ) : null}
+      {disposition === "ACCEPTED" ? (
+        <Row>
+          <Col>
+            <Button
+              
+              onClick={() => props.refundOrder(props.activeOrder._id)}
+              title="Refund"
+            />
+            <Button
+              
+              onClick={() => props.readyOrder(props.activeOrder._id)}
+              title="Ready"
+            />
+          </Col>
+        </Row>
       ) : (
         <Row>
-          <Col>{props.activeOrder.method}</Col>
+          <Col>
+            <Button
+              
+              onClick={() => setShowAcceptOrderModal(!showAcceptOrderModal)}
+              title="Accept"
+            />
+          </Col>
         </Row>
       )}
-      <Row>
-        <Col>
-          <Button
-            color="primary"
-            onClick={() => props.refundOrder(props.activeOrder._id)}
-            buttonText="Refund"
-          />
-          <Button
-            color="primary"
-            onClick={() => props.completeOrder(props.activeOrder._id)}
-            buttonText="Complete"
-          />
-        </Col>
-      </Row>
+      <AcceptOrderModal
+        isOpen={showAcceptOrderModal}
+        toggle={() => setShowAcceptOrderModal(!showAcceptOrderModal)}
+        order={props.activeOrder}
+      />
     </OrderContainer>
   );
 };
@@ -94,7 +119,7 @@ const ActiveOrder = (props) => {
 const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = {
-  completeOrder,
+  readyOrder,
   refundOrder,
 };
 

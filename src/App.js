@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Switch, Route, Redirect } from "react-router";
-import { Container, Col, Spinner } from "reactstrap";
+import { Col, Spinner } from "reactstrap";
 
 import "./App.css";
 import { setBaseURL } from "./services/http";
@@ -20,8 +20,10 @@ import Menu from "./screens/customer/Menu";
 import Cart from "./screens/customer/Cart";
 import EditMenu from "./screens/vendor/EditMenu";
 import Vendors from "./screens/customer/Vendors";
+import { Container } from "./components/styles";
 
 setBaseURL(process.env.REACT_APP_API_URL);
+let ordersInterval;
 
 function App(props) {
   const authToken = localStorage.getItem("authToken");
@@ -30,12 +32,12 @@ function App(props) {
     props.loginWithToken(authToken, userType);
   }
   useEffect(() => {
+    console.log("started");
     const { userType } = props;
-    let getActiveOrders;
     if (userType === "vendor") {
-      getActiveOrders = setInterval(() => props.getActiveOrders(), 60000);
+      ordersInterval = setInterval(() => props.getActiveOrders(), 60000);
     } else {
-      clearInterval(getActiveOrders);
+      clearInterval(ordersInterval);
     }
   }, [props.userType]);
   return (

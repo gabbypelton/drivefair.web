@@ -7,6 +7,7 @@ import vendor from "./vendor";
 import session from "./session";
 import cart from "./cart";
 import menu from "./menu";
+import drivers from "./drivers";
 
 const rootReducer = combineReducers({
   customer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   orders,
   vendor,
   session,
-  cart
+  cart,
+  drivers
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
