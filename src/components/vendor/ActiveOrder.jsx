@@ -85,12 +85,10 @@ const ActiveOrder = (props) => {
         <Row>
           <Col>
             <Button
-              
               onClick={() => props.refundOrder(props.activeOrder._id)}
               title="Refund"
             />
             <Button
-              
               onClick={() => props.readyOrder(props.activeOrder._id)}
               title="Ready"
             />
@@ -100,7 +98,6 @@ const ActiveOrder = (props) => {
         <Row>
           <Col>
             <Button
-              
               onClick={() => setShowAcceptOrderModal(!showAcceptOrderModal)}
               title="Accept"
             />

@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import useResponsiveFontSize from "../../useResponsiveFontSize";
 import { pay } from "../../../actions/cart";
 import { Button, InputErrorMessage } from "../../styles";
+import { colors } from "../../../constants/theme";
 
 const useOptions = () => {
   const fontSize = useResponsiveFontSize();
@@ -20,7 +21,7 @@ const useOptions = () => {
       style: {
         base: {
           fontSize,
-          color: "#424770",
+          color: colors.text,
           letterSpacing: "0.025em",
           fontFamily: "Source Code Pro, monospace",
           "::placeholder": {
@@ -122,7 +123,7 @@ const CardForm = (props) => {
         type="submit"
         disabled={!stripe}
         isLoading={props.isLoading}
-        buttonText="Pay"
+        title="Pay"
       />
       <InputErrorMessage>{paymentError}</InputErrorMessage>
     </form>

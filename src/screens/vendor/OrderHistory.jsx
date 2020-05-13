@@ -47,7 +47,7 @@ export class ActiveOrders extends Component {
 
 const mapStateToProps = (state) => ({
   orderHistory: state.orders.orderHistory,
-  completedOrders: state.orders.completedOrders,
+  readyOrders: state.orders.readyOrders,
   user: state.session.profile,
   isLoading: state.orders.isLoading,
 });

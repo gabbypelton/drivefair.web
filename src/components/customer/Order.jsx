@@ -4,9 +4,9 @@ import { Row, Col, OrderContainer, OrderTitle } from "../styles";
 import { formatPriceFromFloatString } from "../../services/formatting";
 
 const Order = (props) => {
-  const { vendor, orderItems, createdOn } = props.order;
+  const { vendor, orderItems, createdOn, disposition } = props.order;
   return (
-    <OrderContainer xs="12" md="6" lg="4">
+    <OrderContainer xs="12" md="5" lg="3" disposition={disposition}>
       <OrderTitle>
         <Col>{vendor.businessName}</Col>
       </OrderTitle>

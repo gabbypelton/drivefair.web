@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import {
-  ModalHeader,
-  ModalBody,
   Spinner,
   Container,
   Input,
@@ -12,6 +10,8 @@ import {
 } from "reactstrap";
 import {
   Modal,
+  ModalHeader,
+  ModalBody,
   Col,
   Row,
   Button,
@@ -61,7 +61,7 @@ export const DriversModal = (props) => {
                         selected={selectedDriverId === driver._id}
                         onClick={() => setSelectedDriverId(driver._id)}
                       >
-                        {driver.lastName} {driver.firstName}
+                        {driver.lastName}, {driver.firstName}
                       </ModificationOption>
                     );
                   })

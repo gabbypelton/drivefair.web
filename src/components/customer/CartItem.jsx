@@ -1,24 +1,14 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import {
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  CardText,
-  Row,
-  Col,
-  CardImg,
-  Card,
-} from "reactstrap";
+import { CardBody, CardTitle, CardSubtitle, CardText } from "reactstrap";
+import { Card, CardImg, Col, Row, Button } from "../styles";
 import { removeFromCart } from "../../actions/cart";
-
-import { Button } from "../styles";
 
 const CartItem = (props) => {
   const { orderItem } = props;
   const { menuItem, modifications } = orderItem;
   return (
-    <Col xs="12" md="6" lg="4">
+    <Col xs="6" md="4" lg="2">
       <Card>
         <CardBody>
           <CardTitle>{menuItem.name}</CardTitle>
@@ -26,16 +16,13 @@ const CartItem = (props) => {
           <Row>
             {modifications.map((selectedMod) => {
               return (
-                <Options
-                  selectedMod={selectedMod}
-                  key={selectedMod._id}
-                />
+                <Options selectedMod={selectedMod} key={selectedMod._id} />
               );
             })}
           </Row>
           <Button
             onClick={() => props.removeFromCart(orderItem._id)}
-            buttonText="Remove"
+            title="Remove"
             isLoading={props.isLoading}
           />
         </CardBody>

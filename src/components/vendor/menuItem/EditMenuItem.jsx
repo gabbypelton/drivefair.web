@@ -215,7 +215,7 @@ export class EditMenuItem extends Component {
           <Row>
             <Col>
               <TouchableHighlight onClick={() => this.toggleModification(null)}>
-                <FontAwesomeIcon icon={faPlusCircle} color={colors.primary} />
+                <FontAwesomeIcon icon={faPlusCircle} color={colors.primary100} />
                 New Modification
               </TouchableHighlight>
             </Col>
@@ -226,8 +226,8 @@ export class EditMenuItem extends Component {
           <Row>
             <Button
               onClick={(e) => this.handleSubmit(e)}
-              color="primary"
-              buttonText="Save"
+              
+              title="Save"
             />
           </Row>
         </Form>
