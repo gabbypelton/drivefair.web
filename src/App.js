@@ -7,7 +7,6 @@ import "./App.css";
 import { setBaseURL } from "./services/http";
 import { loginWithToken } from "./actions/session";
 import { getVendors } from "./actions/vendor";
-import { getActiveOrders } from "./actions/orders";
 import Navbar from "./components/Navbar";
 import VendorAuthContainer from "./screens/vendor/AuthContainer";
 import VendorOrders from "./screens/vendor/Orders";
@@ -31,15 +30,6 @@ function App(props) {
   if (authToken && !props.isLoggedIn && !props.isLoading) {
     props.loginWithToken(authToken, userType);
   }
-  useEffect(() => {
-    console.log("started");
-    const { userType } = props;
-    if (userType === "vendor") {
-      ordersInterval = setInterval(() => props.getActiveOrders(), 60000);
-    } else {
-      clearInterval(ordersInterval);
-    }
-  }, [props.userType]);
   return (
     <Container className="App">
       <Navbar />
@@ -85,7 +75,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   loginWithToken,
   getVendors,
-  getActiveOrders,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

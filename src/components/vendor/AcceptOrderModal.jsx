@@ -18,15 +18,11 @@ import {
   ModificationSelect,
   ModificationOption,
 } from "../styles";
-import { getActiveDrivers } from "../../actions/drivers";
 import { acceptOrder } from "../../actions/orders";
 
 export const DriversModal = (props) => {
   const [selectedDriverId, setSelectedDriverId] = useState(null);
-  const [timeToReady, setTimeToReady] = useState(null);
-  useEffect(() => {
-    props.getActiveDrivers();
-  }, []);
+  const [timeToReady, setTimeToReady] = useState(15);
   useEffect(() => {
     if (props.drivers.length > 0) {
       setSelectedDriverId(props.drivers[0]._id);
@@ -79,7 +75,6 @@ export const DriversModal = (props) => {
               <Input
                 name="timeToReady"
                 value={timeToReady}
-                defaultValue="15"
                 onChange={(e) => setTimeToReady(e.target.value)}
               />
               <InputGroupAddon addonType="append">
@@ -106,7 +101,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  getActiveDrivers,
   acceptOrder,
 };
 

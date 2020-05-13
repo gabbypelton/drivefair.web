@@ -10,13 +10,25 @@ import {
   OrderListBody,
 } from "../../components/styles";
 import { getActiveOrders, getReadyOrders } from "../../actions/orders";
+import { getActiveDrivers } from "../../actions/drivers";
 import ActiveOrder from "../../components/vendor/ActiveOrder";
 import ReadyOrder from "../../components/vendor/ReadyOrder";
 
+let getRealTimeDataInterval;
 export class ActiveOrders extends Component {
   componentDidMount() {
+    this.getRealTimeData();
+    getRealTimeDataInterval = setInterval(() => this.getRealTimeData(), 30000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(getRealTimeDataInterval);
+  }
+
+  getRealTimeData() {
     this.props.getActiveOrders();
     this.props.getReadyOrders();
+    this.props.getActiveDrivers();
   }
 
   render() {
@@ -49,11 +61,7 @@ const OrderListContainer = (props) => (
     ) : props.orders.length ? (
       <OrderListBody>
         {props.orders.map((order) => (
-          <Order
-            key={order._id}
-            order={order}
-            orderType={props.orderType}
-          />
+          <Order key={order._id} order={order} orderType={props.orderType} />
         ))}
       </OrderListBody>
     ) : (
@@ -75,12 +83,13 @@ const mapStateToProps = (state) => ({
   activeOrders: state.orders.activeOrders,
   readyOrders: state.orders.readyOrders,
   user: state.session.profile,
-  isLoading: state.orders.isLoading
+  isLoading: state.orders.isLoading,
 });
 
 const mapDispatchToProps = {
   getActiveOrders,
   getReadyOrders,
+  getActiveDrivers,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActiveOrders);
