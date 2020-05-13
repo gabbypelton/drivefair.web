@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import {
+  Label,
   CardBody,
-  CardTitle,
   CardSubtitle,
   CardText,
-  CardImg,
-  Label,
-  Modal,
+  CardTitle,
   ModalHeader,
   ModalBody,
 } from "reactstrap";
@@ -17,6 +15,8 @@ import {
   formatImgurUrl,
 } from "../../../services/formatting";
 import {
+  Modal,
+  CardImg,
   Row,
   Col,
   Button,
@@ -95,13 +95,13 @@ const RemoveItemConfirmationModal = (props) => {
         <Row>
           <Col>
             <Button
-              buttonText="Yes"
-              color="secondary"
+              title="Yes"
+              
               onClick={() => props.removeMenuItem(props.menuItem._id)}
             />
             <Button
-              buttonText="No"
-              color="secondary"
+              title="No"
+              
               onClick={() => props.setShowRemoveModal(false)}
             />
           </Col>

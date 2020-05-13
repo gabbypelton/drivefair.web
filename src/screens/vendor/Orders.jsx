@@ -9,35 +9,47 @@ import {
   OrderListHeading,
   OrderListBody,
 } from "../../components/styles";
-import { getActiveOrders, getCompletedOrders } from "../../actions/orders";
+import { getActiveOrders, getReadyOrders } from "../../actions/orders";
+import { getActiveDrivers } from "../../actions/drivers";
 import ActiveOrder from "../../components/vendor/ActiveOrder";
-import CompletedOrder from "../../components/vendor/CompletedOrder";
+import ReadyOrder from "../../components/vendor/ReadyOrder";
 
+let getRealTimeDataInterval;
 export class ActiveOrders extends Component {
   componentDidMount() {
+    this.getRealTimeData();
+    getRealTimeDataInterval = setInterval(() => this.getRealTimeData(), 30000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(getRealTimeDataInterval);
+  }
+
+  getRealTimeData() {
     this.props.getActiveOrders();
-    this.props.getCompletedOrders();
+    this.props.getReadyOrders();
+    this.props.getActiveDrivers();
   }
 
   render() {
     return (
       <Container>
-        <OrderContainer
+        <OrderListContainer
           {...this.props}
           orders={this.props.activeOrders}
           orderType={"Active"}
         />
-        <OrderContainer
+        <OrderListContainer
           {...this.props}
-          orders={this.props.completedOrders}
-          orderType={"Complete"}
+          orders={this.props.readyOrders}
+          orderType={"Ready"}
         />
       </Container>
     );
   }
 }
 
-const OrderContainer = (props) => (
+const OrderListContainer = (props) => (
   <OrderList>
     <OrderListHeading>
       <h4>{props.orderType} Orders</h4>
@@ -49,11 +61,7 @@ const OrderContainer = (props) => (
     ) : props.orders.length ? (
       <OrderListBody>
         {props.orders.map((order) => (
-          <Order
-            key={order._id}
-            order={order}
-            orderType={props.orderType}
-          />
+          <Order key={order._id} order={order} orderType={props.orderType} />
         ))}
       </OrderListBody>
     ) : (
@@ -68,19 +76,20 @@ const Order = (props) =>
   props.orderType === "Active" ? (
     <ActiveOrder activeOrder={props.order} />
   ) : (
-    <CompletedOrder completedOrder={props.order} />
+    <ReadyOrder readyOrder={props.order} />
   );
 
 const mapStateToProps = (state) => ({
   activeOrders: state.orders.activeOrders,
-  completedOrders: state.orders.completedOrders,
+  readyOrders: state.orders.readyOrders,
   user: state.session.profile,
-  isLoading: state.orders.isLoading
+  isLoading: state.orders.isLoading,
 });
 
 const mapDispatchToProps = {
   getActiveOrders,
-  getCompletedOrders,
+  getReadyOrders,
+  getActiveDrivers,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActiveOrders);

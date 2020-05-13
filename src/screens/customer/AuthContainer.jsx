@@ -5,6 +5,7 @@ import { Col, Container, Jumbotron } from "reactstrap";
 import { Button, Row } from "../../components/styles";
 import Login from "../../components/customer/auth/Login";
 import Register from "../../components/customer/auth/Register";
+import { colors } from "../../constants/theme";
 
 class AuthContainer extends React.Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class AuthContainer extends React.Component {
     this.setState({
       selectedModal: "register",
       modalTitle: "Sign up.",
-      cta: "Click here if you already have an account."
+      cta: "Click here if you already have an account.",
     });
   }
 
@@ -38,27 +39,29 @@ class AuthContainer extends React.Component {
     this.setState({
       selectedModal,
       modalTitle,
-      cta
+      cta,
     });
   }
 
   render() {
     return (
       <Container>
-        <Jumbotron style={{ backgroundColor: "#F7F9FB" }}>
-          <h1>Denton. Delivered.</h1>
+        <Jumbotron style={{ backgroundColor: colors.background }}>
+          <Row>
+            <h1>Denton. Delivered.</h1>
+          </Row>
+          <Row>
+            <Button
+              color="link"
+              onClick={this.toggleAuthType.bind(this)}
+              title={this.state.cta}
+            />
+          </Row>
         </Jumbotron>
         <Row>
           <Col>
             <Row>
               <ModalSelector selectedModal={this.state.selectedModal} />
-            </Row>
-            <Row>
-              <Button
-                color="link"
-                onClick={this.toggleAuthType.bind(this)}
-                buttonText={this.state.cta}
-              />
             </Row>
           </Col>
         </Row>
@@ -67,7 +70,7 @@ class AuthContainer extends React.Component {
   }
 }
 
-const ModalSelector = props => {
+const ModalSelector = (props) => {
   return props.selectedModal === "login" ? <Login /> : <Register />;
 };
 

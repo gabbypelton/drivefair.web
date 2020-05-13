@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Modal, ModalHeader, ModalBody, Spinner, Container } from "reactstrap";
+import { Spinner, Container } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { loadStripe } from "@stripe/stripe-js";
@@ -10,6 +10,9 @@ import { getAddresses, selectAddress } from "../../../actions/customer";
 import CardForm from "./CardForm";
 import EditAddress from "./EditAddress";
 import {
+  Modal,
+  ModalHeader,
+  ModalBody,
   Col,
   Row,
   TouchableHighlight,
@@ -84,7 +87,7 @@ class CheckoutForm extends React.Component {
                   <TouchableHighlight onClick={() => this.selectAddress(null)}>
                     <FontAwesomeIcon
                       icon={faPlusCircle}
-                      color={colors.primary}
+                      color={colors.primary100}
                     />
                     New Address
                   </TouchableHighlight>
@@ -110,7 +113,7 @@ const mapStateToProps = (state) => ({
   readyToPay: state.cart.readyToPay,
   addresses: state.customer.addresses,
   addressesLoading: state.customer.isLoading,
-  orderMethod: state.cart.method
+  orderMethod: state.cart.method,
 });
 
 const mapDispatchToProps = {

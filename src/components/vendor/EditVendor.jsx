@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { FormGroup, Modal, ModalHeader, ModalBody } from "reactstrap";
+import { FormGroup, ModalHeader, ModalBody } from "reactstrap";
 
 import {
+  Modal,
   Button,
   Form,
   Col,
@@ -169,7 +170,9 @@ class EditVendor extends Component {
           <Row>
             <Col xs="6" md="4">
               <FormGroup>
-                <Row><Col>Logo</Col></Row>
+                <Row>
+                  <Col>Logo</Col>
+                </Row>
                 <img
                   style={{ width: "50%" }}
                   src={formatImgurUrl(this.state.logoUrl)}
@@ -301,7 +304,7 @@ class EditVendor extends Component {
               color="tertiary"
               isLoading={this.props.isLoading}
               onClick={() => this.toggleCheckPasswordModal()}
-              buttonText="Save"
+              title="Save"
             />
           </Row>
         </Form>
@@ -343,7 +346,7 @@ const CheckPasswordModal = (props) => {
                 type="password"
                 onInput={(e) => props.handleChange(e)}
               />
-              <Button buttonText="Submit" />
+              <Button title="Submit" />
             </FormGroup>
           </Form>
         </Row>

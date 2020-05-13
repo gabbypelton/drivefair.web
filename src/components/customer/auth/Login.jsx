@@ -64,9 +64,9 @@ class Login extends Component {
           </InputErrorMessage>
         </FormGroup>
         <Button
-          color="tertiary"
+          
           onClick={(e) => this.handleSubmit(e)}
-          buttonText="Sign In"
+          title="Sign In"
           isLoading={this.props.isLoading}
         />
       </Form>
