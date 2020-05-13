@@ -27,10 +27,12 @@ const ActiveOrder = (props) => {
   return (
     <OrderContainer xs="12" md="5" lg="3" disposition={disposition}>
       <Row>
-        <Col>{moment(createdOn).format("MM-DD-YYYY @ hh:mm")}</Col>
+        <Col>{moment(createdOn).format("hh:mm A")}</Col>
       </Row>
       <Row>
-        <Col>{customer.firstName}</Col>
+        <Col>
+          {customer.firstName} {customer.lastName[0]}
+        </Col>
       </Row>
       <Row>
         {orderItems.map((orderItem) => {

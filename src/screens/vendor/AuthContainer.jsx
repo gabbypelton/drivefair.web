@@ -47,19 +47,21 @@ class AuthContainer extends React.Component {
     return (
       <Container>
         <Jumbotron style={{ backgroundColor: colors.background }}>
-          <h1>Deliver, Denton.</h1>
+          <Row>
+            <h1>Deliver, Denton.</h1>
+          </Row>
+          <Row>
+            <Button
+              color="link"
+              onClick={this.toggleAuthType.bind(this)}
+              title={this.state.cta}
+            />
+          </Row>
         </Jumbotron>
         <Row>
           <Col>
             <Row>
               <ModalSelector authType={this.state.authType} />
-            </Row>
-            <Row>
-              <Button
-                color="link"
-                onClick={this.toggleAuthType.bind(this)}
-                title={this.state.cta}
-              />
             </Row>
           </Col>
         </Row>

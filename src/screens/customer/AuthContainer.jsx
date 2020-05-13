@@ -21,7 +21,7 @@ class AuthContainer extends React.Component {
     this.setState({
       selectedModal: "register",
       modalTitle: "Sign up.",
-      cta: "Click here if you already have an account."
+      cta: "Click here if you already have an account.",
     });
   }
 
@@ -39,7 +39,7 @@ class AuthContainer extends React.Component {
     this.setState({
       selectedModal,
       modalTitle,
-      cta
+      cta,
     });
   }
 
@@ -47,19 +47,21 @@ class AuthContainer extends React.Component {
     return (
       <Container>
         <Jumbotron style={{ backgroundColor: colors.background }}>
-          <h1>Denton. Delivered.</h1>
+          <Row>
+            <h1>Denton. Delivered.</h1>
+          </Row>
+          <Row>
+            <Button
+              color="link"
+              onClick={this.toggleAuthType.bind(this)}
+              title={this.state.cta}
+            />
+          </Row>
         </Jumbotron>
         <Row>
           <Col>
             <Row>
               <ModalSelector selectedModal={this.state.selectedModal} />
-            </Row>
-            <Row>
-              <Button
-                color="link"
-                onClick={this.toggleAuthType.bind(this)}
-                title={this.state.cta}
-              />
             </Row>
           </Col>
         </Row>
@@ -68,7 +70,7 @@ class AuthContainer extends React.Component {
   }
 }
 
-const ModalSelector = props => {
+const ModalSelector = (props) => {
   return props.selectedModal === "login" ? <Login /> : <Register />;
 };
 

@@ -158,14 +158,18 @@ export const NavLink = styled(BSNavLink)`
   cursor: pointer;
 `;
 const ButtonBase = styled(BSButton)`
-  background: ${(props) =>
-    colors[
-      (props.backgroundColor || "primary") + (props.selected ? "900" : "600")
-    ]};
+  ${(props) =>
+    props.color === "link"
+      ? ""
+      : `background: ${
+          colors[
+            (props.backgroundColor || "primary") +
+              (props.selected ? "900" : "600")
+          ]};
   color: ${colors.text};
-  width: ${(props) => props.width};
+  width: ${props.width};
   min-width: 100px;
-  margin: 1rem 2% 1rem 2%;
+  margin: 1rem 2% 1rem 2%;`}
 `;
 
 export const SmallButton = styled(BSButton)`
@@ -285,7 +289,11 @@ export const OrderItemContainer = styled(BSCol)`
 
 export const Button = (props) => {
   return (
-    <ButtonBase {...props} disabled={props.isLoading} color="none">
+    <ButtonBase
+      {...props}
+      disabled={props.isLoading}
+      color={props.color === "link" ? "link" : "none"}
+    >
       {props.isLoading ? <Spinner /> : props.title}
     </ButtonBase>
   );
