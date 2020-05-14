@@ -40,7 +40,7 @@ export default (state = initialState, { type, payload }) => {
         orderHistory: [...payload.orderHistory],
         isLoading: false,
       };
-    case types.COMPLETE_ORDER_SUCCESS:
+    case types.READY_ORDER_SUCCESS:
       return {
         ...state,
         activeOrders: [...payload.activeOrders],

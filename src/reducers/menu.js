@@ -29,7 +29,7 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         menuItems: payload.menuItems,
-        visiblmenuItems: payload.menuItems,
+        visibleMenuItems: payload.menuItems,
         isLoading: false,
       };
     case types.ADD_MODIFICATION:

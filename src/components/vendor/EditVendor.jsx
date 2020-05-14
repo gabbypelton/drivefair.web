@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { FormGroup, ModalHeader, ModalBody } from "reactstrap";
+import { FormGroup } from "reactstrap";
 
 import {
   Modal,
+  ModalHeader,
+  ModalBody,
   Button,
   Form,
   Col,

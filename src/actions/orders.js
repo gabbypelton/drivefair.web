@@ -57,11 +57,11 @@ export const acceptOrder = ({
 
 export const readyOrder = (orderId) => async (dispatch) => {
   try {
-    dispatch({ type: types.COMPLETE_ORDER });
+    dispatch({ type: types.READY_ORDER });
     const response = await Axios.post("/orders/readyOrder", { orderId });
-    dispatch({ type: types.COMPLETE_ORDER_SUCCESS, payload: response.data });
+    dispatch({ type: types.READY_ORDER_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.COMPLETE_ORDER_FAIL, payload: { error } });
+    dispatch({ type: types.READY_ORDER_FAIL, payload: { error } });
   }
 };
 

@@ -1,20 +1,14 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import {
-  Label,
-  CardBody,
-  CardSubtitle,
-  CardText,
-  CardTitle,
-  ModalHeader,
-  ModalBody,
-} from "reactstrap";
+import { Label, CardBody, CardSubtitle, CardText, CardTitle } from "reactstrap";
 import { removeMenuItem } from "../../../actions/menu";
 import {
   formatPriceFromFloatString,
   formatImgurUrl,
 } from "../../../services/formatting";
 import {
+  ModalHeader,
+  ModalBody,
   Modal,
   CardImg,
   Row,
@@ -96,12 +90,10 @@ const RemoveItemConfirmationModal = (props) => {
           <Col>
             <Button
               title="Yes"
-              
               onClick={() => props.removeMenuItem(props.menuItem._id)}
             />
             <Button
               title="No"
-              
               onClick={() => props.setShowRemoveModal(false)}
             />
           </Col>
