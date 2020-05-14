@@ -1,15 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle, faSave } from "@fortawesome/free-solid-svg-icons";
+import { faSave } from "@fortawesome/free-solid-svg-icons";
 
 import {
-  Button,
   Col,
   Row,
   Label,
   Input,
-  EditOptionContainer,
   ModificationFormGroup,
   ModificationInputGroup,
   TouchableHighlight,

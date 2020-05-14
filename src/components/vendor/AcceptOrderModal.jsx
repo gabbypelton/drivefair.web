@@ -27,7 +27,7 @@ export const DriversModal = (props) => {
     if (props.drivers.length > 0) {
       setSelectedDriverId(props.drivers[0]._id);
     }
-  }, [props.drivers[0]]);
+  }, [props.drivers]);
   const acceptOrder = () => {
     props.acceptOrder({
       orderId: props.order._id,

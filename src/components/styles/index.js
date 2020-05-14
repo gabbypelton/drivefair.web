@@ -1,11 +1,7 @@
 import React from "react";
 import { Link as RRLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTimes,
-  faPlus,
-  faPlusCircle,
-} from "@fortawesome/free-solid-svg-icons";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import {
   Container as BSContainer,
   Modal as BSModal,
@@ -41,12 +37,13 @@ export const Container = styled(BSContainer)`
 `;
 
 export const OrdersContainer = styled(BSContainer)`
-max-height: 100vh;
-width: 100%;
-display: flex;
-margin: 0 0 0 0;
-max-width: unset;
-flex-flow: column nowrap;`;
+  max-height: 100vh;
+  width: 100%;
+  display: flex;
+  margin: 0 0 0 0;
+  max-width: unset;
+  flex-flow: column nowrap;
+`;
 
 export const Col = styled(BSCol)`
   dispay: flex;

@@ -66,7 +66,7 @@ class EditVendor extends Component {
   handleChange({ target }) {
     let { name, value } = target;
     if (name === "phoneNumber") {
-      if (value.match(/[^0-9\-]{1}/)) return;
+      if (value.match(/[^0-9-]{1}/)) return;
       if (value.match(/^[0-9]{3}$/) || value.match(/^[0-9]{3}-[0-9]{3}$/)) {
         value += "-";
       }
@@ -178,6 +178,7 @@ class EditVendor extends Component {
                 <img
                   style={{ width: "50%" }}
                   src={formatImgurUrl(this.state.logoUrl)}
+                  alt={`Logo for ${this.state.businessName}`}
                 />
                 <Input
                   type="file"

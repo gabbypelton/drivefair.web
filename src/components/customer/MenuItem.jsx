@@ -12,7 +12,6 @@ import {
   ModificationOption,
 } from "../styles";
 import {
-  formatPriceFromFloatString,
   formatImgurUrl,
 } from "../../services/formatting";
 

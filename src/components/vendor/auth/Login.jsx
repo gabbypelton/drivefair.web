@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { InputGroup, FormGroup } from "reactstrap";
+import { FormGroup } from "reactstrap";
 
 import {
   Button,
-  ModalBody,
   Form,
   Input,
   Label,
@@ -12,10 +11,6 @@ import {
 } from "../../styles";
 import { loginVendor } from "../../../actions/session";
 import { loadState } from "../../../services/stateManagement";
-import {
-  emailValidation,
-  passwordValidation
-} from "../../../services/inputValidation";
 
 class Login extends Component {
   state = {

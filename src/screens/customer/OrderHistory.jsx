@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import {
-  Container,
   OrderListHeading,
   OrderListBody,
   OrderList,
@@ -11,7 +10,7 @@ import { getOrderHistory } from "../../actions/orders";
 import Order from "../../components/customer/Order";
 import { Spinner } from "reactstrap";
 
-export class ActiveOrders extends Component {
+export class OrderHistory extends Component {
   componentDidMount() {
     this.props.getOrderHistory();
   }
@@ -57,4 +56,4 @@ const mapDispatchToProps = {
   getOrderHistory,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ActiveOrders);
+export default connect(mapStateToProps, mapDispatchToProps)(OrderHistory);

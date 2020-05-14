@@ -12,7 +12,7 @@ export class DisplayVendor extends Component {
         <Col>
           <Row>
             <Col xs="6">
-              <img style={{width: "50%"}}src={formatImgurUrl(logoUrl)} />
+              <img style={{width: "50%"}}src={formatImgurUrl(logoUrl)} alt={`Vendor logo for ${businessName}.`} />
             </Col>
           </Row>
           <Row>

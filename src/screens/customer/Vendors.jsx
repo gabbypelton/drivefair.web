@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Row, Col, Container } from "reactstrap";
+import { Row, Container } from "reactstrap";
 import VendorInfo from "../../components/customer/VendorInfo";
 import { getVendors } from "../../actions/vendor";
 import { Redirect } from "react-router";

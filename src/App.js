@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Switch, Route, Redirect } from "react-router";
-import { Col, Spinner } from "reactstrap";
+import { Spinner } from "reactstrap";
 
 import "./App.css";
 import { setBaseURL } from "./services/http";
@@ -22,7 +22,6 @@ import Vendors from "./screens/customer/Vendors";
 import { Container } from "./components/styles";
 
 setBaseURL(process.env.REACT_APP_API_URL);
-let ordersInterval;
 
 function App(props) {
   const authToken = localStorage.getItem("authToken");

@@ -47,7 +47,7 @@ export const toggleOrderMethod = (orderMethod) => async (dispatch) => {
     });
     dispatch({
       type: types.TOGGLE_ORDER_METHOD_SUCCESS,
-      payload: { orderMethod },
+      payload: { ...response.data, orderMethod },
     });
   } catch (error) {
     dispatch({ type: types.TOGGLE_ORDER_METHOD_FAIL, payload: { error } });

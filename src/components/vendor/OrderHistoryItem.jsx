@@ -11,7 +11,6 @@ import {
   OrderHistoryContainer,
   OrderItemContainer,
 } from "../styles";
-import { colors } from "../../constants/theme";
 
 const OrderHistoryItem = (props) => {
   const [selected, setSelected] = useState(false);

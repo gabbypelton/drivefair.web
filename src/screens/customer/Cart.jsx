@@ -158,7 +158,6 @@ export class Cart extends Component {
         <Row>
           <Col>
             <Button
-              isLoading={this.props.isLoading}
               onClick={() => this.placeOrder()}
               title="Place Order"
               isLoading={this.props.isLoading}
