@@ -11,8 +11,8 @@ export const ConfirmEmail = (props) => {
         <Row>Confirm your email!</Row>
         <Row>
           <Button
-            buttonText="Resend Email"
-            color="primary"
+            title="Resend Email"
+            
             onClick={() => props.sendConfirmationEmail(props.userType)}
           />
         </Row>

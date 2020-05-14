@@ -1,41 +1,42 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Spinner } from "reactstrap";
 
 import {
   Container,
   OrderListHeading,
   OrderListBody,
   OrderList,
+  OrdersContainer,
 } from "../../components/styles";
-import { getActiveOrders, getCompletedOrders } from "../../actions/orders";
+import { getActiveOrders, getReadyOrders } from "../../actions/orders";
 import Order from "../../components/customer/Order";
-import { Spinner } from "reactstrap";
 
 export class ActiveOrders extends Component {
   componentDidMount() {
     this.props.getActiveOrders();
-    this.props.getCompletedOrders();
+    this.props.getReadyOrders();
   }
 
   render() {
     return (
-      <Container>
-        <OrderContainer
+      <OrdersContainer>
+        <OrderListContainer
           {...this.props}
           orders={this.props.activeOrders}
           orderType={"Active"}
         />
-        <OrderContainer
+        <OrderListContainer
           {...this.props}
-          orders={this.props.completedOrders}
-          orderType={"Complete"}
+          orders={this.props.readyOrders}
+          orderType={"Ready"}
         />
-      </Container>
+      </OrdersContainer>
     );
   }
 }
 
-const OrderContainer = (props) => (
+const OrderListContainer = (props) => (
   <OrderList>
     <OrderListHeading>
       <h4>{props.orderType} Orders</h4>
@@ -60,14 +61,14 @@ const OrderContainer = (props) => (
 
 const mapStateToProps = (state) => ({
   activeOrders: state.orders.activeOrders,
-  completedOrders: state.orders.completedOrders,
+  readyOrders: state.orders.readyOrders,
   user: state.session.profile,
   isLoading: state.orders.isLoading,
 });
 
 const mapDispatchToProps = {
   getActiveOrders,
-  getCompletedOrders,
+  getReadyOrders,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActiveOrders);

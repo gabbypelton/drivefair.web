@@ -17,11 +17,12 @@ import {
 } from "reactstrap";
 import { logout } from "../actions/session";
 import { NavLink } from "../components/styles";
+import { colors } from "../constants/theme";
 
-const Example = (props) => {
+const AppNavBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { activeOrders, completedOrders } = props;
-  const orders = [...activeOrders, ...completedOrders];
+  const { activeOrders, readyOrders } = props;
+  const orders = [...activeOrders, ...readyOrders];
   const history = useHistory();
   const customer = {
     phrase: "No wait I'm a customer!",
@@ -39,7 +40,7 @@ const Example = (props) => {
   if (!props.isLoggedIn) {
     return (
       <div>
-        <Navbar color="light" light expand="md">
+        <Navbar color="dark" dark expand="md">
           <NavbarBrand href="/"> </NavbarBrand>
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
@@ -58,7 +59,7 @@ const Example = (props) => {
   }
   return (
     <div>
-      <Navbar color="light" light expand="md">
+      <Navbar color="dark" dark expand="md" style={{ margin: "0 0 0 0" }}>
         <NavbarBrand href="/"> </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
@@ -78,7 +79,14 @@ const Example = (props) => {
             <Nav navbar>
               <NavItem>
                 {props.userType === "customer" ? (
-                  <NavLink onClick={() => history.push("/cart")}>Cart</NavLink>
+                  <NavLink onClick={() => history.push("/cart")}>
+                    Cart{" "}
+                    {props.cartItems.length ? (
+                      <Badge style={{ background: colors.primary500 }}>
+                        {props.cartItems.length}
+                      </Badge>
+                    ) : null}
+                  </NavLink>
                 ) : (
                   <NavLink onClick={() => history.push("/editMenu")}>
                     Menu
@@ -89,23 +97,32 @@ const Example = (props) => {
                 <DropdownToggle nav caret>
                   Orders{" "}
                   {orders.length ? (
-                    <Badge color="primary">{orders.length}</Badge>
+                    <Badge style={{ background: colors.primary500 }}>
+                      {orders.length}
+                    </Badge>
                   ) : null}
                 </DropdownToggle>
-                <DropdownMenu right>
+                <DropdownMenu
+                  right
+                  style={{ backgroundColor: colors.background }}
+                >
                   <DropdownItem>
                     <NavLink onClick={() => history.push("/orders")}>
                       Active{" "}
                       {activeOrders.length ? (
-                        <Badge color="primary">{activeOrders.length}</Badge>
+                        <Badge style={{ background: colors.primary500 }}>
+                          {activeOrders.length}
+                        </Badge>
                       ) : null}
                     </NavLink>
                   </DropdownItem>
                   <DropdownItem>
                     <NavLink onClick={() => history.push("/orders")}>
-                      Completed{" "}
-                      {completedOrders.length ? (
-                        <Badge color="primary">{completedOrders.length}</Badge>
+                      Ready{" "}
+                      {readyOrders.length ? (
+                        <Badge style={{ background: colors.primary500 }}>
+                          {readyOrders.length}
+                        </Badge>
                       ) : null}
                     </NavLink>
                   </DropdownItem>
@@ -114,7 +131,6 @@ const Example = (props) => {
                       History
                     </NavLink>
                   </DropdownItem>
-                  <DropdownItem divider />
                 </DropdownMenu>
               </UncontrolledDropdown>
             </Nav>
@@ -130,11 +146,12 @@ const mapStateToProps = (state) => ({
   userType: state.session.userType,
   emailIsConfirmed: state.session.profile.emailIsConfirmed,
   activeOrders: state.orders.activeOrders,
-  completedOrders: state.orders.completedOrders,
+  readyOrders: state.orders.readyOrders,
+  cartItems: state.cart.orderItems
 });
 
 const mapDispatchToProps = {
   logout,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Example);
+export default connect(mapStateToProps, mapDispatchToProps)(AppNavBar);

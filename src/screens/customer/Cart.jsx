@@ -8,7 +8,6 @@ import {
   Button,
   Label,
   Input,
-  SmallButton,
 } from "../../components/styles";
 import {
   toggleOrderMethod,
@@ -20,7 +19,12 @@ import { getVendors } from "../../actions/vendor";
 import CartItem from "../../components/customer/CartItem";
 import CheckoutModal from "../../components/customer/checkout/CheckoutModal";
 import { formatPriceFromFloatString } from "../../services/formatting";
-import { InputGroupAddon, InputGroupText, InputGroup } from "reactstrap";
+import {
+  InputGroupAddon,
+  InputGroupText,
+  InputGroup,
+  ButtonGroup,
+} from "reactstrap";
 
 export class Cart extends Component {
   state = {
@@ -41,8 +45,9 @@ export class Cart extends Component {
       this.setState({
         total: parseFloat(this.props.totalPrice) + parseFloat(this.state.tip),
       });
-    } if (prevProps.orderItems.length && !this.props.orderItems.length) {
-      this.props.history.push("/orders")
+    }
+    if (prevProps.orderItems.length && !this.props.orderItems.length) {
+      this.props.history.push("/orders");
     }
   }
 
@@ -87,31 +92,30 @@ export class Cart extends Component {
           })}
         </Row>
         <Row>
-          <Col>
-            <Button
-              color="primary"
-              active={this.props.orderMethod === "DELIVERY"}
-              onClick={() => this.toggleOrderMethod("DELIVERY")}
-              buttonText="Delivery"
-            />
-            <Button
-              color="primary"
-              active={this.props.orderMethod === "PICKUP"}
-              onClick={() => this.toggleOrderMethod("PICKUP")}
-              buttonText="Pickup"
-            />
+          <Col xs="10" md="6" lg="3">
+            <ButtonGroup>
+              <Button
+                isLoading={this.props.isLoading}
+                selected={this.props.orderMethod === "DELIVERY"}
+                onClick={() => this.toggleOrderMethod("DELIVERY")}
+                title="Delivery"
+              />
+              <Button
+                isLoading={this.props.isLoading}
+                selected={this.props.orderMethod === "PICKUP"}
+                onClick={() => this.toggleOrderMethod("PICKUP")}
+                title="Pickup"
+              />
+            </ButtonGroup>
           </Col>
         </Row>
         <Row>
-          <Col>Total: {formatPriceFromFloatString(this.state.total)}</Col>
-        </Row>
-        <Row>
-          <Col xs="6" md="4">
+          <Col xs="10" md="6" lg="3">
             <Row>
-              <Col xs="3">
+              <Col xs="2">
                 <Label to="tip">Tip: </Label>
               </Col>
-              <Col xs="12">
+              <Col xs="8">
                 <InputGroup>
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>$</InputGroupText>
@@ -124,35 +128,39 @@ export class Cart extends Component {
                 </InputGroup>
               </Col>
             </Row>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
             <Row>
-              <Col xs="6">
-                <SmallButton
-                  onClick={() =>
-                    this.updateTip((this.props.totalPrice * 0.15).toFixed(2))
-                  }
-                >
-                  15%
-                </SmallButton>
-              </Col>
-              <Col xs="6">
-                <SmallButton
-                  onClick={() =>
-                    this.updateTip((this.props.totalPrice * 0.2).toFixed(2))
-                  }
-                >
-                  20%
-                </SmallButton>
+              <Col>
+                <ButtonGroup>
+                  <Button
+                    title="15%"
+                    onClick={() =>
+                      this.updateTip((this.props.totalPrice * 0.15).toFixed(2))
+                    }
+                  />
+                  <Button
+                    title="20%"
+                    onClick={() =>
+                      this.updateTip((this.props.totalPrice * 0.2).toFixed(2))
+                    }
+                  />
+                </ButtonGroup>
               </Col>
             </Row>
           </Col>
         </Row>
         <Row>
+          <Col>Total: {formatPriceFromFloatString(this.state.total)}</Col>
+        </Row>
+        <Row>
           <Col>
             <Button
-              color="primary"
               isLoading={this.props.isLoading}
               onClick={() => this.placeOrder()}
-              buttonText="Place Order"
+              title="Place Order"
               isLoading={this.props.isLoading}
             />
           </Col>

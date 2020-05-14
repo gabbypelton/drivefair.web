@@ -185,9 +185,9 @@ class Register extends Component {
         </Row>
         <Row style={{ justifyContent: "center" }}>
           <Button
-            color="tertiary"
+            
             onClick={e => this.handleSubmit(e)}
-            buttonText="Sign Up"
+            title="Sign Up"
           />
         </Row>
       </Form>

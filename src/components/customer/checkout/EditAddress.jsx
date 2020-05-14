@@ -155,7 +155,7 @@ class EditAddress extends Component {
         <Row>
           <Col>
             <TouchableHighlight onClick={() => this.saveModification()}>
-              <FontAwesomeIcon icon={faSave} color={colors.primary} /> Save
+              <FontAwesomeIcon icon={faSave} color={colors.primary100} /> Save
             </TouchableHighlight>
           </Col>
         </Row>

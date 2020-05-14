@@ -31,9 +31,9 @@ export class DisplayOrEditMenuItem extends Component {
           <CardFooter>
             {menuItem ? (
               <Button
-                color="primary"
+                
                 onClick={() => this.toggleEditMenuItem()}
-                buttonText={this.state.editMenuItem ? "Cancel" : "Edit"}
+                title={this.state.editMenuItem ? "Cancel" : "Edit"}
                 isLoading={this.props.isLoading}
               />
             ) : null}

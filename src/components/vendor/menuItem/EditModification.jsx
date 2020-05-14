@@ -100,15 +100,15 @@ class EditModification extends Component {
         </Row>
         <Row>
           <Button
-            color="primary"
+            
             active={type === "single"}
-            buttonText="Single"
+            title="Single"
             onClick={(e) => this.handleModificationChange("type", "single", e)}
           />
           <Button
-            color="primary"
+            
             active={type === "multiple"}
-            buttonText="Multiple"
+            title="Multiple"
             onClick={(e) =>
               this.handleModificationChange("type", "multiple", e)
             }
@@ -165,7 +165,7 @@ class EditModification extends Component {
         <Row>
           <Col>
             <TouchableHighlight onClick={() => this.addOption()}>
-              <FontAwesomeIcon icon={faPlusCircle} color={colors.primary} /> New
+              <FontAwesomeIcon icon={faPlusCircle} color={colors.primary100} /> New
               Option
             </TouchableHighlight>
           </Col>
@@ -173,7 +173,7 @@ class EditModification extends Component {
         <Row>
           <Col>
             <TouchableHighlight onClick={() => this.saveModification()}>
-              <FontAwesomeIcon icon={faSave} color={colors.primary} /> Save
+              <FontAwesomeIcon icon={faSave} color={colors.primary100} /> Save
             </TouchableHighlight>
           </Col>
         </Row>

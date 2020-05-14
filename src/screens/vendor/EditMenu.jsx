@@ -50,10 +50,7 @@ export class Menu extends Component {
         <Row>
           <Col>
             <Button
-              color="primary"
-              buttonText={
-                this.state.showVendorEditor ? "Cancel" : "Edit Profile"
-              }
+              title={this.state.showVendorEditor ? "Cancel" : "Edit Profile"}
               onClick={() => this.toggleVendorEditor()}
             />
           </Col>

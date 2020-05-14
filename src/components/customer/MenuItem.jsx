@@ -1,17 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  CardText,
-  Row,
-  Col,
-  CardImg,
-  Card,
-} from "reactstrap";
+import { CardBody, CardTitle, CardSubtitle, CardText } from "reactstrap";
 import { addToCart } from "../../actions/cart";
-import { Button, ModificationSelect, ModificationOption } from "../styles";
+import {
+  Card,
+  Col,
+  Row,
+  CardImg,
+  Button,
+  ModificationSelect,
+  ModificationOption,
+} from "../styles";
 import {
   formatPriceFromFloatString,
   formatImgurUrl,
@@ -103,9 +102,9 @@ class MenuItem extends Component {
               ))}
             </Row>
             <Button
-              color="primary"
+              
               onClick={() => this.addToCart()}
-              buttonText="Add to cart"
+              title="Add to cart"
               isLoading={this.props.isLoading}
             />
           </CardBody>

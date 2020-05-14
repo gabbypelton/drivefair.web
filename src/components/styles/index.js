@@ -32,13 +32,28 @@ import { colors } from "../../constants/theme";
 import styled from "styled-components";
 
 export const Container = styled(BSContainer)`
-  background: ${colors.white};
   min-height: 100vh;
+  width: 100%;
   display: flex;
+  margin: 0 0 0 0;
+  max-width: unset;
   flex-flow: column nowrap;
 `;
 
-export const Col = styled(BSCol)``;
+export const OrdersContainer = styled(BSContainer)`
+max-height: 100vh;
+width: 100%;
+display: flex;
+margin: 0 0 0 0;
+max-width: unset;
+flex-flow: column nowrap;`;
+
+export const Col = styled(BSCol)`
+  dispay: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+`;
 
 export const Row = styled(BSRow)`
   display: flex;
@@ -47,22 +62,22 @@ export const Row = styled(BSRow)`
   align-items: center;
 `;
 
-export const Modal = styled(BSModal)``;
+export const Modal = styled(BSModal)`
+  background: ${colors.background};
+  color: ${colors.text};
+`;
 
 export const ModalHeader = styled(BSModalHeader)`
-  background: ${colors.white};
+  background: ${colors.background};
+  color: ${colors.text};
 `;
 
 export const ModalBody = styled(BSModalBody)`
-  background: ${colors.white};
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
+  background: ${colors.background};
+  color: ${colors.text};
 `;
 
-export const ModalFooter = styled(BSModalFooter)`
-  background: ${colors.white};
-`;
+export const ModalFooter = styled(BSModalFooter)``;
 
 export const Form = styled(BSForm)``;
 
@@ -106,6 +121,8 @@ export const ResultContainer = styled(Col)``;
 
 export const Card = styled(BSCard)`
   margin-bottom: 1rem;
+  background: ${colors.background};
+  color: ${colors.text};
 `;
 
 export const CardImg = styled(BSCardImg)`
@@ -123,7 +140,7 @@ export const ContentHeading = styled(BSRow)`
 
 export const AutoCompleteContainer = styled(Col)`
   border: solid 1px gray;
-  background: white;
+  background: text;
   position: absolute;
   z-index: 5;
   top: 3rem;
@@ -150,10 +167,19 @@ export const NavLink = styled(BSNavLink)`
   cursor: pointer;
 `;
 const ButtonBase = styled(BSButton)`
-  background: ${(props) => colors[props.color]};
-  width: ${(props) => (props.color === "link" ? "" : "20%")};
+  ${(props) =>
+    props.color === "link"
+      ? ""
+      : `background: ${
+          colors[
+            (props.backgroundColor || "primary") +
+              (props.selected ? "900" : "600")
+          ]
+        };
+  color: ${colors.text};
+  width: ${props.width};
   min-width: 100px;
-  margin: 1rem 2% 2rem 2%;
+  margin: 1rem 2% 1rem 2%;`}
 `;
 
 export const SmallButton = styled(BSButton)`
@@ -175,8 +201,8 @@ export const TouchableHighlight = styled.div`
   text-align: center;
   &:hover {
     cursor: pointer;
-    background-color: ${colors.black};
-    color: ${colors.white};
+    background-color: ${colors.background};
+    color: ${colors.text};
   }
 `;
 
@@ -190,13 +216,16 @@ export const ModificationOption = styled(Row)`
   ${(props) =>
     props.selected
       ? `
-        background-color: ${colors.black};
-        color: ${colors.white};
+        background-color: ${colors.primary900};
+        color: ${colors.text};
       `
       : `
-        background-color: ${colors.white};
-        color: ${colors.black};
+        background-color: ${colors.text};
+        color: ${colors.primary900};
       `}
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const EditOptionContainer = styled(BSRow)`
@@ -205,7 +234,7 @@ export const EditOptionContainer = styled(BSRow)`
   height: 4rem;
   align-items: center;
   background-color: ${(props) =>
-    props.selected ? colors.black : colors.white};
+    props.selected ? colors.background : colors.text};
   &:hover {
     cursor: pointer;
   }
@@ -217,33 +246,51 @@ export const ViewModificationsList = styled(BSRow)`
   align-items: flex-start;
 `;
 
-export const OrderList = styled(BSCol)``;
+export const OrderList = styled(BSCol)`
+  margin: 0;
+  padding: 0;
+  height: 50;
+`;
 
 export const OrderListHeading = styled(BSRow)`
   justify-content: center;
-  background: ${colors.primary};
-  color: ${colors.white};
+  background: ${colors.primary500};
+  color: ${colors.text};
 `;
 
 export const OrderListBody = styled(BSRow)`
-  justify-content: center;
+  flex-flow: row nowrap;
+  overflow-x: auto;
+  
 `;
 
 export const ViewOptionsItem = styled(BSCol)`
   ${(props) =>
     props.selected
       ? `
-      background-color: ${colors.black};
-      color: ${colors.white};
+      background-color: ${colors.background};
+      color: ${colors.text};
     `
       : `
-      background-color: ${colors.white};
-      color: ${colors.black};
+      background-color: ${colors.text};
+      color: ${colors.background};
     `}
 `;
 
+const orderColors = {
+  PAID: "warning",
+  STALE: "danger",
+  ACCEPTED: "primary",
+  READY: "primary",
+  EN_ROUTE: "success",
+};
+
 export const OrderContainer = styled(BSCol)`
-  margin: 0 0 1rem;
+  background-color: ${(props) =>
+    colors[orderColors[props.disposition] + "900"]};
+  margin: 1rem 2%;
+  height: 35vh;
+  overflow-y: auto;
 `;
 
 export const OrderTitle = styled(BSCol)`
@@ -251,7 +298,7 @@ export const OrderTitle = styled(BSCol)`
 `;
 
 export const OrderHistoryContainer = styled(BSCol)`
-  border: solid ${colors.black} 1px;
+  border: solid ${colors.background} 1px;
 `;
 
 export const OrderItemContainer = styled(BSCol)`
@@ -260,8 +307,12 @@ export const OrderItemContainer = styled(BSCol)`
 
 export const Button = (props) => {
   return (
-    <ButtonBase {...props} disabled={props.isLoading}>
-      {props.isLoading ? <Spinner /> : props.buttonText}
+    <ButtonBase
+      {...props}
+      disabled={props.isLoading}
+      color={props.color === "link" ? "link" : "none"}
+    >
+      {props.isLoading ? <Spinner /> : props.title}
     </ButtonBase>
   );
 };

@@ -1,16 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import {
-  Row,
-  CardBody,
-  Card,
-  Col,
-  CardTitle,
-  CardText,
-  CardSubtitle,
-  Button,
-  CardImg,
-} from "reactstrap";
+import { CardBody, CardSubtitle, CardText, CardTitle } from "reactstrap";
+import { Row, Card, Col, Button, CardImg } from "../styles";
 import { Link } from "react-router-dom";
 import { selectVendor } from "../../actions/vendor";
 import { formatImgurUrl } from "../../services/formatting";

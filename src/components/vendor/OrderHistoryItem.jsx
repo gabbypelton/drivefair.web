@@ -15,7 +15,7 @@ import { colors } from "../../constants/theme";
 
 const OrderHistoryItem = (props) => {
   const [selected, setSelected] = useState(false);
-  const { customer, orderItems, createdOn } = props.order;
+  const { customer, orderItems, createdOn, disposition } = props.order;
   if (!selected) {
     return (
       <OrderHistoryContainer
@@ -55,18 +55,18 @@ const OrderHistoryItem = (props) => {
                   <h4>{orderItem.menuItem.name}</h4>
                 </Col>
               </Row>
-                {orderItem.modifications.map((mod) => {
-                  return (
-                    <Row key={mod._id}>
-                      <p>
-                        <strong>{mod.name}: </strong>
-                        {Array.isArray(mod.options)
-                          ? mod.options.map((a) => a.name).join(", ")
-                          : mod.options.name}
-                      </p>
-                    </Row>
-                  );
-                })}
+              {orderItem.modifications.map((mod) => {
+                return (
+                  <Row key={mod._id}>
+                    <p>
+                      <strong>{mod.name}: </strong>
+                      {Array.isArray(mod.options)
+                        ? mod.options.map((a) => a.name).join(", ")
+                        : mod.options.name}
+                    </p>
+                  </Row>
+                );
+              })}
             </OrderItemContainer>
           );
         })}
@@ -79,11 +79,12 @@ const OrderHistoryItem = (props) => {
       </Row>
       <Row>
         <Col>
-          <Button
-            color="primary"
-            onClick={() => props.refundOrder(props.order._id)}
-            buttonText="Refund"
-          />
+          {disposition !== "CANCELED" ? (
+            <Button
+              onClick={() => props.refundOrder(props.order._id)}
+              title="Refund"
+            />
+          ) : null}
         </Col>
       </Row>
     </OrderHistoryContainer>

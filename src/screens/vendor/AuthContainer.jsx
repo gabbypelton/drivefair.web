@@ -5,6 +5,7 @@ import { Col, Container, Jumbotron } from "reactstrap";
 import { Button, Row } from "../../components/styles";
 import Login from "../../components/vendor/auth/Login";
 import Register from "../../components/vendor/auth/Register";
+import { colors } from "../../constants/theme";
 
 class AuthContainer extends React.Component {
   constructor(props) {
@@ -45,20 +46,22 @@ class AuthContainer extends React.Component {
   render() {
     return (
       <Container>
-        <Jumbotron style={{ backgroundColor: "#F7F9FB" }}>
-          <h1>Deliver, Denton.</h1>
+        <Jumbotron style={{ backgroundColor: colors.background }}>
+          <Row>
+            <h1>Deliver, Denton.</h1>
+          </Row>
+          <Row>
+            <Button
+              color="link"
+              onClick={this.toggleAuthType.bind(this)}
+              title={this.state.cta}
+            />
+          </Row>
         </Jumbotron>
         <Row>
           <Col>
             <Row>
               <ModalSelector authType={this.state.authType} />
-            </Row>
-            <Row>
-              <Button
-                color="link"
-                onClick={this.toggleAuthType.bind(this)}
-                buttonText={this.state.cta}
-              />
             </Row>
           </Col>
         </Row>

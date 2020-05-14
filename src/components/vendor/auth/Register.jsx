@@ -228,7 +228,7 @@ class Register extends Component {
             color="tertiary"
             isLoading={this.props.isLoading}
             onClick={e => this.handleSubmit(e)}
-            buttonText="Sign up"
+            title="Sign up"
           />
         </Row>
       </Form>
