@@ -261,7 +261,7 @@ export const OrderListHeading = styled(BSRow)`
 export const OrderListBody = styled(BSRow)`
   flex-flow: row nowrap;
   overflow-x: auto;
-  
+  justify-content: center;
 `;
 
 export const ViewOptionsItem = styled(BSCol)`
