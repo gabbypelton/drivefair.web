@@ -22,7 +22,7 @@ const ActiveOrder = (props) => {
     method,
     disposition,
   } = props.activeOrder;
-  const { street, unit, city, state, zip } = address[0] ? address[0] : {};
+  const { street, unit, city, state, zip } = address ? address : {};
   const [showAcceptOrderModal, setShowAcceptOrderModal] = useState(false);
   return (
     <OrderContainer xs="12" md="5" lg="3" disposition={disposition}>
@@ -102,6 +102,7 @@ const ActiveOrder = (props) => {
             <Button
               onClick={() => setShowAcceptOrderModal(!showAcceptOrderModal)}
               title="Accept"
+              isLoading={props.isLoading}
             />
           </Col>
         </Row>
@@ -115,7 +116,9 @@ const ActiveOrder = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  isLoading: state.orders.isLoading,
+});
 
 const mapDispatchToProps = {
   readyOrder,

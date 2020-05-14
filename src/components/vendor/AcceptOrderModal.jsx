@@ -34,6 +34,7 @@ export const DriversModal = (props) => {
       selectedDriverId,
       timeToReady,
     });
+    props.toggle()
   };
   return (
     <Modal isOpen={props.isOpen} toggle={props.toggle}>

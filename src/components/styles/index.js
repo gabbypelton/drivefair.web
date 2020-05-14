@@ -40,6 +40,14 @@ export const Container = styled(BSContainer)`
   flex-flow: column nowrap;
 `;
 
+export const OrdersContainer = styled(BSContainer)`
+max-height: 100vh;
+width: 100%;
+display: flex;
+margin: 0 0 0 0;
+max-width: unset;
+flex-flow: column nowrap;`;
+
 export const Col = styled(BSCol)`
   dispay: flex;
   align-items: center;
@@ -113,7 +121,8 @@ export const ResultContainer = styled(Col)``;
 
 export const Card = styled(BSCard)`
   margin-bottom: 1rem;
-  color: ${colors.background};
+  background: ${colors.background};
+  color: ${colors.text};
 `;
 
 export const CardImg = styled(BSCardImg)`
@@ -165,7 +174,8 @@ const ButtonBase = styled(BSButton)`
           colors[
             (props.backgroundColor || "primary") +
               (props.selected ? "900" : "600")
-          ]};
+          ]
+        };
   color: ${colors.text};
   width: ${props.width};
   min-width: 100px;
@@ -206,13 +216,16 @@ export const ModificationOption = styled(Row)`
   ${(props) =>
     props.selected
       ? `
-        background-color: ${colors.text};
-        color: ${colors.background};
+        background-color: ${colors.primary900};
+        color: ${colors.text};
       `
       : `
-        background-color: ${colors.background};
-        color: ${colors.text};
+        background-color: ${colors.text};
+        color: ${colors.primary900};
       `}
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const EditOptionContainer = styled(BSRow)`
@@ -236,6 +249,7 @@ export const ViewModificationsList = styled(BSRow)`
 export const OrderList = styled(BSCol)`
   margin: 0;
   padding: 0;
+  height: 50;
 `;
 
 export const OrderListHeading = styled(BSRow)`
@@ -245,7 +259,9 @@ export const OrderListHeading = styled(BSRow)`
 `;
 
 export const OrderListBody = styled(BSRow)`
-  justify-content: center;
+  flex-flow: row nowrap;
+  overflow-x: auto;
+  
 `;
 
 export const ViewOptionsItem = styled(BSCol)`
@@ -273,6 +289,8 @@ export const OrderContainer = styled(BSCol)`
   background-color: ${(props) =>
     colors[orderColors[props.disposition] + "900"]};
   margin: 1rem 2%;
+  height: 35vh;
+  overflow-y: auto;
 `;
 
 export const OrderTitle = styled(BSCol)`

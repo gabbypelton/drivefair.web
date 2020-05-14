@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Spinner } from "reactstrap";
 
 import {
   Container,
   OrderListHeading,
   OrderListBody,
   OrderList,
+  OrdersContainer,
 } from "../../components/styles";
 import { getActiveOrders, getReadyOrders } from "../../actions/orders";
 import Order from "../../components/customer/Order";
-import { Spinner } from "reactstrap";
 
 export class ActiveOrders extends Component {
   componentDidMount() {
@@ -19,7 +20,7 @@ export class ActiveOrders extends Component {
 
   render() {
     return (
-      <Container>
+      <OrdersContainer>
         <OrderListContainer
           {...this.props}
           orders={this.props.activeOrders}
@@ -30,7 +31,7 @@ export class ActiveOrders extends Component {
           orders={this.props.readyOrders}
           orderType={"Ready"}
         />
-      </Container>
+      </OrdersContainer>
     );
   }
 }

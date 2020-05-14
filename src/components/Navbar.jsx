@@ -40,7 +40,7 @@ const AppNavBar = (props) => {
   if (!props.isLoggedIn) {
     return (
       <div>
-        <Navbar dark expand="md">
+        <Navbar color="dark" dark expand="md">
           <NavbarBrand href="/"> </NavbarBrand>
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
@@ -59,7 +59,7 @@ const AppNavBar = (props) => {
   }
   return (
     <div>
-      <Navbar dark expand="md" style={{ margin: "0 0 0 0" }}>
+      <Navbar color="dark" dark expand="md" style={{ margin: "0 0 0 0" }}>
         <NavbarBrand href="/"> </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
