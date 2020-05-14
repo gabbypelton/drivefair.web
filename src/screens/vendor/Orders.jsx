@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Spinner } from "reactstrap";
 
 import {
-  Container,
+  OrdersContainer,
   Row,
   OrderList,
   OrderListHeading,
@@ -33,7 +33,7 @@ export class ActiveOrders extends Component {
 
   render() {
     return (
-      <Container>
+      <OrdersContainer>
         <OrderListContainer
           {...this.props}
           orders={this.props.activeOrders}
@@ -44,7 +44,7 @@ export class ActiveOrders extends Component {
           orders={this.props.readyOrders}
           orderType={"Ready"}
         />
-      </Container>
+      </OrdersContainer>
     );
   }
 }
@@ -52,9 +52,10 @@ export class ActiveOrders extends Component {
 const OrderListContainer = (props) => (
   <OrderList>
     <OrderListHeading>
-      <h4>{props.orderType} Orders</h4>
+      <h4>{props.orderType} Orders </h4>
+      {props.isLoading && props.orders.length ? <Spinner style={{position: "absolute", right: 0}}/> : null}
     </OrderListHeading>
-    {props.isLoading ? (
+    {props.isLoading && !props.orders.length ? (
       <OrderListBody>
         <Spinner />
       </OrderListBody>

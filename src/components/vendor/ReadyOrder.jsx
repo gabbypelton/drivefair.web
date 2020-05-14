@@ -25,7 +25,7 @@ const ReadyOrder = (props) => {
     disposition,
     stale,
   } = props.readyOrder;
-  const { street, unit, city, state, zip } = address[0] ? address[0] : {};
+  const { street, unit, city, state, zip } = address ? address : {};
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [password, setPassword] = useState("");
   const refundOrder = (e) => {
