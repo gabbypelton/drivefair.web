@@ -4,6 +4,7 @@ import { Spinner } from "reactstrap";
 
 import {
   OrdersContainer,
+  Row,
   OrderList,
   OrderListHeading,
   OrderListBody,

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import moment from "moment";
 import { Form, FormGroup, Label, Input } from "reactstrap";
-import { deliverOrder, refundOrder } from "../../actions/orders";
+import { customerPickUpOrder, refundOrder } from "../../actions/orders";
 import { formatPriceFromFloatString } from "../../services/formatting";
 
 import {
@@ -101,7 +101,7 @@ const ReadyOrder = (props) => {
           <Button onClick={() => setShowPasswordModal(true)} title="Refund" />
           {props.readyOrder.method === "PICKUP" ? (
             <Button
-              onClick={() => props.deliverOrder(props.readyOrder._id)}
+              onClick={() => props.customerPickUpOrder(props.readyOrder._id)}
               title="Sold"
             />
           ) : null}
@@ -147,7 +147,7 @@ const CheckPasswordModal = (props) => {
 const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = {
-  deliverOrder,
+  customerPickUpOrder,
   refundOrder,
 };
 

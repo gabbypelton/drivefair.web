@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import moment from "moment";
-import { readyOrder, refundOrder } from "../../actions/orders";
+import {
+  readyOrder,
+  refundOrder,
+  selectDriver,
+  autoSelect,
+  acceptOrder,
+} from "../../actions/orders";
 import { formatPriceFromFloatString } from "../../services/formatting";
 
 import {
@@ -12,6 +18,8 @@ import {
   OrderItemContainer,
 } from "../styles";
 import AcceptOrderModal from "./AcceptOrderModal";
+import SelectDriverModal from "./SelectDriverModal";
+import { Container } from "reactstrap";
 
 const ActiveOrder = (props) => {
   const {
@@ -23,7 +31,12 @@ const ActiveOrder = (props) => {
     disposition,
   } = props.activeOrder;
   const { street, unit, city, state, zip } = address ? address : {};
-  const [showAcceptOrderModal, setShowAcceptOrderModal] = useState(false);
+  const [isShowingModal, setIsShowingModal] = useState(false);
+  const [modalType, setModalType] = useState("");
+  const showModal = (modal) => {
+    setModalType(modal);
+    setIsShowingModal(true);
+  };
   return (
     <OrderContainer xs="12" md="5" lg="3" disposition={disposition}>
       <Row>
@@ -31,7 +44,7 @@ const ActiveOrder = (props) => {
       </Row>
       <Row>
         <Col>
-          {customer.firstName} {customer.lastName[0]}
+          {customer.firstName} {customer.lastName ? customer.lastName[0] : null}
         </Col>
       </Row>
       <Row>
@@ -68,22 +81,59 @@ const ActiveOrder = (props) => {
         <Col>{method}</Col>
       </Row>
       {method === "DELIVERY" ? (
+        <Container>
+          <Row>
+            <Col>
+              <Row>
+                <Col>
+                  {street} {unit ? "#" + unit : null}
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  {city}, {state} {zip}
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+          <DeliveryButtons {...props} showModal={showModal} />
+        </Container>
+      ) : (
+        <PickupButtons {...props} showModal={showModal} />
+      )}
+      <AcceptOrderModal
+        isOpen={isShowingModal && modalType === "acceptOrder"}
+        toggle={() => setIsShowingModal(!isShowingModal)}
+        order={props.activeOrder}
+      />
+      <SelectDriverModal
+        isOpen={isShowingModal && modalType === "selectDriver"}
+        toggle={() => setIsShowingModal(!isShowingModal)}
+        order={props.activeOrder}
+      />
+    </OrderContainer>
+  );
+};
+
+const DeliveryButtons = (props) => {
+  switch (props.activeOrder.disposition) {
+    case "ACCEPTED_BY_VENDOR":
+      return (
         <Row>
           <Col>
-            <Row>
-              <Col>
-                {street} {unit ? "#" + unit : null}
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                {city}, {state} {zip}
-              </Col>
-            </Row>
+            <Button
+              onClick={() => props.showModal("selectDriver")}
+              title="Choose Driver"
+            />
+            <Button
+              onClick={() => props.autoSelect(props.activeOrder._id)}
+              title="Auto-select"
+            />
           </Col>
         </Row>
-      ) : null}
-      {disposition === "ACCEPTED" ? (
+      );
+    case "ACCEPTED_BY_DRIVER":
+      return (
         <Row>
           <Col>
             <Button
@@ -96,24 +146,52 @@ const ActiveOrder = (props) => {
             />
           </Col>
         </Row>
-      ) : (
+      );
+    case "PAID":
+      return (
         <Row>
           <Col>
             <Button
-              onClick={() => setShowAcceptOrderModal(!showAcceptOrderModal)}
+              onClick={() => props.showModal("acceptOrder")}
               title="Accept"
               isLoading={props.isLoading}
             />
           </Col>
         </Row>
-      )}
-      <AcceptOrderModal
-        isOpen={showAcceptOrderModal}
-        toggle={() => setShowAcceptOrderModal(!showAcceptOrderModal)}
-        order={props.activeOrder}
-      />
-    </OrderContainer>
-  );
+      );
+    default:
+      return;
+  }
+};
+
+const PickupButtons = (props) => {
+  switch (props.activeOrder.disposition) {
+    case "ACCEPTED_BY_VENDOR":
+      return (
+        <Row>
+          <Col>
+            <Button
+              onClick={() => props.readyOrder(props.activeOrder._id)}
+              title="Ready"
+            />
+          </Col>
+        </Row>
+      );
+    case "PAID":
+      return (
+        <Row>
+          <Col>
+            <Button
+              onClick={() => props.showModal("acceptOrder")}
+              title="Accept"
+              isLoading={props.isLoading}
+            />
+          </Col>
+        </Row>
+      );
+    default:
+      return;
+  }
 };
 
 const mapStateToProps = (state) => ({
@@ -123,6 +201,10 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   readyOrder,
   refundOrder,
+  acceptOrder,
+  selectDriver,
+  autoSelect,
+  acceptOrder,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActiveOrder);

@@ -21,6 +21,7 @@ import {
   Col as BSCol,
   NavLink as BSNavLink,
   Spinner,
+  Media,
 } from "reactstrap";
 
 import { colors } from "../../constants/theme";
@@ -205,7 +206,10 @@ export const TouchableHighlight = styled.div`
 
 export const ModificationSelect = styled(Col)`
   height: 5rem;
-  overflow-y: scroll;
+  overflow-y: auto;
+  background: ${colors.background};
+  border: 1px solid ${colors.primary900};
+  border-radius: 5px;
 `;
 
 export const ModificationOption = styled(Row)`
@@ -214,11 +218,8 @@ export const ModificationOption = styled(Row)`
     props.selected
       ? `
         background-color: ${colors.primary900};
-        color: ${colors.text};
       `
-      : `
-        background-color: ${colors.text};
-        color: ${colors.primary900};
+      : `background-color: ${colors.background};
       `}
   &:hover {
     cursor: pointer;
@@ -237,7 +238,25 @@ export const EditOptionContainer = styled(BSRow)`
   }
 `;
 
-export const ViewOptionsList = styled(BSRow)``;
+export const ViewOptionsList = styled(BSRow)`
+  height: 5rem;
+  overflow-y: auto;
+  background: ${colors.background};
+  border: 1px solid ${colors.primary900};
+  border-radius: 5px;
+`;
+
+export const ViewOptionsItem = styled(BSCol)`
+  justify-content: space-around;
+  ${(props) =>
+    props.selected
+      ? `
+        background-color: ${colors.primary900};
+      `
+      : `background-color: ${colors.background};
+      `
+  }
+`
 
 export const ViewModificationsList = styled(BSRow)`
   align-items: flex-start;
@@ -261,23 +280,11 @@ export const OrderListBody = styled(BSRow)`
   justify-content: center;
 `;
 
-export const ViewOptionsItem = styled(BSCol)`
-  ${(props) =>
-    props.selected
-      ? `
-      background-color: ${colors.background};
-      color: ${colors.text};
-    `
-      : `
-      background-color: ${colors.text};
-      color: ${colors.background};
-    `}
-`;
-
 const orderColors = {
-  PAID: "warning",
+  PAID: "danger",
   STALE: "danger",
-  ACCEPTED: "primary",
+  ACCEPTED_BY_VENDOR: "warning",
+  ACCEPTED_BY_DRIVER: "primary",
   READY: "primary",
   EN_ROUTE: "success",
 };
@@ -290,16 +297,49 @@ export const OrderContainer = styled(BSCol)`
   overflow-y: auto;
 `;
 
+export const OrderItemContainer = styled(BSCol)`
+  margin: 1rem 0;
+`;
+
 export const OrderTitle = styled(BSCol)`
   margin: 1rem 0;
 `;
 
-export const OrderHistoryContainer = styled(BSCol)`
-  border: solid ${colors.background} 1px;
+export const OrderHistoryList = styled(BSCol)`
+  margin: 0;
+  padding: 0;
 `;
 
-export const OrderItemContainer = styled(BSCol)`
-  margin: 1rem 0;
+export const OrderHistoryListHeading = styled(BSRow)`
+  justify-content: center;
+  background: ${colors.primary500};
+  color: ${colors.text};
+`;
+
+export const OrderHistoryListBody = styled(BSRow)`
+  justify-content: center;
+`;
+
+export const OrderHistoryItemContainer = styled(BSRow)`
+  padding: 1rem;
+  width: 100%;
+  margin: 0.2rem;
+  ${(props) =>
+    props.index % 2 === 0
+      ? `background: ${colors.info900};`
+      : `background: ${colors.primary900};`}
+`;
+
+export const OrderHistoryOrderItem = styled(BSRow)`
+  margin: 0;
+  padding: 1rem;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: flex-start;
+  ${(props) =>
+    props.index % 2 === 0
+      ? `background: ${colors.info800};`
+      : `background: ${colors.primary800};`}
 `;
 
 export const Button = (props) => {

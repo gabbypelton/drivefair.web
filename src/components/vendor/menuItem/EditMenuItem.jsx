@@ -226,8 +226,7 @@ export class EditMenuItem extends Component {
           <Row>
             <Button
               onClick={(e) => this.handleSubmit(e)}
-              
-              title="Save"
+              title="Save Menu Item"
             />
           </Row>
         </Form>

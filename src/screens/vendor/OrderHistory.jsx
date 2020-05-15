@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import { Spinner } from "reactstrap";
 
 import {
-  OrderList,
-  OrderListBody,
-  OrderListHeading,
+  OrderHistoryList,
+  OrderHistoryListBody,
+  OrderHistoryListHeading,
 } from "../../components/styles";
 import { getOrderHistory } from "../../actions/orders";
 import OrderHistoryItem from "../../components/vendor/OrderHistoryItem";
@@ -17,30 +17,31 @@ export class OrderHistory extends Component {
 
   render() {
     return (
-      <OrderList>
-        <OrderListHeading>
+      <OrderHistoryList>
+        <OrderHistoryListHeading>
           <h4>Order History</h4>
-        </OrderListHeading>
+        </OrderHistoryListHeading>
         {this.props.isLoading ? (
-          <OrderListBody>
+          <OrderHistoryListBody>
             <Spinner />
-          </OrderListBody>
+          </OrderHistoryListBody>
         ) : this.props.orderHistory.length ? (
-          <OrderListBody>
-            {this.props.orderHistory.map((order) => (
+          <OrderHistoryListBody>
+            {this.props.orderHistory.map((order, index) => (
               <OrderHistoryItem
+                index={index}
                 key={order._id}
                 order={order}
                 orderType={this.props.orderType}
               />
             ))}
-          </OrderListBody>
+          </OrderHistoryListBody>
         ) : (
-          <OrderListBody>
+          <OrderHistoryListBody>
             <h5>None yet!</h5>
-          </OrderListBody>
+          </OrderHistoryListBody>
         )}
-      </OrderList>
+      </OrderHistoryList>
     );
   }
 }

@@ -44,7 +44,7 @@ export const acceptOrder = ({
 }) => async (dispatch) => {
   try {
     dispatch({ type: types.ACCEPT_ORDER });
-    const response = await Axios.post("/orders/acceptOrder", {
+    const response = await Axios.post("/orders/vendorAcceptOrder", {
       orderId,
       selectedDriverId,
       timeToReady,
@@ -52,6 +52,35 @@ export const acceptOrder = ({
     dispatch({ type: types.ACCEPT_ORDER_SUCCESS, payload: response.data });
   } catch (error) {
     dispatch({ type: types.ACCEPT_ORDER_FAIL, payload: { error } });
+  }
+};
+export const selectDriver = ({ orderId, selectedDriverId }) => async (
+  dispatch
+) => {
+  try {
+    dispatch({ type: types.SELECT_DRIVER });
+    const response = await Axios.post("/orders/selectDriver", {
+      orderId,
+      selectedDriverId,
+    });
+    dispatch({ type: types.SELECT_DRIVER_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispatch({ type: types.SELECT_DRIVER_FAIL, payload: { error } });
+  }
+};
+
+export const autoSelect = ({ orderId }) => async (dispatch) => {
+  try {
+    dispatch({ type: types.AUTO_SELECT_DRIVER });
+    const response = await Axios.post("/orders/autoSelect", {
+      orderId,
+    });
+    dispatch({
+      type: types.AUTO_SELECT_DRIVER_SUCCESS,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({ type: types.AUTO_SELECT_DRIVER_FAIL, payload: { error } });
   }
 };
 
@@ -65,13 +94,13 @@ export const readyOrder = (orderId) => async (dispatch) => {
   }
 };
 
-export const deliverOrder = (orderId) => async (dispatch) => {
+export const customerPickUpOrder = (orderId) => async (dispatch) => {
   try {
-    dispatch({ type: types.DELIVER_ORDER });
-    const response = await Axios.post("/orders/deliverOrder", { orderId });
-    dispatch({ type: types.DELIVER_ORDER_SUCCESS, payload: response.data });
+    dispatch({ type: types.CUSTOMER_PICK_UP_ORDER });
+    const response = await Axios.post("/orders/customerPickUpOrder", { orderId });
+    dispatch({ type: types.CUSTOMER_PICK_UP_ORDER_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.DELIVER_ORDER_FAIL, payload: { error } });
+    dispatch({ type: types.CUSTOMER_PICK_UP_ORDER_FAIL, payload: { error } });
   }
 };
 
