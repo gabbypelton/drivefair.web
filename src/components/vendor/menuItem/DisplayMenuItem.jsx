@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Label, CardBody, CardSubtitle, CardText, CardTitle } from "reactstrap";
+import { CardBody, CardSubtitle, CardText, CardTitle } from "reactstrap";
 import { removeMenuItem } from "../../../actions/menu";
 import {
   formatPriceFromFloatString,

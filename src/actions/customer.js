@@ -8,7 +8,7 @@ export const newCustomer = (details) => async (dispatch) => {
     const response = await Axios.post("/customers/register", details);
     localStorage.clear();
     localStorage.setItem("authToken", response.data.token);
-    localStorage.setItem("userType", "vendor");
+    localStorage.setItem("userType", "customer");
     setBearerToken(response.data.token);
     dispatch({ type: types.NEW_CUSTOMER_SUCCESS, payload: response.data });
   } catch (error) {

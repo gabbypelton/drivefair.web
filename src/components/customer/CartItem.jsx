@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import { CardBody, CardTitle, CardSubtitle, CardText } from "reactstrap";
-import { Card, CardImg, Col, Row, Button } from "../styles";
+import { CardBody, CardTitle, CardText } from "reactstrap";
+import { Card, Col, Row, Button } from "../styles";
 import { removeFromCart } from "../../actions/cart";
 
 const CartItem = (props) => {

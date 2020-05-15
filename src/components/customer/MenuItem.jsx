@@ -12,7 +12,6 @@ import {
   ModificationOption,
 } from "../styles";
 import {
-  formatPriceFromFloatString,
   formatImgurUrl,
 } from "../../services/formatting";
 
@@ -24,7 +23,10 @@ class MenuItem extends Component {
   componentDidMount() {
     const { modifications } = this.props.menuItem;
     modifications.forEach((modification) => {
-      modification.options[modification.defaultOptionIndex].selected = true;
+      const { defaultOptionIndex } = modification;
+      if (defaultOptionIndex !== null && defaultOptionIndex !== undefined) {
+        modification.options[defaultOptionIndex].selected = true;
+      }
     });
     this.setState({
       modifications,
@@ -102,7 +104,6 @@ class MenuItem extends Component {
               ))}
             </Row>
             <Button
-              
               onClick={() => this.addToCart()}
               title="Add to cart"
               isLoading={this.props.isLoading}

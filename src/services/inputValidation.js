@@ -2,7 +2,7 @@ export const passwordValidation = (password, required) => {
   if (!password && !required) return;
   if (
     !password.match(
-      /(?=(.*[0-9]))(?=.*[\!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{8,}/
+      /(?=(.*[0-9]))(?=.*[!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{8,}/
     )
   ) {
     return "Password must be at least 8 characters and have a lowercase, uppercase, number, and special character.";

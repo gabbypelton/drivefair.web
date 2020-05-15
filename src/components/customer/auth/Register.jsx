@@ -6,7 +6,6 @@ import {
   Button,
   Form,
   Input,
-  ModalBody,
   Label,
   InputErrorMessage
 } from "../../styles";
@@ -52,7 +51,7 @@ class Register extends Component {
   handleChange({ target }) {
     let { name, value } = target;
     if (name === "phoneNumber") {
-      if (value.match(/[^0-9\-]{1}/)) return;
+      // if (value.match(/[^0-9-]{1}/)) return;
       if (value.match(/^[0-9]{3}$/) || value.match(/^[0-9]{3}-[0-9]{3}$/)) {
         value += "-";
       }

@@ -36,14 +36,14 @@ export class Cart extends Component {
     this.props.getVendors();
     this.props.getCart();
     this.setState({
-      total: parseFloat(this.props.totalPrice) + parseFloat(this.state.tip),
+      total: parseFloat(this.props.subtotal) + parseFloat(this.state.tip),
     });
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.totalPrice !== prevProps.totalPrice) {
+    if (this.props.subtotal !== prevProps.subtotal) {
       this.setState({
-        total: parseFloat(this.props.totalPrice) + parseFloat(this.state.tip),
+        total: parseFloat(this.props.subtotal) + parseFloat(this.state.tip),
       });
     }
     if (prevProps.orderItems.length && !this.props.orderItems.length) {
@@ -63,7 +63,7 @@ export class Cart extends Component {
   updateTip(value) {
     this.setState({
       tip: value,
-      total: parseFloat(this.props.totalPrice) + parseFloat(value),
+      total: parseFloat(this.props.subtotal) + parseFloat(value),
     });
   }
 
@@ -138,13 +138,13 @@ export class Cart extends Component {
                   <Button
                     title="15%"
                     onClick={() =>
-                      this.updateTip((this.props.totalPrice * 0.15).toFixed(2))
+                      this.updateTip((this.props.subtotal * 0.15).toFixed(2))
                     }
                   />
                   <Button
                     title="20%"
                     onClick={() =>
-                      this.updateTip((this.props.totalPrice * 0.2).toFixed(2))
+                      this.updateTip((this.props.subtotal * 0.2).toFixed(2))
                     }
                   />
                 </ButtonGroup>
@@ -158,7 +158,6 @@ export class Cart extends Component {
         <Row>
           <Col>
             <Button
-              isLoading={this.props.isLoading}
               onClick={() => this.placeOrder()}
               title="Place Order"
               isLoading={this.props.isLoading}
@@ -175,7 +174,7 @@ const mapStateToProps = (state) => ({
   orderItems: state.cart.orderItems,
   selectedVendor: state.vendor.selectedVendor,
   orderMethod: state.cart.method,
-  totalPrice: state.cart.total,
+  subtotal: state.cart.subtotal,
   isLoading: state.cart.isLoading,
 });
 

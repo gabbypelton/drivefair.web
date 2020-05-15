@@ -8,7 +8,6 @@ import DisplayVendor from "../../components/vendor/DisplayVendor";
 import DisplayOrEditMenuItem from "../../components/vendor/menuItem/DisplayOrEditMenuItem";
 import { getMenu } from "../../actions/menu";
 import {
-  Link,
   Container,
   Row,
   Col,

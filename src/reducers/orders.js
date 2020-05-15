@@ -13,13 +13,13 @@ export default (state = initialState, { type, payload }) => {
     case types.GET_READY_ORDERS:
     case types.GET_ORDER_HISTORY:
     case types.REFUND_ORDER:
-    case types.GET_ACTIVE_ORDERS:
+    case types.CUSTOMER_PICK_UP_ORDER:
       return { ...state, ...payload, isLoading: true };
     case types.GET_ACTIVE_ORDERS_FAIL:
     case types.GET_READY_ORDERS_FAIL:
     case types.GET_ORDER_HISTORY_FAIL:
     case types.REFUND_ORDER_FAIL:
-    case types.GET_ACTIVE_ORDERS_FAIL:
+    case types.CUSTOMER_PICK_UP_ORDER_FAIL:
       return { ...state, error: payload.error, isLoading: false };
     case types.GET_ACTIVE_ORDERS_SUCCESS:
     case types.ACCEPT_ORDER_SUCCESS:
@@ -48,13 +48,14 @@ export default (state = initialState, { type, payload }) => {
         isLoading: false,
       };
     case types.DELIVER_ORDER_SUCCESS:
+    case types.CUSTOMER_PICK_UP_ORDER_SUCCESS:
       return {
         ...state,
         orderHistory: [...payload.orderHistory],
         readyOrders: [...payload.readyOrders],
         isLoading: false,
       };
-    case types.REFUND_ORDER_FAIL:
+    case types.REFUND_ORDER_SUCCESS:
       return {
         ...state,
         activeOrders: [...payload.activeOrders],

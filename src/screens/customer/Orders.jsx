@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { Spinner } from "reactstrap";
 
 import {
-  Container,
   OrderListHeading,
   OrderListBody,
   OrderList,
@@ -12,7 +11,7 @@ import {
 import { getActiveOrders, getReadyOrders } from "../../actions/orders";
 import Order from "../../components/customer/Order";
 
-export class ActiveOrders extends Component {
+export class Orders extends Component {
   componentDidMount() {
     this.props.getActiveOrders();
     this.props.getReadyOrders();
@@ -71,4 +70,4 @@ const mapDispatchToProps = {
   getReadyOrders,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ActiveOrders);
+export default connect(mapStateToProps, mapDispatchToProps)(Orders);

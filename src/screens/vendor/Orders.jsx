@@ -15,7 +15,7 @@ import ActiveOrder from "../../components/vendor/ActiveOrder";
 import ReadyOrder from "../../components/vendor/ReadyOrder";
 
 let getRealTimeDataInterval;
-export class ActiveOrders extends Component {
+export class Orders extends Component {
   componentDidMount() {
     this.getRealTimeData();
     getRealTimeDataInterval = setInterval(() => this.getRealTimeData(), 30000);
@@ -93,4 +93,4 @@ const mapDispatchToProps = {
   getActiveDrivers,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ActiveOrders);
+export default connect(mapStateToProps, mapDispatchToProps)(Orders);
