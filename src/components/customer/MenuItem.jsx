@@ -11,9 +11,7 @@ import {
   ModificationSelect,
   ModificationOption,
 } from "../styles";
-import {
-  formatImgurUrl,
-} from "../../services/formatting";
+import { formatImgurUrl } from "../../services/formatting";
 
 class MenuItem extends Component {
   state = {
@@ -58,7 +56,7 @@ class MenuItem extends Component {
       return { ...mod, options: mod.options.filter((a) => a.selected) };
     });
     this.props.addToCart(
-      this.props.menuItem,
+      this.props.menuItem._id,
       modifications,
       this.props.selectedVendor._id
     );
