@@ -24,7 +24,7 @@ export const getVendors = () => async (dispatch) => {
     const response = await Axios.get("/vendors");
     dispatch({ type: types.GET_VENDORS_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.GET_VENDORS_FAIL, error });
+    dispatch({ type: types.GET_VENDORS_FAIL, payload: { error } });
   }
 };
 
@@ -40,6 +40,6 @@ export const editVendor = (changes) => async (dispatch) => {
     const response = await Axios.post("/vendors/editVendor", changes);
     dispatch({ type: types.EDIT_VENDOR_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.EDIT_VENDOR_FAIL, error });
+    dispatch({ type: types.EDIT_VENDOR_FAIL, payload: { error } });
   }
 };

@@ -29,10 +29,10 @@ export const editAddress = (addressId, changes) => async (dispatch) => {
   }
 };
 
-export const addAddress = (properties) => async (dispatch) => {
+export const addAddress = (address) => async (dispatch) => {
   try {
     dispatch({ type: types.ADD_ADDRESS });
-    const response = await Axios.post("/customers/addAddress", properties);
+    const response = await Axios.post("/customers/addAddress", { address });
     dispatch({ type: types.ADD_ADDRESS_SUCCESS, payload: response.data });
   } catch (error) {
     dispatch({ type: types.ADD_ADDRESS_FAIL, payload: { error } });

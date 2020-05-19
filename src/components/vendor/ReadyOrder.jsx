@@ -15,6 +15,7 @@ import {
   OrderContainer,
   OrderItemContainer,
 } from "../styles";
+import { dispositionPipeline } from "../../constants/settings";
 
 const ReadyOrder = (props) => {
   const {
@@ -23,8 +24,15 @@ const ReadyOrder = (props) => {
     createdOn,
     address,
     disposition,
-    stale,
+    estimatedReadyTime,
+    estimatedDeliveryTime,
   } = props.readyOrder;
+  const orderIsPastDue =
+    moment(estimatedReadyTime).isBefore(moment()) &&
+    dispositionPipeline[disposition] < 4;
+  const deliveryIsPastDue =
+    moment(estimatedDeliveryTime).isBefore(moment()) &&
+    dispositionPipeline[disposition] < 7;
   const { street, unit, city, state, zip } = address ? address : {};
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [password, setPassword] = useState("");
@@ -39,7 +47,7 @@ const ReadyOrder = (props) => {
       md="5"
       lg="3"
       disposition={disposition}
-      stale={true}
+      stale={orderIsPastDue || deliveryIsPastDue}
     >
       <Row>
         <Col>{moment(createdOn).format("MM-DD-YYYY @ hh:mm")}</Col>
