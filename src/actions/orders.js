@@ -54,33 +54,33 @@ export const acceptOrder = ({
     dispatch({ type: types.ACCEPT_ORDER_FAIL, payload: { error } });
   }
 };
-export const selectDriver = ({ orderId, selectedDriverId }) => async (
+export const requestDriver = ({ orderId, selectedDriverId }) => async (
   dispatch
 ) => {
   try {
-    dispatch({ type: types.SELECT_DRIVER });
-    const response = await Axios.post("/orders/selectDriver", {
+    dispatch({ type: types.REQUEST_DRIVER });
+    const response = await Axios.post("/orders/requestDriver", {
       orderId,
       selectedDriverId,
     });
-    dispatch({ type: types.SELECT_DRIVER_SUCCESS, payload: response.data });
+    dispatch({ type: types.REQUEST_DRIVER_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.SELECT_DRIVER_FAIL, payload: { error } });
+    dispatch({ type: types.REQUEST_DRIVER_FAIL, payload: { error } });
   }
 };
 
 export const autoSelect = ({ orderId }) => async (dispatch) => {
   try {
-    dispatch({ type: types.AUTO_SELECT_DRIVER });
+    dispatch({ type: types.AUTO_REQUEST_DRIVER });
     const response = await Axios.post("/orders/autoSelect", {
       orderId,
     });
     dispatch({
-      type: types.AUTO_SELECT_DRIVER_SUCCESS,
+      type: types.AUTO_REQUEST_DRIVER_SUCCESS,
       payload: response.data,
     });
   } catch (error) {
-    dispatch({ type: types.AUTO_SELECT_DRIVER_FAIL, payload: { error } });
+    dispatch({ type: types.AUTO_REQUEST_DRIVER_FAIL, payload: { error } });
   }
 };
 

@@ -4,7 +4,7 @@ import moment from "moment";
 import {
   readyOrder,
   refundOrder,
-  selectDriver,
+  requestDriver,
   autoSelect,
   acceptOrder,
 } from "../../actions/orders";
@@ -107,7 +107,7 @@ const ActiveOrder = (props) => {
         order={props.activeOrder}
       />
       <SelectDriverModal
-        isOpen={isShowingModal && modalType === "selectDriver"}
+        isOpen={isShowingModal && modalType === "requestDriver"}
         toggle={() => setIsShowingModal(!isShowingModal)}
         order={props.activeOrder}
       />
@@ -122,7 +122,7 @@ const DeliveryButtons = (props) => {
         <Row>
           <Col>
             <Button
-              onClick={() => props.showModal("selectDriver")}
+              onClick={() => props.showModal("requestDriver")}
               title="Choose Driver"
             />
             <Button
@@ -201,8 +201,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   readyOrder,
   refundOrder,
-  acceptOrder,
-  selectDriver,
+  requestDriver,
   autoSelect,
   acceptOrder,
 };

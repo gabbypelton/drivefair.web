@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import {
-  Spinner,
-  Container,
-  Input,
-  InputGroup,
-  InputGroupText,
-  InputGroupAddon,
-} from "reactstrap";
+import { Spinner } from "reactstrap";
 import {
   Modal,
   ModalHeader,
@@ -18,7 +11,7 @@ import {
   ModificationSelect,
   ModificationOption,
 } from "../styles";
-import { selectDriver } from "../../actions/orders";
+import { requestDriver } from "../../actions/orders";
 
 export const DriversModal = (props) => {
   const [selectedDriverId, setSelectedDriverId] = useState(null);
@@ -27,8 +20,8 @@ export const DriversModal = (props) => {
       setSelectedDriverId(props.drivers[0]._id);
     }
   }, [props.drivers]);
-  const selectDriver = () => {
-    props.selectDriver({
+  const requestDriver = () => {
+    props.requestDriver({
       orderId: props.order._id,
       selectedDriverId,
     });
@@ -66,7 +59,7 @@ export const DriversModal = (props) => {
             <Button
               width="100%"
               title="Submit"
-              onClick={() => selectDriver()}
+              onClick={() => requestDriver()}
             />
           </Col>
         </Row>
@@ -81,7 +74,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  selectDriver,
+  requestDriver,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DriversModal);

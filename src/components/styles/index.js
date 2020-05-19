@@ -21,7 +21,6 @@ import {
   Col as BSCol,
   NavLink as BSNavLink,
   Spinner,
-  Media,
 } from "reactstrap";
 
 import { colors } from "../../constants/theme";
@@ -254,9 +253,8 @@ export const ViewOptionsItem = styled(BSCol)`
         background-color: ${colors.primary900};
       `
       : `background-color: ${colors.background};
-      `
-  }
-`
+      `}
+`;
 
 export const ViewModificationsList = styled(BSRow)`
   align-items: flex-start;
@@ -291,7 +289,9 @@ const orderColors = {
 
 export const OrderContainer = styled(BSCol)`
   background-color: ${(props) =>
-    colors[orderColors[props.disposition] + "900"]};
+    props.stale
+      ? colors[orderColors.STALE + "900"]
+      : colors[orderColors[props.disposition] + "900"]};
   margin: 1rem 2%;
   height: 35vh;
   overflow-y: auto;
