@@ -5,6 +5,7 @@ const initialState = {
   readyOrders: [],
   orderHistory: [],
   isLoading: false,
+  error: null,
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -63,6 +64,8 @@ export default (state = initialState, { type, payload }) => {
         orderHistory: [...payload.orderHistory],
         isLoading: false,
       };
+    case "DISMISS_ORDERS_ERROR":
+      return { ...state, error: null };
     default:
       return state;
   }

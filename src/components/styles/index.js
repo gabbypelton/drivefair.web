@@ -74,7 +74,10 @@ export const ModalBody = styled(BSModalBody)`
   color: ${colors.text};
 `;
 
-export const ModalFooter = styled(BSModalFooter)``;
+export const ModalFooter = styled(BSModalFooter)`
+  background: ${colors.background};
+  color: ${colors.text};
+`;
 
 export const Form = styled(BSForm)``;
 

@@ -7,6 +7,7 @@ const initialState = {
   modifications: [],
   isLoading: false,
   modificationsLoading: false,
+  error: null,
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -39,7 +40,7 @@ export default (state = initialState, { type, payload }) => {
     case types.ADD_MODIFICATION_FAIL:
     case types.REMOVE_MODIFICATION_FAIL:
     case types.EDIT_MODIFICATION_FAIL:
-      return { ...state, modificationsLoading: false };
+      return { ...state, error: payload.error, modificationsLoading: false };
     case types.ADD_MODIFICATION_SUCCESS:
     case types.REMOVE_MODIFICATION_SUCCESS:
     case types.EDIT_MODIFICATION_SUCCESS:
@@ -70,9 +71,13 @@ export default (state = initialState, { type, payload }) => {
         visibleMenuItems: [...state.menuItems].filter(
           (a) =>
             a.name.toLowerCase().includes(payload.searchString.toLowerCase()) ||
-            a.description.toLowerCase().includes(payload.searchString.toLowerCase())
+            a.description
+              .toLowerCase()
+              .includes(payload.searchString.toLowerCase())
         ),
       };
+    case "DISMISS_MENU_ERROR":
+      return { ...state, error: null };
     default:
       return state;
   }

@@ -19,6 +19,7 @@ import Menu from "./screens/customer/Menu";
 import Cart from "./screens/customer/Cart";
 import EditMenu from "./screens/vendor/EditMenu";
 import Vendors from "./screens/customer/Vendors";
+import ErrorModal from "./components/ErrorModal";
 import { Container } from "./components/styles";
 
 setBaseURL(process.env.REACT_APP_API_URL);
@@ -60,6 +61,7 @@ function App(props) {
           <Route path="/" component={() => <Redirect to="/orders" />} />
         </Switch>
       )}
+      <ErrorModal />
     </Container>
   );
 }

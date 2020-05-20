@@ -11,7 +11,10 @@ export const getActiveDrivers = () => async (dispatch) => {
       payload: response.data,
     });
   } catch (error) {
-    dispatch({ type: types.GET_ACTIVE_DRIVERS_FAIL, payload: { error } });
+    dispatch({
+      type: types.GET_ACTIVE_DRIVERS_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
   }
 };
 
@@ -27,6 +30,9 @@ export const requestDriver = (orderId, driverId) => async (dispatch) => {
       payload: response.data,
     });
   } catch (error) {
-    dispatch({ type: types.REQUEST_DRIVER_FAIL, payload: { error } });
+    dispatch({
+      type: types.REQUEST_DRIVER_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
   }
 };

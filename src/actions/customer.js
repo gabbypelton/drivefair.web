@@ -12,7 +12,10 @@ export const newCustomer = (details) => async (dispatch) => {
     setBearerToken(response.data.token);
     dispatch({ type: types.NEW_CUSTOMER_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.NEW_CUSTOMER_FAIL, payload: { error } });
+    dispatch({
+      type: types.NEW_CUSTOMER_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
   }
 };
 
@@ -25,7 +28,10 @@ export const editAddress = (addressId, changes) => async (dispatch) => {
     });
     dispatch({ type: types.EDIT_ADDRESS_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.EDIT_ADDRESS_FAIL, payload: { error } });
+    dispatch({
+      type: types.EDIT_ADDRESS_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
   }
 };
 
@@ -35,7 +41,10 @@ export const addAddress = (address) => async (dispatch) => {
     const response = await Axios.post("/customers/addAddress", { address });
     dispatch({ type: types.ADD_ADDRESS_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.ADD_ADDRESS_FAIL, payload: { error } });
+    dispatch({
+      type: types.ADD_ADDRESS_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
   }
 };
 
@@ -50,7 +59,10 @@ export const removeAddress = (addressId) => async (dispatch) => {
       payload: response.data,
     });
   } catch (error) {
-    dispatch({ type: types.REMOVE_ADDRESS_FAIL, payload: { error } });
+    dispatch({
+      type: types.REMOVE_ADDRESS_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
   }
 };
 
@@ -65,7 +77,10 @@ export const selectAddress = (addressId) => async (dispatch) => {
       payload: response.data,
     });
   } catch (error) {
-    dispatch({ type: types.SELECT_ADDRESS_FAIL, payload: { error } });
+    dispatch({
+      type: types.SELECT_ADDRESS_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
   }
 };
 
@@ -78,6 +93,9 @@ export const getAddresses = () => async (dispatch) => {
       payload: response.data,
     });
   } catch (error) {
-    dispatch({ type: types.GET_ADDRESSES_FAIL, payload: { error } });
+    dispatch({
+      type: types.GET_ADDRESSES_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
   }
 };
