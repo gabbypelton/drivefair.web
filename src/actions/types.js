@@ -42,7 +42,7 @@ const asyncActions = [
   "GET_ON_CALL_DRIVERS",
   "ACCEPT_ORDER",
   "AUTO_REQUEST_DRIVER",
-  "REQUEST_DRIVER"
+  "REQUEST_DRIVER",
 ];
 const syncActions = ["LOG_OUT", "TOGGLE_READY_TO_PAY", "SEARCH_MENU"];
 

@@ -9,7 +9,7 @@ export const getActiveOrders = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: types.GET_ACTIVE_ORDERS_FAIL,
-      payload: error.response.data,
+      payload: error.response ? error.response.data : { error },
     });
   }
 };
@@ -25,7 +25,7 @@ export const getReadyOrders = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: types.GET_READY_ORDERS_FAIL,
-      payload: error.response.data,
+      payload: error.response ? error.response.data : { error },
     });
   }
 };
@@ -41,7 +41,7 @@ export const getOrderHistory = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: types.GET_ORDER_HISTORY_FAIL,
-      payload: error.response.data,
+      payload: error.response ? error.response.data : { error },
     });
   }
 };
@@ -97,7 +97,7 @@ export const autoSelect = ({ orderId }) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: types.AUTO_REQUEST_DRIVER_FAIL,
-      payload: error.response.data,
+      payload: error.response ? error.response.data : { error },
     });
   }
 };
@@ -128,7 +128,7 @@ export const customerPickUpOrder = (orderId) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: types.CUSTOMER_PICK_UP_ORDER_FAIL,
-      payload: error.response.data,
+      payload: error.response ? error.response.data : { error },
     });
   }
 };
