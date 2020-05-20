@@ -9,8 +9,10 @@ export const ErrorModal = ({ error, errorType }) => {
       <Modal isOpen={error}>
         <ModalBody>
           <Row>
-            <Col> {error ? error.message : null}</Col>
-            <Col>
+            <Col xs="12" md="9">
+              {error ? error.message : null}
+            </Col>
+            <Col xs="12" md="3">
               <Button
                 title="Okay"
                 onClick={() =>
