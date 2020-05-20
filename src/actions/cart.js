@@ -7,7 +7,10 @@ export const getCart = () => async (dispatch) => {
     const response = await Axios.get("/orders/cart");
     dispatch({ type: types.GET_CART_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.GET_CART_FAIL, payload: { error } });
+    dispatch({
+      type: types.GET_CART_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
   }
 };
 
@@ -23,7 +26,10 @@ export const addToCart = (menuItemId, modifications, vendorId) => async (
     });
     dispatch({ type: types.ADD_TO_CART_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.ADD_TO_CART_FAIL, payload: { error } });
+    dispatch({
+      type: types.ADD_TO_CART_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
   }
 };
 
@@ -35,7 +41,10 @@ export const removeFromCart = (orderItemId) => async (dispatch) => {
     });
     dispatch({ type: types.REMOVE_FROM_CART_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.REMOVE_FROM_CART_FAIL, payload: { error } });
+    dispatch({
+      type: types.REMOVE_FROM_CART_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
   }
 };
 
@@ -50,7 +59,10 @@ export const toggleOrderMethod = (orderMethod) => async (dispatch) => {
       payload: { ...response.data, orderMethod },
     });
   } catch (error) {
-    dispatch({ type: types.TOGGLE_ORDER_METHOD_FAIL, payload: { error } });
+    dispatch({
+      type: types.TOGGLE_ORDER_METHOD_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
   }
 };
 
@@ -65,7 +77,10 @@ export const setTip = (tipAmount) => async (dispatch) => {
       payload: response.data,
     });
   } catch (error) {
-    dispatch({ type: types.SET_TIP_FAIL, payload: { error } });
+    dispatch({
+      type: types.SET_TIP_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
   }
 };
 
@@ -77,7 +92,10 @@ export const pay = (paymentDetails) => async (dispatch) => {
     });
     dispatch({ type: types.PAY_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.PAY_FAIL, payload: { error } });
+    dispatch({
+      type: types.PAY_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
   }
 };
 

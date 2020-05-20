@@ -7,7 +7,10 @@ export const getActiveOrders = () => async (dispatch) => {
     const response = await Axios.get("/orders/active");
     dispatch({ type: types.GET_ACTIVE_ORDERS_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.GET_ACTIVE_ORDERS_FAIL, payload: { error } });
+    dispatch({
+      type: types.GET_ACTIVE_ORDERS_FAIL,
+      payload: error.response.data,
+    });
   }
 };
 
@@ -20,7 +23,10 @@ export const getReadyOrders = () => async (dispatch) => {
       payload: response.data,
     });
   } catch (error) {
-    dispatch({ type: types.GET_READY_ORDERS_FAIL, payload: { error } });
+    dispatch({
+      type: types.GET_READY_ORDERS_FAIL,
+      payload: error.response.data,
+    });
   }
 };
 
@@ -33,7 +39,10 @@ export const getOrderHistory = () => async (dispatch) => {
       payload: response.data,
     });
   } catch (error) {
-    dispatch({ type: types.GET_ORDER_HISTORY_FAIL, payload: { error } });
+    dispatch({
+      type: types.GET_ORDER_HISTORY_FAIL,
+      payload: error.response.data,
+    });
   }
 };
 
@@ -51,7 +60,10 @@ export const acceptOrder = ({
     });
     dispatch({ type: types.ACCEPT_ORDER_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.ACCEPT_ORDER_FAIL, payload: { error } });
+    dispatch({
+      type: types.ACCEPT_ORDER_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
   }
 };
 export const requestDriver = ({ orderId, selectedDriverId }) => async (
@@ -65,7 +77,10 @@ export const requestDriver = ({ orderId, selectedDriverId }) => async (
     });
     dispatch({ type: types.REQUEST_DRIVER_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.REQUEST_DRIVER_FAIL, payload: { error } });
+    dispatch({
+      type: types.REQUEST_DRIVER_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
   }
 };
 
@@ -80,7 +95,10 @@ export const autoSelect = ({ orderId }) => async (dispatch) => {
       payload: response.data,
     });
   } catch (error) {
-    dispatch({ type: types.AUTO_REQUEST_DRIVER_FAIL, payload: { error } });
+    dispatch({
+      type: types.AUTO_REQUEST_DRIVER_FAIL,
+      payload: error.response.data,
+    });
   }
 };
 
@@ -90,17 +108,28 @@ export const readyOrder = (orderId) => async (dispatch) => {
     const response = await Axios.post("/orders/readyOrder", { orderId });
     dispatch({ type: types.READY_ORDER_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.READY_ORDER_FAIL, payload: { error } });
+    dispatch({
+      type: types.READY_ORDER_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
   }
 };
 
 export const customerPickUpOrder = (orderId) => async (dispatch) => {
   try {
     dispatch({ type: types.CUSTOMER_PICK_UP_ORDER });
-    const response = await Axios.post("/orders/customerPickUpOrder", { orderId });
-    dispatch({ type: types.CUSTOMER_PICK_UP_ORDER_SUCCESS, payload: response.data });
+    const response = await Axios.post("/orders/customerPickUpOrder", {
+      orderId,
+    });
+    dispatch({
+      type: types.CUSTOMER_PICK_UP_ORDER_SUCCESS,
+      payload: response.data,
+    });
   } catch (error) {
-    dispatch({ type: types.CUSTOMER_PICK_UP_ORDER_FAIL, payload: { error } });
+    dispatch({
+      type: types.CUSTOMER_PICK_UP_ORDER_FAIL,
+      payload: error.response.data,
+    });
   }
 };
 
@@ -113,6 +142,9 @@ export const refundOrder = ({ orderId, password }) => async (dispatch) => {
     });
     dispatch({ type: types.REFUND_ORDER_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.REFUND_ORDER_FAIL, payload: { error } });
+    dispatch({
+      type: types.REFUND_ORDER_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
   }
 };

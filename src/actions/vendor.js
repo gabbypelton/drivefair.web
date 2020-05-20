@@ -14,7 +14,10 @@ export const newVendor = (details) => async (dispatch) => {
     setBearerToken(response.data.token);
     dispatch({ type: types.NEW_VENDOR_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.NEW_VENDOR_FAIL, payload: { error } });
+    dispatch({
+      type: types.NEW_VENDOR_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
   }
 };
 
@@ -24,7 +27,10 @@ export const getVendors = () => async (dispatch) => {
     const response = await Axios.get("/vendors");
     dispatch({ type: types.GET_VENDORS_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.GET_VENDORS_FAIL, payload: { error } });
+    dispatch({
+      type: types.GET_VENDORS_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
   }
 };
 
@@ -40,6 +46,9 @@ export const editVendor = (changes) => async (dispatch) => {
     const response = await Axios.post("/vendors/editVendor", changes);
     dispatch({ type: types.EDIT_VENDOR_SUCCESS, payload: response.data });
   } catch (error) {
-    dispatch({ type: types.EDIT_VENDOR_FAIL, payload: { error } });
+    dispatch({
+      type: types.EDIT_VENDOR_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
   }
 };

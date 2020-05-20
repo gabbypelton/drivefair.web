@@ -2,12 +2,11 @@ import types from "../actions/types";
 
 const initialState = {
   addresses: [],
+  error: null,
 };
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case "NEW_CUSTOMER":
-      return { ...state, ...payload };
     case types.ADD_ADDRESS:
     case types.REMOVE_ADDRESS:
     case types.EDIT_ADDRESS:
@@ -17,7 +16,7 @@ export default (state = initialState, { type, payload }) => {
     case types.REMOVE_ADDRESS_FAIL:
     case types.EDIT_ADDRESS_FAIL:
     case types.GET_ADDRESSES_FAIL:
-      return { ...state, isLoading: false };
+      return { ...state, error: payload.error, isLoading: false };
     case types.ADD_ADDRESS_SUCCESS:
     case types.REMOVE_ADDRESS_SUCCESS:
     case types.EDIT_ADDRESS_SUCCESS:
@@ -27,6 +26,8 @@ export default (state = initialState, { type, payload }) => {
         addresses: [...payload.addresses],
         isLoading: false,
       };
+    case types.DISMISS_CUSTOMER_ERROR:
+      return { ...state, error: null };
     default:
       return state;
   }
