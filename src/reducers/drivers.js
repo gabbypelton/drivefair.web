@@ -3,6 +3,7 @@ import types from "../actions/types";
 const initialState = {
   activeDrivers: [],
   isLoading: false,
+  error: null,
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -17,7 +18,8 @@ export default (state = initialState, { type, payload }) => {
         activeDrivers: [...payload.drivers],
         isLoading: false,
       };
-
+    case "DISMISS_DRIVERS_ERROR":
+      return { ...state, error: null };
     default:
       return state;
   }

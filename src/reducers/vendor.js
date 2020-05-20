@@ -10,6 +10,7 @@ const initialState = {
     menu: [],
     phoneNumber: "",
   },
+  error: null,
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -43,6 +44,9 @@ export default (state = initialState, { type, payload }) => {
           (vendor) => vendor._id === payload.vendorId
         ) || { ...state.selectedVendor },
       };
+
+    case "DISMISS_VENDOR_ERROR":
+      return { ...state, error: null };
 
     default:
       return state;

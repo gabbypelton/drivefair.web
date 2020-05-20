@@ -6,7 +6,7 @@ const initialState = {
   token: "",
   isLoggedIn: false,
   isLoading: false,
-  error: "",
+  error: null,
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -44,13 +44,13 @@ export default (state = initialState, { type, payload }) => {
         isLoading: false,
         isLoggedIn: true,
       };
-      
+
     case types.SEND_CONFIRMATION_EMAIL_SUCCESS:
       return {
         ...state,
         isLoading: false,
-        emailConfirmationSent: true
-      }
+        emailConfirmationSent: true,
+      };
 
     case types.EDIT_VENDOR_SUCCESS:
       return {
@@ -61,7 +61,9 @@ export default (state = initialState, { type, payload }) => {
 
     case types.LOG_OUT:
       return { ...initialState };
-
+    case "DISMISS_SESSION_ERROR":
+    case "DISMISS_VENDOR_ERROR":
+      return { ...state, error: null };
     default:
       return state;
   }

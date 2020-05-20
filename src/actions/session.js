@@ -16,7 +16,10 @@ export const loginCustomer = ({ email, password }) => async (dispatch) => {
     setBearerToken(token);
     dispatch(loginWithToken(token, "customer"));
   } catch (error) {
-    dispatch({ type: types.LOG_IN_FAIL, payload: { error } });
+    dispatch({
+      type: types.LOG_IN_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
     dispatch(logout());
   }
 };
@@ -35,7 +38,10 @@ export const loginVendor = ({ email, password }) => async (dispatch) => {
     setBearerToken(token);
     dispatch(loginWithToken(token, "vendor"));
   } catch (error) {
-    dispatch({ type: types.LOG_IN_FAIL, payload: { error } });
+    dispatch({
+      type: types.LOG_IN_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
     dispatch(logout());
   }
 };
@@ -45,18 +51,16 @@ export const loginWithToken = (token, userType) => async (dispatch) => {
   try {
     setBearerToken(token);
     const response = await Axios.get(`/${userType}s/me`);
-    if (!response.data || !response.data.profile) {
-      localStorage.clear();
-      dispatch({ type: types.LOG_IN_FAIL, payload: response.data });
-      dispatch(logout());
-    }
     dispatch({
       type: types.LOG_IN_SUCCESS,
       payload: { ...response.data, userType, token },
     });
   } catch (error) {
     localStorage.clear();
-    dispatch({ type: types.LOG_IN_FAIL, payload: { error } });
+    dispatch({
+      type: types.LOG_IN_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
     dispatch(logout());
   }
 };
@@ -70,7 +74,10 @@ export const sendConfirmationEmail = (userType) => async (dispatch) => {
       payload: response.data,
     });
   } catch (error) {
-    dispatch({ type: types.SEND_CONFIRMATION_EMAIL_FAIL, payload: { error } });
+    dispatch({
+      type: types.SEND_CONFIRMATION_EMAIL_FAIL,
+      payload: error.response ? error.response.data : { error },
+    });
   }
 };
 

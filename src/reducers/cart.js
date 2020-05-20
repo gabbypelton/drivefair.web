@@ -3,7 +3,7 @@ import types from "../actions/types";
 const initialState = {
   orderItems: [],
   inProgress: true,
-  error: {},
+  error: null,
   readyToPay: false,
   method: "PICKUP",
   total: 0,
@@ -42,6 +42,8 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, method: payload.orderMethod, isLoading: false };
     case types.PAY_SUCCESS:
       return { ...initialState };
+    case "DISMISS_CART_ERROR":
+      return { ...state, error: null };
     default:
       return state;
   }
