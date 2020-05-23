@@ -31,10 +31,10 @@ export const DriversModal = (props) => {
   const acceptOrder = () => {
     props.acceptOrder({
       orderId: props.order._id,
-      selectedDriverId,
+      driverId: selectedDriverId,
       timeToReady,
     });
-    props.toggle()
+    props.toggle();
   };
   return (
     <Modal isOpen={props.isOpen} toggle={props.toggle}>

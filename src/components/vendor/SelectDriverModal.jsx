@@ -11,7 +11,7 @@ import {
   ModificationSelect,
   ModificationOption,
 } from "../styles";
-import { requestDriver } from "../../actions/orders";
+import { requestDrivers } from "../../actions/orders";
 
 export const DriversModal = (props) => {
   const [selectedDriverId, setSelectedDriverId] = useState(null);
@@ -21,9 +21,9 @@ export const DriversModal = (props) => {
     }
   }, [props.drivers]);
   const requestDriver = () => {
-    props.requestDriver({
+    props.requestDrivers({
       orderId: props.order._id,
-      selectedDriverId,
+      driverId: selectedDriverId,
     });
     props.toggle();
   };
@@ -74,7 +74,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  requestDriver,
+  requestDrivers,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DriversModal);

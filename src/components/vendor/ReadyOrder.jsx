@@ -16,6 +16,7 @@ import {
   OrderItemContainer,
 } from "../styles";
 import { dispositionPipeline } from "../../constants/settings";
+import CheckPasswordModal from "../CheckPasswordModal";
 
 const ReadyOrder = (props) => {
   const {
@@ -123,32 +124,6 @@ const ReadyOrder = (props) => {
         value={password}
       />
     </OrderContainer>
-  );
-};
-
-const CheckPasswordModal = (props) => {
-  return (
-    <Modal isOpen={props.isOpen} toggle={() => props.toggle()}>
-      <ModalHeader>Check Password</ModalHeader>
-      <ModalBody>
-        <Row>
-          <Form onSubmit={(e) => props.handleSubmit(e)}>
-            <FormGroup>
-              <Label to="password">
-                Enter your password to confirm changes
-              </Label>
-              <Input
-                name="password"
-                type="password"
-                value={props.password}
-                onInput={(e) => props.handleChange(e.target.value)}
-              />
-              <Button title="Submit" />
-            </FormGroup>
-          </Form>
-        </Row>
-      </ModalBody>
-    </Modal>
   );
 };
 

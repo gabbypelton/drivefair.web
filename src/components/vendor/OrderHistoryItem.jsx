@@ -20,6 +20,7 @@ const OrderHistoryItem = (props) => {
     createdOn,
     disposition,
     driver,
+    actualReadyTime,
     actualDeliveryTime,
   } = props.order;
   if (!selected) {
@@ -32,18 +33,22 @@ const OrderHistoryItem = (props) => {
       >
         <Col xs="12">
           <Row>
-            <Col>For: {customer.firstName}</Col>
             <Col>
-              Placed: {moment(createdOn).format("MM-DD-YYYY @ hh:mm a")}
+              {customer.firstName} {customer.lastName[0]}
             </Col>
+            <Col>Placed: {moment(createdOn).format("MM-DD-YYYY @ hh:mma")}</Col>
             <Col>
               {actualDeliveryTime
-                ? `Received: ${moment(actualDeliveryTime).format(
-                    "MM-DD-YYYY @ hh:mm a"
-                  )}`
+                ? `Ready at ${moment(actualReadyTime).format("hh:mma")}`
                 : null}
             </Col>
-            <Col>{driver ? `Delivered by: ${driver.firstName}` : null}</Col>
+            <Col>
+              {driver
+                ? `Delivered by ${driver.firstName} at ${moment(
+                    actualDeliveryTime
+                  ).format("hh:mma")}`
+                : null}
+            </Col>
           </Row>
         </Col>
       </OrderHistoryItemContainer>
@@ -84,7 +89,7 @@ const OrderHistoryItem = (props) => {
         </Row>
         <Row>
           <Col>For: {customer.firstName}</Col>
-          <Col>Placed: {moment(createdOn).format("MM-DD-YYYY @ hh:mm a")}</Col>
+          <Col>Placed: {moment(createdOn).format("MM-DD-YYYY @ hh:mma")}</Col>
           <Col>
             {actualDeliveryTime
               ? `Received: ${moment(actualDeliveryTime).format(

@@ -10,8 +10,8 @@ import {
 } from "../../components/styles";
 import { getActiveOrders, getReadyOrders } from "../../actions/orders";
 import { getActiveDrivers } from "../../actions/drivers";
-import ActiveOrder from "../../components/vendor/ActiveOrder";
-import ReadyOrder from "../../components/vendor/ReadyOrder";
+import Order from "../../components/vendor/Order";
+import ReadyOrder from "../../components/vendor/Order";
 
 let getRealTimeDataInterval;
 export class Orders extends Component {
@@ -52,7 +52,9 @@ const OrderListContainer = (props) => (
   <OrderList>
     <OrderListHeading>
       <h4>{props.orderType} Orders </h4>
-      {props.isLoading && props.orders.length ? <Spinner style={{position: "absolute", right: 0}}/> : null}
+      {props.isLoading && props.orders.length ? (
+        <Spinner style={{ position: "absolute", right: 0 }} />
+      ) : null}
     </OrderListHeading>
     {props.isLoading && !props.orders.length ? (
       <OrderListBody>
@@ -71,13 +73,6 @@ const OrderListContainer = (props) => (
     )}
   </OrderList>
 );
-
-const Order = (props) =>
-  props.orderType === "Active" ? (
-    <ActiveOrder activeOrder={props.order} />
-  ) : (
-    <ReadyOrder readyOrder={props.order} />
-  );
 
 const mapStateToProps = (state) => ({
   activeOrders: state.orders.activeOrders,

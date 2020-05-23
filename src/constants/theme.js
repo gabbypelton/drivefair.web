@@ -1,10 +1,9 @@
 import { dark } from "@eva-design/eva";
-console.log(dark['color-basic-800'])
 
 export const colors = {
   ...dark,
   text: "white",
-  background: dark['color-basic-800'],
+  background: dark["color-basic-800"],
   primary100: "#D5E2FA",
   primary200: "#ADC4F5",
   primary300: "#7F9CE1",
