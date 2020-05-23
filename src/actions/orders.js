@@ -9,7 +9,7 @@ export const getActiveOrders = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: types.GET_ACTIVE_ORDERS_FAIL,
-      payload: error.response.data,
+      payload: error.response ? error.response.data : { error },
     });
   }
 };
@@ -25,7 +25,7 @@ export const getReadyOrders = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: types.GET_READY_ORDERS_FAIL,
-      payload: error.response.data,
+      payload: error.response ? error.response.data : { error },
     });
   }
 };
@@ -41,21 +41,19 @@ export const getOrderHistory = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: types.GET_ORDER_HISTORY_FAIL,
-      payload: error.response.data,
+      payload: error.response ? error.response.data : { error },
     });
   }
 };
 
-export const acceptOrder = ({
-  orderId,
-  selectedDriverId,
-  timeToReady,
-}) => async (dispatch) => {
+export const acceptOrder = ({ orderId, driverId, timeToReady }) => async (
+  dispatch
+) => {
   try {
     dispatch({ type: types.ACCEPT_ORDER });
     const response = await Axios.post("/orders/vendorAcceptOrder", {
       orderId,
-      selectedDriverId,
+      driverId: driverId,
       timeToReady,
     });
     dispatch({ type: types.ACCEPT_ORDER_SUCCESS, payload: response.data });
@@ -66,19 +64,22 @@ export const acceptOrder = ({
     });
   }
 };
-export const requestDriver = ({ orderId, selectedDriverId }) => async (
-  dispatch
-) => {
+
+export const requestDrivers = ({ orderId, driverId }) => async (dispatch) => {
   try {
-    dispatch({ type: types.REQUEST_DRIVER });
-    const response = await Axios.post("/orders/requestDriver", {
+    console.log({ driverId });
+    dispatch({ type: types.REQUEST_DRIVERS });
+    const response = await Axios.post("/orders/requestDrivers", {
       orderId,
-      selectedDriverId,
+      driverIds: [driverId],
     });
-    dispatch({ type: types.REQUEST_DRIVER_SUCCESS, payload: response.data });
+    dispatch({
+      type: types.REQUEST_DRIVERS_SUCCESS,
+      payload: response.data,
+    });
   } catch (error) {
     dispatch({
-      type: types.REQUEST_DRIVER_FAIL,
+      type: types.REQUEST_DRIVERS_FAIL,
       payload: error.response ? error.response.data : { error },
     });
   }
@@ -86,18 +87,18 @@ export const requestDriver = ({ orderId, selectedDriverId }) => async (
 
 export const autoSelect = ({ orderId }) => async (dispatch) => {
   try {
-    dispatch({ type: types.AUTO_REQUEST_DRIVER });
+    dispatch({ type: types.AUTO_REQUEST_DRIVERS });
     const response = await Axios.post("/orders/autoSelect", {
       orderId,
     });
     dispatch({
-      type: types.AUTO_REQUEST_DRIVER_SUCCESS,
+      type: types.AUTO_REQUEST_DRIVERS_SUCCESS,
       payload: response.data,
     });
   } catch (error) {
     dispatch({
-      type: types.AUTO_REQUEST_DRIVER_FAIL,
-      payload: error.response.data,
+      type: types.AUTO_REQUEST_DRIVERS_FAIL,
+      payload: error.response ? error.response.data : { error },
     });
   }
 };
@@ -128,7 +129,7 @@ export const customerPickUpOrder = (orderId) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: types.CUSTOMER_PICK_UP_ORDER_FAIL,
-      payload: error.response.data,
+      payload: error.response ? error.response.data : { error },
     });
   }
 };

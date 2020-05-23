@@ -266,7 +266,6 @@ export const ViewModificationsList = styled(BSRow)`
 export const OrderList = styled(BSCol)`
   margin: 0;
   padding: 0;
-  height: 50;
 `;
 
 export const OrderListHeading = styled(BSRow)`
@@ -278,15 +277,18 @@ export const OrderListHeading = styled(BSRow)`
 export const OrderListBody = styled(BSRow)`
   flex-flow: row nowrap;
   overflow-x: auto;
+  overflow-y: visible;
   justify-content: center;
+  max-height: 44vh;
 `;
 
 const orderColors = {
   PAID: "danger",
   STALE: "danger",
   ACCEPTED_BY_VENDOR: "warning",
-  ACCEPTED_BY_DRIVER: "primary",
-  READY: "primary",
+  WAITING_FOR_DRIVER: "warning",
+  ACCEPTED_BY_DRIVER: "success",
+  READY: "warning",
   EN_ROUTE: "success",
 };
 
@@ -296,13 +298,16 @@ export const OrderContainer = styled(BSCol)`
       ? colors[orderColors.STALE + "900"]
       : colors[orderColors[props.disposition] + "900"]};
   margin: 1rem 2%;
-  height: 35vh;
-  overflow-y: auto;
+  max-height: 100%;
 `;
 
-export const OrderItemContainer = styled(BSCol)`
+export const OrderItemList = styled(BSCol)`
+  overflow-y: auto;
   margin: 1rem 0;
+  max-height: 16vh;
 `;
+
+export const OrderItemContainer = styled(BSCol)``;
 
 export const OrderTitle = styled(BSCol)`
   margin: 1rem 0;

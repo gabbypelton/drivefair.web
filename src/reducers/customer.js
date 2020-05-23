@@ -26,7 +26,7 @@ export default (state = initialState, { type, payload }) => {
         addresses: [...payload.addresses],
         isLoading: false,
       };
-    case types.DISMISS_CUSTOMER_ERROR:
+    case "DISMISS_CUSTOMER_ERROR":
       return { ...state, error: null };
     default:
       return state;
