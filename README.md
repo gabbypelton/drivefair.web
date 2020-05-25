@@ -1,1 +1,1 @@
-Try the [Demo](https://denton-delivery.netlify.app/)
+Try the [Demo](https://dentondelivery-dev.netlify.app/)
