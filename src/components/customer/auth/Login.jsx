@@ -2,13 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { FormGroup } from "reactstrap";
 
-import {
-  Button,
-  Form,
-  Input,
-  Label,
-  InputErrorMessage,
-} from "../../styles";
+import { Button, Form, Input, Label, InputErrorMessage } from "../../styles";
 import { loginCustomer } from "../../../actions/session";
 import { loadState } from "../../../services/stateManagement";
 
@@ -40,7 +34,7 @@ class Login extends Component {
 
   render() {
     return (
-      <Form style={{ width: "40%" }}>
+      <Form style={{ width: "40%" }} onSubmit={(e) => this.handleSubmit(e)}>
         <FormGroup>
           <Label to="email">Email</Label>
           <Input
@@ -63,7 +57,6 @@ class Login extends Component {
           </InputErrorMessage>
         </FormGroup>
         <Button
-          
           onClick={(e) => this.handleSubmit(e)}
           title="Sign In"
           isLoading={this.props.isLoading}
@@ -74,7 +67,7 @@ class Login extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  isLoading: state.session.isLoading
+  isLoading: state.session.isLoading,
 });
 
 export default connect(mapStateToProps, { loginCustomer })(Login);

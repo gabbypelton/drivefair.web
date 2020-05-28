@@ -2,13 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { FormGroup } from "reactstrap";
 
-import {
-  Button,
-  Form,
-  Input,
-  Label,
-  InputErrorMessage
-} from "../../styles";
+import { Button, Form, Input, Label, InputErrorMessage } from "../../styles";
 import { loginVendor } from "../../../actions/session";
 import { loadState } from "../../../services/stateManagement";
 
@@ -16,7 +10,7 @@ class Login extends Component {
   state = {
     email: "",
     password: "",
-    formErrors: {}
+    formErrors: {},
   };
 
   componentDidMount() {
@@ -28,7 +22,7 @@ class Login extends Component {
     const { value, name } = target;
     localStorage.setItem(name, value);
     this.setState({
-      [name]: value
+      [name]: value,
     });
   }
 
@@ -40,7 +34,7 @@ class Login extends Component {
 
   render() {
     return (
-      <Form style={{ width: "40%" }}>
+      <Form style={{ width: "40%" }} onSubmit={(e) => this.handleSubmit(e)}>
         <FormGroup>
           <Label to="email">Email</Label>
           <Input
@@ -64,7 +58,7 @@ class Login extends Component {
         </FormGroup>
         <Button
           color="tertiary"
-          onClick={e => this.handleSubmit(e)}
+          onClick={(e) => this.handleSubmit(e)}
           title="Sign In"
           isLoading={this.props.isLoading}
         />
